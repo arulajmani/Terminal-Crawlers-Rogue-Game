@@ -8,7 +8,7 @@ class Merchant: public Enemy {
 	const int defaultHP;
 	const int defaultAtk;
 	const int defaultDef;
-	MerchantHoard merchangHoard;
+	MerchantHoard merchantHoard;
 
 public:
 	Merchant();
