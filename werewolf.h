@@ -1,14 +1,14 @@
 #ifndef _WEREWOLF_H_
 #define _WEREWOLF_H_
 #include "enemy.h"
-#include "smallhoard.h"
+#include "normalhoard.h"
 
 
 class Werewolf: public Enemy {
 	const int defaultHP;
 	const int defaultAt;
 	const int defaultDef;
-	const SmallHoard smallHoard;
+	const NormalHoard nh;
 
 
 

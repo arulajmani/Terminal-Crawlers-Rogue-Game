@@ -1,14 +1,14 @@
 #ifndef _TROLL_H_
 #define _TROLL_H_
 #include "enemy.h"
-#include "smallhoard.h"
+#include "normalhoard.h"
 
 
 class Troll: public Enemy {
 	const int defaultHP;
 	const int defaultAtk;
 	const int defaultDef;
-	const SmallHoard smallHoard;
+	const NormalHoard nh;
 
 
 

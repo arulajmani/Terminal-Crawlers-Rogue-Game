@@ -1,14 +1,14 @@
 #ifndef _PHEONIX_H_
 #define _PHEONIX_H_
 #include "enemy.h"
-#include "smallhoard.h"
+#include "normalhoard.h"
 
 
 class Pheonix: public Enemy {
 	const int defaultHP;
 	const int defaultAtk;
 	const int defaultDef;
-	const SmallHoard smallHoard;
+	const NormalHoard nh;
 
 
 

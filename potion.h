@@ -13,6 +13,10 @@ public:
 	~Potion()=0;
 
 	void getPickedBy(Player &p);
+	int getAtkChange();
+	int getDefChange();
+	int getHPChange();
+
 };
 
 endif

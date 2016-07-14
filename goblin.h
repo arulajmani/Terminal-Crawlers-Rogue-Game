@@ -1,14 +1,14 @@
 #ifndef _GOBLIN_H_
 #define _GOBLIN_H_
 #include "enemy.h"
-#include "smallhoard.h"
+#include "normalhoard.h"
 
 
 class Goblin: public Enemy {
 	const int defaultHP;
 	const int defaultAtk;
 	const int defaultDef;
-	const SmallHoard smallHoard;
+	const NormalHoard nh;
 
 
 
