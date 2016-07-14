@@ -1,20 +1,22 @@
-#ifndef _HUMAN_H_
-#define _HUMAN_H_
+#ifndef _DWARF_H_
+#define _DWARF_H_
 
 #include "player.h"
 #include <string>
 
-class Human: public Player{
+class Dwarf: public Player{
 	const int defaultHP;
 	const int defaultAtk;
 	const int defaultDef;
 
 public:
-	Human(std::string race);
-	~Human();
+	Dwarf(std::string race);
+	~Dwarf();
 
 	void getAttackedBy(Character &c);
 	void attack(Character &c);
+	void pickItem(Gold &g);
+
 };
 
 #endif

@@ -15,7 +15,7 @@ class Player: public class Character {
 
 public:
 	Player(std::string race);
-	~Player();
+	~Player()=0;
 
 	int getLevelAtk() const;
 	int getLevelDef() const;
@@ -26,8 +26,8 @@ public:
 	int setGold();
 
 	std::string getRace();
-	virtual void pickItem(Gold &g)=0;
-	virtual void pickItem(Potion &p)=0;
+	virtual void pickItem(Gold &g);
+	virtual void pickItem(Potion &p);
 
 };
 
