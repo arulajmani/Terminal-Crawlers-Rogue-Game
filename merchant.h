@@ -2,10 +2,12 @@
 #define _MERCHANT_H_
 #include "enemy.h"
 #include "merchanthoard.h"
+#include "player.h"
+#include "character.h"
 
 class Merchant: public Enemy {
 	static bool hostile;
-	MerchantHoard merchantHoard;
+	const MerchantHoard merchantHoard;
 
 public:
 	Merchant();

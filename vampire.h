@@ -2,6 +2,8 @@
 #define _VAMPIRE_H_
 #include "enemy.h"
 #include "normalhoard.h"
+#include "character.h"
+#include "player.h"
 
 class Vampire: public Enemy {
 	const NormalHoard nh;

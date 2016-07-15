@@ -9,10 +9,8 @@
 class Enemy: public class Character {
 
 public:
-	Enemy();
+	Enemy(int hp, int atk, int def);
 	~Enemy();
-
-	virtual int dropGold();
 	virtual bool isHostile();
 	virtual void whenDead(Player &p)=0; // To force giving of contained gold in enemy
 										// to player p
