@@ -1,4 +1,5 @@
 #include "dwarf.h"
+using namespace std;
 
 const int defaultHP = 100;
 const int defaultAtk = 20;

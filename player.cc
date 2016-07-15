@@ -1,6 +1,7 @@
 #include "player.h"
 #include "potion.h"
 #include "gold.h"
+using namespace std;
 
 Player::Player(string race, int hp, int atk, int def): Character{hp, atk, def}, race{race}, levelAtk{0}, levelDef{0} {}
 Player::~Player() {}

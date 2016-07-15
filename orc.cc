@@ -1,4 +1,5 @@
 #include "orc.h"
+using namespace std;
 
 const int defaultHP = 180;
 const int defaultAtk = 30;

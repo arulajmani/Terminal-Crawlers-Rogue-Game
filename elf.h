@@ -1,6 +1,5 @@
 #ifndef _ELF_H_
 #define _ELF_H_
-
 #include "player.h"
 #include <string>
 
