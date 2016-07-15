@@ -7,3 +7,9 @@ const int defaultDef = 25;
 
 Orc::Orc(): Player{"Orc", defaultHP, defaultDef, defaultAtk} {}
 Orc::~Orc() {}
+
+void Orc::pickItem(Gold &g) {
+	int moreGold = g.getValue() / 2;
+	int value = this->getGold() + moreGold;
+	this->setGold(value);
+}

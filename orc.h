@@ -11,7 +11,7 @@ public:
 
 	void getAttackedBy(Character &c);
 	void attack(Character &c);
-	void pickItem(Gold &g);
+	void pickItem(Gold &g) override;
 
 };
 

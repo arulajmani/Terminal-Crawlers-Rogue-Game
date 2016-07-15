@@ -15,7 +15,7 @@ int Player::getLevelDef() const {
 }
 
 int Player::getGold() const {
-	return Gold;
+	return gold;
 }
 
 
