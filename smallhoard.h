@@ -8,4 +8,4 @@ class SmallHoard : public Gold {
 		~SmallHoard();
 };
 
-#endif;
+#endif

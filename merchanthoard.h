@@ -8,4 +8,4 @@ class MerchantHoard : public Gold {
 		~MerchantHoard();
 };
 
-#endif;
+#endif
