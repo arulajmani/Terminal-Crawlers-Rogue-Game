@@ -37,3 +37,24 @@ string Player::getRace() {
 	return race;
 }
 
+virtual void pickItem(Gold &g) {
+	gold += g.value;
+}
+
+virtual void pickItem(Potion &p) {
+	if (levelAtk + p.atkChange < 0) {
+		levelAtk = 0;
+	} else {
+		levelAtk += p.atkChange;
+	}
+
+	if (levelDef + p.defChange < 0) {
+		levelDef = 0;
+	} else {
+		levelDef += p.defChange;
+	}
+
+	int hp = this->getHP();
+	hp += p.getHPChange();
+	this->setHP(hp);
+}
