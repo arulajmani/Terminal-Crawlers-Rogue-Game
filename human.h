@@ -5,12 +5,8 @@
 #include <string>
 
 class Human: public Player{
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
-
 public:
-	Human(std::string race);
+	Human();
 	~Human();
 
 	void getAttackedBy(Character &c);

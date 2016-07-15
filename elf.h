@@ -5,12 +5,8 @@
 #include <string>
 
 class Elf: public Player{
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
-
 public:
-	Elf(std::string race);
+	Elf();
 	~Elf();
 
 	void getAttackedBy(Character &c);

@@ -7,6 +7,7 @@ class Character: public GameElement {
 	int hp; 
 	int atk; 
 	int def;
+	bool alive;
 
 public:
 	Character(int hp, int atk, int def);
@@ -15,6 +16,7 @@ public:
 	int getHP() const;
 	int getAtk() const;
 	int getDef() const;
+	bool isAlive() const;
 
 	void setHP(int hp);
 	void setAtk(int atk);

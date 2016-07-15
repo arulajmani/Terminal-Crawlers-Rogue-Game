@@ -14,17 +14,17 @@ class Player: public class Character {
 	int levelDef;
 
 public:
-	Player(std::string race);
+	Player(std::string race, int hp, int atk, int def);
 	~Player()=0;
 
 	int getLevelAtk() const;
 	int getLevelDef() const;
 	int getGold() const;
 
-	int setLevelAtk();
-	int setLevelDef();
-	int setGold();
-
+	void setLevelAtk(int levelAtk);
+	void setLevelDef(int levelDef);
+	void setGold(int value); // Perform computation in base classes, this will just update. (Allow removal of gold as well)
+	
 	std::string getRace();
 	virtual void pickItem(Gold &g);
 	virtual void pickItem(Potion &p);

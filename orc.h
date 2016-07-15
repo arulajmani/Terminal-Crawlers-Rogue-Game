@@ -5,12 +5,8 @@
 #include <string>
 
 class Orc: public Player{
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
-
 public:
-	Orc(std::string race);
+	Orc();
 	~Orc();
 
 	void getAttackedBy(Character &c);

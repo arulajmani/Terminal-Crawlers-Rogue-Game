@@ -8,7 +8,7 @@
 class Vampire: public Enemy {
 	const NormalHoard nh;
 
-
+	
 public:
 	Vampire();
 	~Vampire();

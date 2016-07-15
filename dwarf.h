@@ -5,12 +5,8 @@
 #include <string>
 
 class Dwarf: public Player{
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
-
 public:
-	Dwarf(std::string race);
+	Dwarf();
 	~Dwarf();
 
 	void getAttackedBy(Character &c);
