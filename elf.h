@@ -10,7 +10,7 @@ public:
 
 	void getAttackedBy(Character &c);
 	void attack(Character &c);
-	void pickItem(Potion &p)
+	void pickItem(Potion &p) override;
 };
 
 #endif
