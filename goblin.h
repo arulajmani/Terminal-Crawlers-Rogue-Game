@@ -5,9 +5,6 @@
 
 
 class Goblin: public Enemy {
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
 	const NormalHoard nh;
 
 

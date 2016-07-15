@@ -12,7 +12,8 @@ public:
 
 	void getPickedBy(Player &p);
 	int getValue();
+	virtual bool canPickup(); 
 
 };
 
-endif
+#endif

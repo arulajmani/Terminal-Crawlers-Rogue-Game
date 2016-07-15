@@ -3,15 +3,11 @@
 #include "enemy.h"
 
 class SubscriberDragon: public Enemy {
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
-
 public:
 	SubscriberDragon();
 	~SubscriberDragon();
 
-	void notify();
+	virtual void notify()=0;
 };
 
 #endif

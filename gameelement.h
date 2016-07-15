@@ -2,6 +2,18 @@
 #define _GAMEELEMENT_H_
 
 class GameElement {
-	const char elementType;
-	
-}
+	int xcoord; 
+	int ycoord;
+
+public:
+	GameElement();
+	~GameElement()=0;
+
+	int getX();
+	int getY();
+
+	void setX(int x);
+	void setY(int y);
+};
+
+#endif

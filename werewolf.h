@@ -5,9 +5,6 @@
 
 
 class Werewolf: public Enemy {
-	const int defaultHP;
-	const int defaultAt;
-	const int defaultDef;
 	const NormalHoard nh;
 
 

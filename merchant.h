@@ -4,10 +4,7 @@
 #include "merchanthoard.h"
 
 class Merchant: public Enemy {
-	static bool hostile
-	const int defaultHP;
-	const int defaultAtk;
-	const int defaultDef;
+	static bool hostile;
 	MerchantHoard merchantHoard;
 
 public:
