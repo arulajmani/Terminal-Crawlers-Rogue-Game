@@ -4,7 +4,7 @@
 
 class SubscriberDragon: public Enemy {
 public:
-	SubscriberDragon();
+	SubscriberDragon(int hp, int atk int def);
 	~SubscriberDragon();
 
 	virtual void notify()=0;

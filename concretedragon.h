@@ -1,12 +1,13 @@
 #ifndef _CONCDRAGON_H_
 #define _CONCDRAGON_H_
 #include "enemy.h"
+#include "subscriberdragon.h"
 
 class ConcreteDragonHoard;
 
-class ConcreteDragon: public Enemy {
+class ConcreteDragon: public SubscriberDragon {
 bool hostile;
-ConcreteDragonHoard dragonHoard;
+ConcreteDragonHoard* dragonHoard;
 public:
 	ConcreteDragon();
 	~ConcreteDragon();
