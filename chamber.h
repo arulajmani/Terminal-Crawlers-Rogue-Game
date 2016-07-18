@@ -10,8 +10,7 @@ public:
 	Chamber();
 	~Chamber();
 
-	void placeElement(GameElement *element);
-	std::pair<int, int> placeStairs(); // Returns the co-ordinates of the placed staircase
+	std::pair<int, int> placeElement();
 	std::pair<int,int> placeDragon(std::pair<int, int> goldCoords);
 
 };
