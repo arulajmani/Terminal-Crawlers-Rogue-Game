@@ -70,6 +70,9 @@ Factory::createEnemy(string enemyType) {
 	}
 	else if(enemyType == "g") {
 		newEnemy = make_shared<GameElement>(new Goblin());
+	} 
+	else if (enemyType = "w") {
+		newEnemy = make_shared<GameElement>(new Werewolf());
 	}
 	return newEnemy;
 }

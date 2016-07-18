@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Vampire::Vampire():Enemy(50, 25, 25){}
+Vampire::Vampire():Enemy(50, 25, 25, 'V'){}
 
 Vampire::~Vampire(){}
 

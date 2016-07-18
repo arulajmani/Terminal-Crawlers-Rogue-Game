@@ -2,22 +2,14 @@
 
 using namespace std; 
 
-GameElement::GameElement(): xcoord{-1} , ycoord{-1} {}
+GameElement::GameElement(): get<0>(coords){-1}, get<1>(coords){-1} {}
 GameElement::~GameElement() {}
 
-int GameElement::getX() {
-	return xcoord;
+pair<int, int> GameElement::getCoords() {
+	return coords;
 }
 
-int GameElement::getY() {
-	return ycoord;
+void GameElement::setCoords(pair<int, int> newCoords) {
+	get<0>(coords) = get<0>(newCoords);
+	get<1>(coords) = get<1>(newCoords);
 }
-
-void GameElement::setX(int x) {
-	xcoord = x;
-}
-
-void GameElement::setY(int y) {
-	ycoord = y;
-}
-

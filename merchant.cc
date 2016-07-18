@@ -4,7 +4,7 @@ using namespace std;
 
 Merchant::hostile = false;
 
-Merchant::Merchant(): Enemy(30, 70, 5){}
+Merchant::Merchant(): Enemy(30, 70, 5, 'M'){}
 
 Merchant::~Merchant(){}
 

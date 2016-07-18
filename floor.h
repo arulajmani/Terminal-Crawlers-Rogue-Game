@@ -14,15 +14,17 @@ const int numChambers = 5;
 
 class Floor {
 	const int floorNum;
-	char theBoard[numRows][numCols]
-	Player *myPlayer;
-	Gold *goldArr[numItems];
-	Potion *potionArry[numItems];
-	Enemy *enemyArr[numEnemies];
-	Chamber *chamberArr[numChambers];
+	char theBoard[numRows][numCols];
+	Factory factory;
+
+	std::shared_ptr<Player> myPlayer;
+	std::shared_ptr<Gold> goldArr[numItems];
+	std::shared_ptr<Potion> potionArr[numItems];
+	std::vector <std::shared_ptr<Enemy>> enemyVec;
+	std::shared_ptr<Chamber> chamberArr[numChambers];
 
 public:
-	Floor(int floorNum);
+	Floor(int floorNum, std::shared_ptr<Player> myPlayer);
 	~Floor();
 
 	void nextState();
@@ -31,7 +33,7 @@ public:
 
 	void spawnPlayer();
 	void spawnStairs(int playerChamber);
-	void spawnPotions();
+	void spawnPotion();
 	void spawnGold();
 	void spawnEnemies();
 
@@ -39,9 +41,9 @@ public:
 	void removeEnemy(int xcoord, int ycoord);
 	void removeGold(int xcoord, int ycoord);
 
-	Enemy* findEnemy(int xcoord, int ycoord) const;
-	Gold* findGold(int xcoord, int ycoord) const;
-	Potion* findPotion(int xcoord, int ycoord) const;
+	std::shared_ptr<Enemy> findEnemy(int xcoord, int ycoord) const;
+	std::shared_ptr<Gold> findGold(int xcoord, int ycoord) const;
+	std::shared_ptr<Potion> findPotion(int xcoord, int ycoord) const;
 };
 
 #endif

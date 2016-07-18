@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Phoenix::Phoenix(): Enemy(50, 35, 20){}
+Phoenix::Phoenix(): Enemy(50, 35, 20, 'P'){}
 
 Phoenix::~Phoenix(){}
 

@@ -7,14 +7,15 @@
 
 
 class Enemy: public class Character {
+	char displaySymbol;
 
 public:
-	Enemy(int hp, int atk, int def);
+	Enemy(int hp, int atk, int def, char displaySymbol);
 	~Enemy();
 	virtual bool isHostile();
 	virtual void whenDead(Player &p)=0; // To force giving of contained gold in enemy
 										// to player p
-
+	char displayDisplaySymbol();
 
 };
 

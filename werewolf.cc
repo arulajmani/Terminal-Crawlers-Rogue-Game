@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Werewolf::Werewolf(): Enemy(120, 30, 5){}
+Werewolf::Werewolf(): Enemy(120, 30, 5, 'W'){}
 
 Werewolf::~Werewolf(){}
 

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Troll::Troll(): Enemy(120, 25, 15){}
+Troll::Troll(): Enemy(120, 25, 15, 'T'){}
 
 Troll::~Troll(){}
 

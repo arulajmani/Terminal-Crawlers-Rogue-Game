@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Goblin::Goblin(): Enemy(70, 5, 10){}
+Goblin::Goblin(): Enemy(70, 5, 10, 'G'){}
 
 Goblin::~Goblin(){}
 
