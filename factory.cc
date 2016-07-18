@@ -75,7 +75,7 @@ Factory::createEnemy(string enemyType) {
 }
 
 
-Factory::creaeGold(string hoardType) {
+Factory::createGold(string hoardType) {
 	shared_ptr<GameElement> newGold = nullptr;
 
 	if(hoardType == "nh") {
