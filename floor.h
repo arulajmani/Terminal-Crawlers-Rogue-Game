@@ -15,6 +15,7 @@ const int numChambers = 5;
 class Floor {
 	const int floorNum;
 	char theBoard[numRows][numCols];
+	char defaultGrid[numRows][numCols]; // To help with movement and replacement of vacated position
 	Factory factory;
 
 	std::shared_ptr<Player> myPlayer;
@@ -40,6 +41,8 @@ public:
 	void removePotion(std::pair <int, int> coords);
 	void removeEnemy(std::pair <int, int> coords);
 	void removeGold(std::pair <int, int> coords);
+
+	void movePlayer(std::string direction);
 
 	std::shared_ptr<Enemy> findEnemy(std::pair <int, int> coords) const;
 	std::shared_ptr<Gold> findGold(std::pair <int, int> coords) const;

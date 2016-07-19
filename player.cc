@@ -59,3 +59,41 @@ virtual void pickItem(Potion &p) {
 	hp += p.getHPChange();
 	this->setHP(hp);
 }
+
+
+pair<int, int> checkMove(string direction) {
+	pair <int, int> checkCoords = this->getCoords();
+	if (direction == "no") {
+		get<0>(checkCoords) += 1;
+		get<1>(checkCoords) += 0;
+	}
+	if (direction == "so") {
+		get<0>(checkCoords) += -1;
+		get<1>(checkCoords) += 0;
+	}
+	if (direction == "ea") {
+		get<0>(checkCoords) += 0;
+		get<1>(checkCoords) += 1;
+	}
+	if (direction == "we") {
+		get<0>(checkCoords) += 0;
+		get<1>(checkCoords) += -1;
+	}
+	if (direction == "nw") {
+		get<0>(checkCoords) += 1;
+		get<1>(checkCoords) += -1;
+	}
+	if (direction == "ne") {
+		get<0>(checkCoords) += 1;
+		get<1>(checkCoords) += 1;
+	}
+	if (direction == "se") {
+		get<0>(checkCoords) += -1;
+		get<1>(checkCoords) += 1;
+	}
+	if (direction == "sw") {
+		get<0>(checkCoords) += -1;
+		get<1>(checkCoords) += -1;
+	}
+	return checkCoords;
+}

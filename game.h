@@ -13,6 +13,7 @@ public:
 
 	void init();
 	void createPlayer(std::string race);
+	void play();
 
 };
 

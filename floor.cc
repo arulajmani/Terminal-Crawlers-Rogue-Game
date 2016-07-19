@@ -93,6 +93,7 @@ void Floor::removePotion(pair <int, int> coords) {
 		if(potionVec[i]->getCoords() == coords) {
 			potionVec[i].reset();
 			potionVec.erase( potionVec.begin() + i ); // Remove the pointer from the vector as well.
+			theBoard[get<0>(coords)][get<1>(coords)] = '.'; // Board now displays a '.' where earlier there was a potion.
 		}
 	}
 }
@@ -103,6 +104,7 @@ void Floor::removeGold(pair <int, int> coords) {
 		if(goldVec[i]->getCoords() == coords) {
 			goldVec[i].reset();
 			goldVec.erase( goldVec.begin() + i ); // Remove the pointer from the vector as well.
+			theBoard[get<0>(coords)][get<1>(coords)] = '.';
 		}
 	}
 }
@@ -113,6 +115,7 @@ void Floor::removeEnemy(pair <int, int> coords) {
 		if(enemyVec[i]->getCoords() == coords) {
 			enemyVec[i].reset();
 			enemyVec.erase( enemyVec.begin() + i ); // Remove the pointer from the vector as well.
+			theBoard[get<0>(coords)][get<1>(coords)] = '.';
 		}
 	}
 }
@@ -145,5 +148,35 @@ shared_ptr<Gold> Floor::findGold(pair <int, int> coords) const {
 		}
 	}
 	return nullptr;
+}
+
+void Floor::movePlayer(string direction) {
+	pair <int, int> checkCoords = myPlayer->checkMove(direction);
+	char nextPos = theBoard[get<0>(checkCoords)] [get<1>(checkCoords)];
+	if(nextPos == '.' || nextPos == '+' || nextPos == '#' ) {
+		theBoard[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())] = defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())];
+		// Replace theBoard with default symbol at the vacated position.
+		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] == '@';
+		myPlayer->setCoords(checkCoords);
+	}
+	else if (nextPos == 'P' || nextPos == 'G') {
+		cout<<"Try picking up instead eh? gg"<<endl;
+	}
+	else if (nextPos == '-' || nextPos == '|') {
+		cout<< "Ooops watch where you're going eh? gg"<<endl;
+	}
+	else if (nextPos == '\\') {
+		if (floorNum != 5) {
+			cout << "On to the next floor there, eh? gg"<<endl;
+		}
+		else {
+			cout << "You're the man now, eh? gg"<<endl;
+			// Game ends
+		}
+		return;
+	}
+	else { // Enemy case
+		cout << "Moving ain't gonna cut it, try attacking eh? gg" <<endl;
+	}
 }
 

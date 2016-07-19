@@ -3,6 +3,7 @@
 
 #include "character.h"
 #include <string>
+#include <utility> 
 
 class Gold; // Include this shit in .cc
 class Potion;
@@ -25,6 +26,7 @@ public:
 	void setLevelDef(int levelDef);
 	void setGold(int value); // Perform computation in base classes, this will just update. (Allow removal of gold as well)
 	
+	std::pair<int, int> checkMove(std::string direction);
 	std::string getRace();
 	virtual void pickItem(Gold &g);
 	virtual void pickItem(Potion &p);
