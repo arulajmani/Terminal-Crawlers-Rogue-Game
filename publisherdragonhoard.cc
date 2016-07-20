@@ -22,7 +22,7 @@ bool PublisherDragonHoard::canPickup(){
 	}
 }
 
-void PublisherDragonHoard::notifyObservers(){
-	dragon->notify();
+void PublisherDragonHoard::notifyObservers(bool dragonHostile){
+	dragon->notify(dragonHostile);
 }
 
