@@ -25,6 +25,7 @@ class Floor {
 	std::shared_ptr<Chamber> chamberArr[numChambers];
 	std::pair<int, int> scanAttack(std::pair<int, int> coords);
 	void possibleMoves(std::pair<int, int> coords, std::vector<std::pair<int, int>> &possible)
+	void scanDragonHoards();
 
 public:
 	Floor(int floorNum, std::shared_ptr<Player> myPlayer);

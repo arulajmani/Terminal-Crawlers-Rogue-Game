@@ -5,7 +5,7 @@
 #include <string>
 #include <utility> 
 
-class Gold; // Include this shit in .cc
+class Gold; 
 class Potion;
 
 class Player: public class Character {

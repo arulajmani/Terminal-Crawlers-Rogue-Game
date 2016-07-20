@@ -63,6 +63,7 @@ void Floor::spawnGold() {
 
 		if (goldNum == 1) { // We created a dragon gold type, so we must spawn the dragon in this case!
 			enemyVec.emplace_back(factory.createEnemy("d"));
+			goldVec.back()->attach(enemyVec.back()); // attach the dragon to the hoard. 
 			do {
 				pair<int, int> dragonCoords = chamberArr[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
@@ -165,7 +166,7 @@ void Floor::movePlayer(string direction) {
 	}
 	else if (nextPos == 'G') {
 		auto g = findGold(checkCoords);
-		if (g.canPick) {
+		if (g.canPick()) {
 			g.getPickedBy(*myPlayer);
 			removeGold(checkCoords);
 		} else {
@@ -187,6 +188,20 @@ void Floor::movePlayer(string direction) {
 	}
 	else { // Enemy case
 		cout << "Moving ain't gonna cut it, try attacking eh? gg" <<endl;
+	}
+}
+
+void Floor::scanDragonHoards() {
+	int length = goldVec.size();
+	for (int i = 0; i < length; ++i) {
+		if (goldVec[i]->goldType() == 'd') {
+			pair<int, int> scannedCoords = scanAtack(goldVec[i]->getCoords());
+			bool DragonHostile = false;
+			if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
+				dragonHostile = true; // Player is in the vicinity. Dragon should be hostile. 
+			}
+			goldVec[i]->NotifyObservers(dragonHostile);
+		}
 	}
 }
 
@@ -222,6 +237,7 @@ void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possibl
 }
 
 void Floor::moveEnemy() {
+	scanDragonHoards(); // To reflect player movements in hostility of dragons.
 	for(int i = 0; i < numRows; ++i) {
 		for(int j = 0; j < numCols; ++i) {
 			for(int k = 0; k < 7; ++k) {
