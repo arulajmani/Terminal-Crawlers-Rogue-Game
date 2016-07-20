@@ -5,3 +5,7 @@ const int value = 2;
 
 SmallHoard::SmallHoard(): Gold{value} {}
 SmallHoard::~SmallHoard() {}
+
+SmallHoard::getPickedBy(Player &p) {
+	p.PickItem(*this);
+}

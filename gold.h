@@ -10,7 +10,6 @@ public:
 	Gold(int value);
 	~Gold()=0;
 
-	void getPickedBy(Player &p);
 	int getValue();
 	virtual bool canPickup(); 
 
