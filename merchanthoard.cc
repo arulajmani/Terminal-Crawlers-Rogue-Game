@@ -6,6 +6,6 @@ const int value = 4;
 MerchantHoard::MerchantHoard(): Gold{value} {}
 MerchantHoard::~MerchantHoard() {}
 
-MerchantHoard::getPickedBy(Player &p) {
+void MerchantHoard::getPickedBy(Player &p) {
 	p.PickItem(*this);
 }

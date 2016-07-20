@@ -8,6 +8,10 @@ bool ConcreteDragonHoard::getState(){
 	// need to figure out how board is working, check .h for more documentation
 }
 
-ConcreteDragonHoard::getPickedBy(Player &p) {
+void ConcreteDragonHoard::getPickedBy(Player &p) {
 	p.PickItem(*this);
+}
+
+char ConcreteDragonHoard::goldType() {
+	return 'd';
 }

@@ -6,6 +6,6 @@ const int value = 1;
 NormalHoard::NormalHoard(): Gold{value} {}
 NormalHoard::~NormalHoard() {}
 
-NormalHoard::getPickedBy(Player &p) {
+void NormalHoard::getPickedBy(Player &p) {
 	p.PickItem(*this);
 }

@@ -12,6 +12,7 @@ public:
 
 	int getValue();
 	virtual bool canPickup(); 
+	virtual char goldType();
 
 };
 
