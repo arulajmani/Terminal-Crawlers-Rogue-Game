@@ -7,6 +7,7 @@ using namespace std;
 string potionType[6] {"rh", "ba", "bd", "ph", "wa", "wd"};
 string enemyType[18] {"m", "m", "p", "p", "v", "v", "v", "t", "t", "g", "g", "g", "g", "g", "w", "w", "w", "w"};
 string goldType[8] {"dh", "sh", "sh",  "nh", "nh", "nh", "nh", "nh"};
+char allEnemies[7] = {'M', 'P', 'V', 'T', 'G', 'W', 'D'}
 
 
 Floor::Floor(int floorNum, shared_ptr<Player> myPlayer): floorNum{floorNum}, myPlayer{myPlayer} {}
@@ -180,3 +181,65 @@ void Floor::movePlayer(string direction) {
 	}
 }
 
+pair<int, int> Floor::scanAttack(pair<int, int> coords) {
+	int xcoord = get<0>(coords);
+	int ycoord = get<1>(coords);
+	pair <int, int> playerCoords {-1, -1}
+	for(int i = -1; i <= 1; ++i) {
+		for(int j = -1; j <= ++j) {
+			if (theBoard[xcoord + i][ycoord + j] == '@') {
+				get<0>(playerCoords) = xcoord + i;
+				get<1>(playerCoords) = ycoord + j;
+				return playerCoords;
+			}
+		}
+	}
+	return playerCoords;
+}
+
+void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possible) { // Fills up the vector
+	int xcoord = get<0>(coords);
+	int ycoord = get<1>(coords);
+	for(int i = -1; i <= 1; ++i) {
+		for(int j = -1; j <= ++j) {
+			if (theBoard[xcoord + i][ycoord + j] == '.') {
+				pair <int, int> moveCoords;
+				get<0>(moveCoords) = xcoord + i;
+				get<1>(moveCoords) = ycoord + j;
+				possible.emplace_back(moveCoords);
+			}
+		}
+	}
+}
+void Floor::moveEnemy() {
+	for(int i = 0; i < numRows; ++i) {
+		for(int j = 0; j < numCols; ++i) {
+			for(int k = 0; k < 7; ++k) {
+				if (theBoard[i][j] == allEnemies[k]) {
+					pair<int, int> enemyCoords{i, j};
+					auto foundEnemy = findEnemy(coords);
+					if (foundEnemy->isHostile()) {
+						pair<int, int> scannedCoords = scanAttack(enemyCoords);
+						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
+							... // Enemy must attack the player. Has to be implemented.
+							return; // Because then you do not want the enemy to move.
+						}
+					}
+					// Move the player now. 
+					vector<pair <int, int>> possible; 
+					possibleMoves(enemyCoords, possible) {
+						int length = possible.size();
+						int move = rand() % length;
+						if(theBoard[i][j] != 'D') {
+							foundEnemy->setCoords(possible[move]); // Move the enemy to new co-ordinates, randomly generated. 
+							theBoard[i][j] = defaultGrid[i][j]; // The vacated co-ordinates
+							theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
+						}
+
+					}
+				}
+			}
+
+		}
+	}
+}

@@ -6,7 +6,7 @@
 #include "factory.h"
 
 const int displayRows = 5;
-const int numRows = 25
+const int numRows = 25;
 const int numCols = 79;
 const int numItems = 10;
 const int numEnemies = 20;
@@ -23,6 +23,7 @@ class Floor {
 	std::vector <std::shared_ptr<Potion>> potionVec;
 	std::vector <std::shared_ptr<Enemy>> enemyVec;
 	std::shared_ptr<Chamber> chamberArr[numChambers];
+	std::pair<int, int> scanAttack(std::pair<int, int> coords);
 
 public:
 	Floor(int floorNum, std::shared_ptr<Player> myPlayer);
@@ -43,6 +44,10 @@ public:
 	void removeGold(std::pair <int, int> coords);
 
 	void movePlayer(std::string direction);
+	void moveEnemy();
+
+	// Still have to make pick Gold and pick potion.
+	// Attack and attacked by stuff
 
 	std::shared_ptr<Enemy> findEnemy(std::pair <int, int> coords) const;
 	std::shared_ptr<Gold> findGold(std::pair <int, int> coords) const;
