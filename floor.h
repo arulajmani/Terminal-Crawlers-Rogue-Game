@@ -47,10 +47,8 @@ public:
 
 	void movePlayer(std::string direction);
 	void moveEnemy();
+	void playerAttack(std::string direction);
 	void pickPotion(std::string direction);
-
-	// Still have to make pick Gold and pick potion.
-	// Attack and attacked by stuff
 
 	std::shared_ptr<Enemy> findEnemy(std::pair <int, int> coords) const;
 	std::shared_ptr<Gold> findGold(std::pair <int, int> coords) const;

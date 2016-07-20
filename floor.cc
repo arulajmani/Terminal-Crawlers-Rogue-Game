@@ -2,6 +2,8 @@
 #include <utility>
 #include <string> 
 
+// Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
+
 using namespace std;
 
 string potionType[6] {"rh", "ba", "bd", "ph", "wa", "wd"};
@@ -247,7 +249,17 @@ void Floor::moveEnemy() {
 					if (foundEnemy->isHostile()) {
 						pair<int, int> scannedCoords = scanAttack(enemyCoords);
 						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
-							... // Enemy must attack the player. Has to be implemented.
+							int hitMiss = rand() % 2;
+							if (hitMiss) {
+								foundEnemy.attack(*myPlayer);
+								cout << "The enemy hit the player. _____ Damage has been dealt." << endl;
+							} else {
+								cout << " The enemy tried to attack, but he missed." << endl; // Give desc. of type of enemy.
+							}
+							if (myPlayer->getHP() == 0) {
+								cout << "Game over." << endl;
+								// Game over.
+							}
 							return; // Because then you do not want the enemy to move.
 						}
 					}
@@ -278,4 +290,18 @@ void Floor::pickPotion(string direction) {
 	} else {
 		cout << "Try picking a potion next time, eh? gg." << endl; 
  	}
+}
+
+void Floor::playerAttack(string direction) {
+	pair<int, int> enemyCoords = myPlayer->checkMove(direction);
+	if (findEnemy(enemyCoords)) {
+		auto foundEnemy = findEnemy(enemyCoords);
+		myPlayer->attack(*foundEnemy);
+		if (foundEnemy->getHP() == 0) {
+			foundEnemy->whenDead(*myPlayer);
+			removeEnemy(enemyCoords);
+		}
+	} else {
+		cout << " You missed." <<endl;
+	}
 }

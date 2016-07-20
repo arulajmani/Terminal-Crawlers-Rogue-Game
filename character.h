@@ -22,8 +22,7 @@ public:
 	void setAtk(int atk);
 	void setDef(int def);
 
-	virtual void getAttackedBy(Character &c)=0;
-	virtual void attack(Character &c)=0;
+	virtual void attack(Character &c);
 
 };
 
