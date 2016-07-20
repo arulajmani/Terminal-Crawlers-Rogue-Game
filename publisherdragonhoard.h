@@ -12,7 +12,7 @@ public:
 	virtual ~PublisherDragonHoard()=0;
 
 	void attach(SubscriberDragon *subDragon);
-	void notifyObservers();
+	void notifyObservers(bool dragonHostile);
 	void detatchObservers(); // Once the dragon is destroyed, must detach to make the pointer null.
 	bool canPickup(); // Check if the dragon pointer is null, only then can be picked up
 };

@@ -14,13 +14,8 @@ ConcreteDragon::~ConcreteDragon() {
 	dragonHoard->detatch(this);
 }
 
-void ConcreteDragon::notify(){
-	if(dragonHoard->getState()){
-		hostile = true;
-	}
-	else{
-		hostile = false;
-	}
+void ConcreteDragon::notify(bool dragonHostile){
+	hostile = dragonHostile;
 }
 
 bool ConcreteDragon::isHostile(){

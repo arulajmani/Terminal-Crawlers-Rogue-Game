@@ -4,9 +4,9 @@ ConcreteDragonHoard::ConcreteDragonHoard(){}
 
 ConcreteDragonHoard::~ConcreteDragonHoard(){}
 
-bool ConcreteDragonHoard::getState(){
+/*bool ConcreteDragonHoard::getState(){
 	// need to figure out how board is working, check .h for more documentation
-}
+}*/
 
 void ConcreteDragonHoard::getPickedBy(Player &p) {
 	p.PickItem(*this);

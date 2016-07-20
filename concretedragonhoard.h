@@ -8,7 +8,7 @@ class ConcreteDragonHoard {
 	~ConcreteDragonHoard();
 public:
 	void getPickedBy(Player &p);
-	bool getState(); // To check if the player is within one step of the haord
+	//bool getState(); // To check if the player is within one step of the haord
 	// Will be used in isHostile of the dragon.
 
 };

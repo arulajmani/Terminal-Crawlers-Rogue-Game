@@ -12,7 +12,7 @@ public:
 	ConcreteDragon();
 	~ConcreteDragon();
 
-	void notify(); // Sets hostile to isHostile
+	void notify(bool dragonHostile); // Sets hostile to isHostile
 	bool isHostile();
 };
 
