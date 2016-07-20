@@ -7,3 +7,7 @@ const int defChange = 5;
 BD::BD():Potion(hpChange, atkChange, defChange){}
 
 BD::~BD(){}
+
+void BD::getPickedBy(Player &p) {
+	p.pickItem(*this);
+}

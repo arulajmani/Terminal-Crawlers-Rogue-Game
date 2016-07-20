@@ -5,6 +5,8 @@ class WD: public Potion {
 public:
 	WD();
 	~WD();
+
+	void getPickedBy(Player &p);
 };
 
 #endif

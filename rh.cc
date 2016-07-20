@@ -7,3 +7,7 @@ const int defChange = 0;
 RH::RH():Potion(hpChange, atkChange, defChange){}
 
 RH::~RH(){}
+
+void RH::getPickedBy(Player &p) {
+	p.pickItem(*this);
+}
