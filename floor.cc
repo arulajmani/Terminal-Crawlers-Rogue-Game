@@ -160,8 +160,17 @@ void Floor::movePlayer(string direction) {
 		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] == '@';
 		myPlayer->setCoords(checkCoords);
 	}
-	else if (nextPos == 'P' || nextPos == 'G') {
+	else if (nextPos == 'P') {
 		cout<<"Try picking up instead eh? gg"<<endl;
+	}
+	else if (nextPos == 'G') {
+		auto g = findGold(checkCoords);
+		if (g.canPick) {
+			g.getPickedBy(*myPlayer);
+			removeGold(checkCoords);
+		} else {
+			cout << "The dragon gets angrier. gg"<<endl;
+		}
 	}
 	else if (nextPos == '-' || nextPos == '|') {
 		cout<< "Ooops watch where you're going eh? gg"<<endl;
@@ -211,6 +220,7 @@ void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possibl
 		}
 	}
 }
+
 void Floor::moveEnemy() {
 	for(int i = 0; i < numRows; ++i) {
 		for(int j = 0; j < numCols; ++i) {
@@ -242,4 +252,14 @@ void Floor::moveEnemy() {
 
 		}
 	}
+}
+
+void Floor::pickPotion(string direction) {
+	pair<int, int> tentativePotion = myPlayer->checkMove(direction);
+	if (findPotion(tentativePotion)) {
+		findPotion(tentativePotion)->getPickedBy(*myPlayer);
+		removePotion(tentativePotion); // Display which potion you used, do this in potion class.
+	} else {
+		cout << "Try picking a potion next time, eh? gg." << endl; 
+ 	}
 }

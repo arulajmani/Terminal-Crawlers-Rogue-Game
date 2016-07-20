@@ -24,6 +24,7 @@ class Floor {
 	std::vector <std::shared_ptr<Enemy>> enemyVec;
 	std::shared_ptr<Chamber> chamberArr[numChambers];
 	std::pair<int, int> scanAttack(std::pair<int, int> coords);
+	void possibleMoves(std::pair<int, int> coords, std::vector<std::pair<int, int>> &possible)
 
 public:
 	Floor(int floorNum, std::shared_ptr<Player> myPlayer);
@@ -45,6 +46,7 @@ public:
 
 	void movePlayer(std::string direction);
 	void moveEnemy();
+	void pickPotion(std::string direction);
 
 	// Still have to make pick Gold and pick potion.
 	// Attack and attacked by stuff
