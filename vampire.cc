@@ -1,8 +1,11 @@
 #include "vampire.h"
 
 using namespace std;
+const int hp = 50;
+const int atk = 25;
+const int def = 25;
 
-Vampire::Vampire():Enemy(50, 25, 25, 'V'){}
+Vampire::Vampire():Enemy(hp, atk, def, 'V'){}
 
 Vampire::~Vampire(){}
 

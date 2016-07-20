@@ -1,8 +1,11 @@
 #include "troll.h"
 
 using namespace std;
+const int hp = 120;
+const int atk = 25;
+const int def = 15;
 
-Troll::Troll(): Enemy(120, 25, 15, 'T'){}
+Troll::Troll(): Enemy(hp, atk, def,'T'){}
 
 Troll::~Troll(){}
 

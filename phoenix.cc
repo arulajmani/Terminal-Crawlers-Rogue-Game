@@ -2,7 +2,11 @@
 
 using namespace std;
 
-Phoenix::Phoenix(): Enemy(50, 35, 20, 'P'){}
+const int hp = 50;
+const int atk = 35;
+const int def = 20;
+
+Phoenix::Phoenix(): Enemy(hp, atk, def, 'P'){}
 
 Phoenix::~Phoenix(){}
 

@@ -2,7 +2,11 @@
 
 using namespace std;
 
-Werewolf::Werewolf(): Enemy(120, 30, 5, 'W'){}
+const int hp = 120;
+const int atk = 30;
+const int def = 5;
+
+Werewolf::Werewolf(): Enemy(hp, atk, def, 'W'){}
 
 Werewolf::~Werewolf(){}
 

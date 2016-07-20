@@ -2,7 +2,11 @@
 
 using namespace std;
 
-Goblin::Goblin(): Enemy(70, 5, 10, 'G'){}
+const int hp = 70;
+const int atk = 5;
+const int def = 10;
+
+Goblin::Goblin(): Enemy(hp, atk, def, 'G'){}
 
 Goblin::~Goblin(){}
 

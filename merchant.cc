@@ -1,10 +1,13 @@
 #include "merchant.h"
 
 using namespace std;
+const int hp = 30;
+const int atk = 70;
+const int def = 5;
 
 Merchant::hostile = false;
 
-Merchant::Merchant(): Enemy(30, 70, 5, 'M'){}
+Merchant::Merchant(): Enemy(hp, atk, def, 'M'){}
 
 Merchant::~Merchant(){}
 
