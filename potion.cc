@@ -4,13 +4,11 @@
 Potion::Potion(int atkChange, int defChange, int hpChange): atkChange{atkChange}, defChange{defChange}, hpChange{hpChange} {}
 
 
-void getPickedBy(Player &p) {
-	p.pickItem(*this);
-}
 
 
-int getAtkChange() { return atkChange; }
-int getDefChange() { return defChange; }
-int getHPChange() { return hpChange; }
+
+int Potion::getAtkChange() { return atkChange; }
+int Potion::getDefChange() { return defChange; }
+int Potion::getHPChange() { return hpChange; }
 
 

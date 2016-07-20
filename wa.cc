@@ -7,3 +7,7 @@ const int defChange = 0;
 WA::WA():Potion(hpChange, atkChange, defChange){}
 
 WA::~WA(){}
+
+void WA::getPickedBy(Player &p) {
+	p.pickItem(*this);
+}

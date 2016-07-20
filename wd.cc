@@ -7,3 +7,7 @@ const int defChange = -5;
 WD::WD():Potion(hpChange, atkChange, defChange){}
 
 WD::~WD(){}
+
+void WD::getPickedBy(Player &p) {
+	p.pickItem(*this);
+}

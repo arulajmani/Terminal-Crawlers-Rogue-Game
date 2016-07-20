@@ -12,7 +12,6 @@ public:
 	Potion(int atkChange, int defChange, int hpChange);
 	~Potion()=0;
 
-	void getPickedBy(Player &p);
 	int getAtkChange();
 	int getDefChange();
 	int getHPChange();
