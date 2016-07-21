@@ -11,7 +11,7 @@ ConcreteDragonHoard* dragonHoard;
 public:
 	ConcreteDragon();
 	~ConcreteDragon();
-
+	void whenDead(Player &p);
 	void notify(bool dragonHostile); // Sets hostile to isHostile
 	bool isHostile();
 };

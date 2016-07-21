@@ -1,10 +1,10 @@
 #ifndef _FACTORY_H_
 #define _FACTORY_H_ // Might make sense to move all these header files to the .cc
 #include <string>
-#include "gamelement.h"
+#include "gameelement.h"
 #include "enemy.h"
 #include "werewolf.h"
-#include "pheonix.h"
+#include "phoenix.h"
 #include "concretedragon.h"
 #include "troll.h"
 #include "goblin.h"
@@ -38,10 +38,10 @@ public:
 	Factory();
 	~Factory();
 
-	Player* createPlayer(std::string race);
-	GameElement* createPotion(std::string potionType);
-	GameElement* createGold(std::string hoardType);
-	GameElement* createEnemy(std::string enemyType);
+	std::shared_ptr<GameElement> createPlayer(std::string race);
+	std::shared_ptr<GameElement> createPotion(std::string potionType);
+	std::shared_ptr<GameElement> createGold(std::string hoardType);
+	std::shared_ptr<GameElement> createEnemy(std::string enemyType);
 	
 };
 

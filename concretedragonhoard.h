@@ -4,9 +4,9 @@
 #include "player.h"
 
 class ConcreteDragonHoard {
+public:
 	ConcreteDragonHoard();
 	~ConcreteDragonHoard();
-public:
 	void getPickedBy(Player &p);
 	void detatchObservers();
 	//bool getState(); // To check if the player is within one step of the haord
