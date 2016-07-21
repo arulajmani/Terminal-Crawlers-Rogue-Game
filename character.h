@@ -11,7 +11,7 @@ class Character: public GameElement {
 
 public:
 	Character(int hp, int atk, int def);
-	~Character();
+	virtual ~Character() = 0;
 
 	int getHP() const;
 	int getAtk() const;

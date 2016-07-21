@@ -8,9 +8,6 @@ class Human: public Player{
 public:
 	Human();
 	~Human();
-
-	void getAttackedBy(Character &c);
-	void attack(Character &c);
 };
 
 #endif

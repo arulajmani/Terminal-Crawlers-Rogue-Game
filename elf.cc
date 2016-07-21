@@ -8,7 +8,7 @@ const int defaultDef = 10;
 Elf::Elf(): Player{"Elf", defaultHP, defaultDef, defaultAtk} {}
 Elf::~Elf() {}
 
-void Elf::pickItem(Potion &p) override {
+void Elf::pickItem(Potion &p) {
 	if (p.getAtkChange() < 0) { // Reverse effect if it was negative (make it position)
 		int levelAtk = this->getLevelAtk() - p.getAtkChange();
 		this->setLevelAtk(levelAtk);

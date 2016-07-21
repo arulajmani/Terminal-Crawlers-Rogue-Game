@@ -3,14 +3,15 @@
 
 #include "player.h"
 #include <string>
+#include "gold.h"
 
 class Dwarf: public Player{
 public:
 	Dwarf();
 	~Dwarf();
 
-	void getAttackedBy(Character &c);
-	void attack(Character &c);
+	/*void getAttackedBy(Character &c);
+	void attack(Character &c);*/
 	void pickItem(Gold &g) override;
 
 };
