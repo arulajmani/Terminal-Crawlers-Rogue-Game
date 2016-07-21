@@ -5,6 +5,6 @@ Gold::Gold(int value): value{value} {}
 
 int Gold::getValue() { return value; }
 
-virtual bool Gold::canPickup() { return true; }
+bool Gold::canPickup() { return true; }
 
-virtual char Gold::goldType() { return 'o'; }
+char Gold::goldType() { return 'o'; }

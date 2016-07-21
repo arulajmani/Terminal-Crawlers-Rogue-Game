@@ -5,6 +5,8 @@
 
 class Item {
 public:
+	Item();
+	~Item();
 	virtual void getPickedBy(Player &p)=0;
 };
 
