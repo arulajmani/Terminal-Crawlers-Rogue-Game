@@ -4,8 +4,9 @@
 #include "player.h"
 
 class Item:public GameElement {
+	std::string itemName;
 public:
-	Item();
+	Item(std::string name);
 	~Item();
 	virtual void getPickedBy(Player &p)=0;
 };

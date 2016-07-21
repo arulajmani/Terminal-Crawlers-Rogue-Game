@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 	if (input == "q") {
 		return;
 	}
-	game->createPlayer()
+	game->createPlayer(input);
 	game->init(filePresent, floorPlan);
 	instructions();
 	cout << "Here is the starting board"<<endl;

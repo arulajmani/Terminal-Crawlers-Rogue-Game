@@ -1,7 +1,7 @@
 #include "gold.h"
 using namespace std;
 
-Gold::Gold(int value): value{value} {}
+Gold::Gold(int value, string itemName): Item{itemName} value{value} {}
 
 int Gold::getValue() { return value; }
 

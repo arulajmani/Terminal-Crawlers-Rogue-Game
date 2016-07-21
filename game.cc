@@ -1,10 +1,12 @@
 #include "game.h"
 
-Game::Game(int level): floorNum{0} {} 
+Game::Game(int level): floorNum{0} myPlayer{nullptr} {
+	view = make_shared<View>();
+} 
 Game::~Game() {}
 
 void Game::Display() {
-	floor->display();
+	view->display();
 }
 
 void Game::init(bool filePresent,char *floorPlan) {
@@ -12,5 +14,9 @@ void Game::init(bool filePresent,char *floorPlan) {
 	if (floorNum == 6) {
 		// Print victory stuff. 
 	}
-	floor = new Floor{floorNum, myPlayer, floorNum, filePresent, floorPlan};
+	floor = new Floor{floorNum, myPlayer, floorNum, filePresent, floorPlan, view};
+}
+
+void Game::createPlayer(std::string race) {
+	myPlayer = factory.createPlayer(race);
 }

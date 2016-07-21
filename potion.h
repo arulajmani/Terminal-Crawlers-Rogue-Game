@@ -9,7 +9,7 @@ class Potion: public Item{
 	const int hpChange;
 
 public:
-	Potion(const int atkChange, const int defChange, const int hpChange);
+	Potion(const int atkChange, const int defChange, const int hpChange, std::string itemName);
 	virtual ~Potion()=0;
 
 	int getAtkChange();

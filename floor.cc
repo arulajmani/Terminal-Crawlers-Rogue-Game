@@ -12,7 +12,7 @@ string goldType[8] {"dh", "sh", "sh",  "nh", "nh", "nh", "nh", "nh"};
 char allEnemies[7] = {'M', 'X', 'V', 'T', 'N', 'W', 'D'};
 
 
-Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan): floorNum{floorNum}, myPlayer{myPlayer}  filePresent {filePresent} floorPlan{floorPlan} {
+Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}  filePresent {filePresent} floorPlan{floorPlan} view{view}{
 	try {
 		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);
@@ -136,6 +136,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 				goldVec[i]->attach(dragon);
 			}
 		}
+		view->setBoard(theBoard);
 		if(!(filePresent)) { // Must have random generation.
 			spawnPlayer();
 		}
@@ -163,21 +164,12 @@ pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 }
 
 
-void Floor::display() {
-	for(int i = 0; i < numRows; ++i) {
-		for(int j = 0; j < numCols; ++j) {
-			cout << theBoard[i][j];
-		}
-		cout<<endl;
-	}
-}
-
 void Floor::spawnPlayer() {
-	// Assuming there is an srand() before.
 	int chamberNum = rand() % 5;
 	pair <int, int> playerCoords = chamberArr[chamberNum]->placeElement();
 	myPlayer->setCoords(playerCoords);
 	theBoard [get<0>(playerCoords)] [get<1>(playerCoords)] = '@';
+	view->updateAt(playerCoords, '@');
 	spawnStairs(chamberNum);
 }
 
@@ -188,6 +180,7 @@ void Floor::spawnStairs(int chamberNum) {
 	}
 	pair<int, int> stairCoords = chamberArr[stairNum]->placeElement();
 	theBoard [get<0>(stairCoords)] [get<1>(stairCoords)] = '\\';
+	view->updateAt(stairCoords, '\\');
 	spawnPotions();
 }
 
@@ -203,6 +196,7 @@ void Floor::spawnPotions() {
 
 		potionVec.back()->setCoords(potionCoords);
 		theBoard [get<0>(potionCoords)] [get<1>(potionCoords)] = 'P';
+		view->updateAt(potionCoords, 'P');
 	}
 	spawnGold();
 }
@@ -219,7 +213,7 @@ void Floor::spawnGold() {
 
 		goldVec.back()->setCoords(goldCoords);
 		theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] = 'G';
-
+		view->updateAt(goldCoords, 'G');
 		if (goldNum == 1) { // We created a dragon gold type, so we must spawn the dragon in this case!
 			enemyVec.emplace_back(factory.createEnemy("d"));
 			goldVec.back()->attach(enemyVec.back()); // attach the dragon to the hoard. 
@@ -227,6 +221,7 @@ void Floor::spawnGold() {
 				pair<int, int> dragonCoords = chamberArr[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
 			theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] = 'D';
+			view->updateAt(dragonCoords, 'D');
 		}
 	}
 	spawnEnemies();
@@ -245,6 +240,7 @@ void Floor::spawnEnemies() {
 
 		enemyVec.back()->setCoords(enemyCoords);
 		theBoard [get<0>(enemyCoords)] [get<1>(enemyCoords)] = enemyVec.back()->displayDisplaySymbol();
+		view->updateAt(enemyCoords, theBoard[get<0>(enemyCoords)][get<1>(enemyCoords)]);
 	}
 }
 
@@ -255,6 +251,7 @@ void Floor::removePotion(pair <int, int> coords) {
 			potionVec[i].reset();
 			potionVec.erase( potionVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.'; // Board now displays a '.' where earlier there was a potion.
+			view->updateAt(coords, '.');
 		}
 	}
 }
@@ -266,6 +263,7 @@ void Floor::removeGold(pair <int, int> coords) {
 			goldVec[i].reset();
 			goldVec.erase( goldVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.';
+			view->updateAt(coords, '.');
 		}
 	}
 }
@@ -277,6 +275,7 @@ void Floor::removeEnemy(pair <int, int> coords) {
 			enemyVec[i].reset();
 			enemyVec.erase( enemyVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.';
+			view->updateAt(coords, '.');
 		}
 	}
 }
@@ -316,8 +315,10 @@ void Floor::movePlayer(string direction) {
 	char nextPos = theBoard[get<0>(checkCoords)] [get<1>(checkCoords)];
 	if(nextPos == '.' || nextPos == '+' || nextPos == '#' ) {
 		theBoard[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())] = defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())];
+		view->updateAt(myPlayer->getCoords(), defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())]); // Update previous coords as default coords in view.
 		// Replace theBoard with default symbol at the vacated position.
-		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] == '@';
+		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
+		view->updateAt(checkCoords, '@');
 		myPlayer->setCoords(checkCoords);
 	}
 	else if (nextPos == 'P') {
@@ -428,7 +429,9 @@ void Floor::moveEnemy() {
 						if(theBoard[i][j] != 'D') {
 							foundEnemy->setCoords(possible[move]); // Move the enemy to new co-ordinates, randomly generated. 
 							theBoard[i][j] = defaultGrid[i][j]; // The vacated co-ordinates
+							view->updateAt(pair<int, int> {i, j}, defaultGrid[i][j]);
 							theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
+							view->updateAt(possible[move], foundEnemy->displayDisplaySymbol());
 						}
 					}
 				}

@@ -3,7 +3,7 @@
 
 const int goldValue = 8;
 
-PublisherDragonHoard::PublisherDragonHoard():Gold(goldValue), dragon{nullptr}{}
+PublisherDragonHoard::PublisherDragonHoard():Gold(goldValue, "Dragon Hoard"), dragon{nullptr}{}
 
 PublisherDragonHoard::~PublisherDragonHoard(){}
 
