@@ -6,14 +6,17 @@
 
 class Game {
 	Floor *floor;
+	std::shared_ptr <Player>myPlayer;
+	int floorNum;
 
 public:
 	Game();
 	~Game();
 
-	void init();
+	void init(bool filePresent, char *floorPlan);
 	void createPlayer(std::string race);
 	void play();
+	void display();
 
 };
 

@@ -49,6 +49,8 @@ public:
 	void moveEnemy();
 	void playerAttack(std::string direction);
 	void pickPotion(std::string direction);
+	
+	void display();
 
 	std::shared_ptr<Enemy> findEnemy(std::pair <int, int> coords) const;
 	std::shared_ptr<Gold> findGold(std::pair <int, int> coords) const;

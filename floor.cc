@@ -9,11 +9,20 @@ using namespace std;
 string potionType[6] {"rh", "ba", "bd", "ph", "wa", "wd"};
 string enemyType[18] {"m", "m", "p", "p", "v", "v", "v", "t", "t", "g", "g", "g", "g", "g", "w", "w", "w", "w"};
 string goldType[8] {"dh", "sh", "sh",  "nh", "nh", "nh", "nh", "nh"};
-char allEnemies[7] = {'M', 'P', 'V', 'T', 'G', 'W', 'D'}
+char allEnemies[7] = {'M', 'P', 'V', 'T', 'G', 'W', 'D'};
 
 
 Floor::Floor(int floorNum, shared_ptr<Player> myPlayer): floorNum{floorNum}, myPlayer{myPlayer} {}
 Floor::~Floor() {}
+
+void Floor::display() {
+	for(int i = 0; i < numRows; ++i) {
+		for(int j = 0; j < numCols; ++j) {
+			cout << theBoard[i][j];
+		}
+		cout<<endl;
+	}
+}
 
 void Floor::spawnPlayer() {
 	// Assuming there is an srand() before.
@@ -273,7 +282,6 @@ void Floor::moveEnemy() {
 							theBoard[i][j] = defaultGrid[i][j]; // The vacated co-ordinates
 							theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
 						}
-
 					}
 				}
 			}
