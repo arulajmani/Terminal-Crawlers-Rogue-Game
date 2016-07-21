@@ -5,7 +5,6 @@
 class SubscriberDragon;
 
 class PublisherDragonHoard : public Gold  {
-	const value = 8;
 	SubscriberDragon *dragon; // There always has to be one dragon, so not a vector
 public: 
 	PublisherDragonHoard();

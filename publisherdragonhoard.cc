@@ -1,7 +1,9 @@
-#include publisherdragonhoard.h
-#include subscriberdragon.h
+#include "publisherdragonhoard.h"
+#include "subscriberdragon.h"
 
-PublisherDragonHoard::PublisherDragonHoard():Gold(value), dragon{nullptr}{}
+const int goldValue = 8;
+
+PublisherDragonHoard::PublisherDragonHoard():Gold(goldValue), dragon{nullptr}{}
 
 PublisherDragonHoard::~PublisherDragonHoard(){}
 

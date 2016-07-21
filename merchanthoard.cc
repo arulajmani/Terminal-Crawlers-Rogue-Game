@@ -1,11 +1,11 @@
 #include "merchanthoard.h" 
 using namespace std;
 
-const int value = 4;
+const int goldValue  = 4;
 
-MerchantHoard::MerchantHoard(): Gold{value} {}
+MerchantHoard::MerchantHoard(): Gold{goldValue } {}
 MerchantHoard::~MerchantHoard() {}
 
 void MerchantHoard::getPickedBy(Player &p) {
-	p.PickItem(*this);
+	p.pickItem(*this);
 }

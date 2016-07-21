@@ -1,11 +1,11 @@
 #include "smallhoard.h" 
 using namespace std;
 
-const int value = 2;
+const int goldValue = 2;
 
-SmallHoard::SmallHoard(): Gold{value} {}
+SmallHoard::SmallHoard(): Gold{goldValue} {}
 SmallHoard::~SmallHoard() {}
 
 void SmallHoard::getPickedBy(Player &p) {
-	p.PickItem(*this);
+	p.pickItem(*this);
 }

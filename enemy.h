@@ -6,7 +6,7 @@
 #include <string>
 
 
-class Enemy: public class Character {
+class Enemy: public Character {
 	char displaySymbol;
 
 public:

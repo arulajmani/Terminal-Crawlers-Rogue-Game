@@ -1,11 +1,11 @@
 #include "normalhoard.h" 
 using namespace std;
 
-const int value = 1;
+const int goldValue  = 1;
 
-NormalHoard::NormalHoard(): Gold{value} {}
+NormalHoard::NormalHoard(): Gold{goldValue } {}
 NormalHoard::~NormalHoard() {}
 
 void NormalHoard::getPickedBy(Player &p) {
-	p.PickItem(*this);
+	p.pickItem(*this);
 }

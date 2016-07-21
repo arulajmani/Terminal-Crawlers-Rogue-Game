@@ -8,7 +8,7 @@ class Gold: public Item{
 
 public:
 	Gold(int value);
-	~Gold()=0;
+	virtual ~Gold()=0;
 
 	int getValue();
 	virtual bool canPickup(); 

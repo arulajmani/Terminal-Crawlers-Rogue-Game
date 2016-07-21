@@ -4,10 +4,10 @@
 
 class SubscriberDragon: public Enemy {
 public:
-	SubscriberDragon(int hp, int atk int def);
+	SubscriberDragon(int hp, int atk, int def);
 	~SubscriberDragon();
 
-	virtual void notify()=0;
+	virtual void notify(bool dragonHostile)=0;
 };
 
 #endif
