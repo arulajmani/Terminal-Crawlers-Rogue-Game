@@ -17,6 +17,8 @@ class Floor {
 	char theBoard[numRows][numCols];
 	char defaultGrid[numRows][numCols]; // To help with movement and replacement of vacated position
 	Factory factory;
+	bool filePresent;
+	char *floorPlan;
 
 	std::shared_ptr<Player> myPlayer;
 	std::vector <std::shared_ptr<Gold>> goldVec;
@@ -26,9 +28,10 @@ class Floor {
 	std::pair<int, int> scanAttack(std::pair<int, int> coords);
 	void possibleMoves(std::pair<int, int> coords, std::vector<std::pair<int, int>> &possible)
 	void scanDragonHoards();
+	pair<int, int> scanDragon(pair<int, int> coords);
 
 public:
-	Floor(int floorNum, std::shared_ptr<Player> myPlayer);
+	Floor(int floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan);
 	~Floor();
 
 	void nextState();
@@ -49,7 +52,7 @@ public:
 	void moveEnemy();
 	void playerAttack(std::string direction);
 	void pickPotion(std::string direction);
-	
+
 	void display();
 
 	std::shared_ptr<Enemy> findEnemy(std::pair <int, int> coords) const;
