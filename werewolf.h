@@ -7,16 +7,13 @@
 
 
 class Werewolf: public Enemy {
-	const NormalHoard nh;
+	NormalHoard nh;
 
 
 
 public:
 	Werewolf();
 	~Werewolf();
-
-	void getAttackedBy(Character &c); // Would always be a player
-	void attack(Character &c);
 	void whenDead(Player &p);
 
 

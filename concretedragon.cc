@@ -3,15 +3,15 @@
 
 using namespace std;
 
-const int hp = 150;
-const int atk = 20;
-const int def = 20;
+const int hpVal = 150;
+const int atkVal = 20;
+const int defVal = 20;
 
-ConcreteDragon::ConcreteDragon(): SubscriberDragon(hp, atk, def), hostile{false}, dragonHoard{nullptr}{
+ConcreteDragon::ConcreteDragon(): SubscriberDragon(hpVal, atkVal, defVal), hostile{false}, dragonHoard{nullptr}{
 }
 
 ConcreteDragon::~ConcreteDragon() {
-	dragonHoard->detatch(this);
+	dragonHoard->detatchObservers();
 }
 
 void ConcreteDragon::notify(bool dragonHostile){

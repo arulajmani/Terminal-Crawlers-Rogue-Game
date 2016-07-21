@@ -7,7 +7,7 @@
 
 class Merchant: public Enemy {
 	static bool hostile;
-	const MerchantHoard merchantHoard;
+	MerchantHoard merchantHoard;
 
 public:
 	Merchant();
@@ -15,8 +15,6 @@ public:
 
 	bool isHostile();
 	void makeHostile(); // Flips the static hostile field. Must be called first time the player attacks any merchant. 
-	void getAttackedBy(Character &c); // Would always be a player
-	void attack(Character &c);
 	void whenDead(Player &p);
 
 };

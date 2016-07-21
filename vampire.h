@@ -6,15 +6,12 @@
 #include "player.h"
 
 class Vampire: public Enemy {
-	const NormalHoard nh;
+	NormalHoard nh;
 
 	
 public:
 	Vampire();
 	~Vampire();
-
-	void getAttackedBy(Character &c); // Would always be a player
-	void attack(Character &c);
 	void whenDead(Player &p);
 
 

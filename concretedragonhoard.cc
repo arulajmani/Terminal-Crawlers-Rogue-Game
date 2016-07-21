@@ -15,3 +15,7 @@ void ConcreteDragonHoard::getPickedBy(Player &p) {
 char ConcreteDragonHoard::goldType() {
 	return 'd';
 }
+
+void ConcreteDragonHoard::detatchObservers(){
+	dragon = nullptr;
+}

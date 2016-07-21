@@ -11,9 +11,6 @@ void PublisherDragonHoard::attach(SubscriberDragon* subDragon){
 	dragon = subDragon;
 }
 
-void PublisherDragonHoard::detatchObservers(){
-	dragon = nullptr;
-}
 
 bool PublisherDragonHoard::canPickup(){
 	if(dragon == nullptr){
