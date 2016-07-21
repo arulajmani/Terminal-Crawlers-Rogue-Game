@@ -38,21 +38,21 @@ string Player::getRace() {
 	return race;
 }
 
-virtual void Player::pickItem(Gold &g) {
-	gold += g.value;
+void Player::pickItem(Gold &g) {
+	gold += g.getValue();
 }
 
-virtual void Player::pickItem(Potion &p) {
-	if (levelAtk + p.atkChange < 0) {
+void Player::pickItem(Potion &p) {
+	if (levelAtk + p.getAtkChange() < 0) {
 		levelAtk = 0;
 	} else {
-		levelAtk += p.atkChange;
+		levelAtk += p.getAtkChange();
 	}
 
-	if (levelDef + p.defChange < 0) {
+	if (levelDef + p.getDefChange() < 0) {
 		levelDef = 0;
 	} else {
-		levelDef += p.defChange;
+		levelDef += p.getDefChange();
 	}
 
 	int hp = this->getHP();
