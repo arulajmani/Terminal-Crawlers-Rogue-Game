@@ -17,5 +17,4 @@ void View::updateAt(std::pair<int, int> coords, char updateTo) {
 	}
 	void addMessage(std::string message) {
 		dispalyMessage << message;
-
 	}
