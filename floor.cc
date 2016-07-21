@@ -70,80 +70,81 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 					auto potion = factory.createPotion("rh");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
-						theBoard[i][j] = 'P'; // Must be displayed as P
-					}
-					else if (curr == '1') {
-						auto potion = factory.createPotion("ba");
-						potion->setCoords(currCoords);
-						potionVec.emplace_back(potion);
-						theBoard[i][j] = 'P'; // Must be displayed as P
-					}
-					else if (curr == '2') {
-						auto potion = factory.createPotion("bd");
-						potion->setCoords(currCoords);
-						potionVec.emplace_back(potion);
-						theBoard[i][j] = 'P'; // Must be displayed as P
-					}
-					else if (curr == '3') {
-						auto potion = factory.createPotion("ph");
-						potion->setCoords(currCoords);
-						potionVec.emplace_back(potion);
-						theBoard[i][j] = 'P'; // Must be displayed as P
-					}
-					else if (curr == '4') {
-						auto potion = factory.createPotion("wa");
-						potion->setCoords(currCoords);
-						potionVec.emplace_back(potion);
-						theBoard[i][j] = 'P'; // Must be displayed as P
-					}
-					else if (curr == '5') {
-						auto potion = factory.createPotion("wd");
-						potion->setCoords(currCoords);
-						potionVec.emplace_back(potion);
-						theBoard[i][j] = 'P'; // Must be displayed as P
-					}
-					else if (curr == '6') {
-						auto gold = factory.createGold("nh");
-						gold->setCoords(currCoords);
-						goldVec.emplace_back(gold);
-						theBoard[i][j] = 'G'; // Must be displayed as P
-					}
-					else if (curr == '7') {
-						auto gold = factory.createGold("sh");
-						gold->setCoords(currCoords);
-						goldVec.emplace_back(gold);
-						theBoard[i][j] = 'G'; // Must be displayed as P
-					}
-					else if (curr == '8') {
-						auto gold = factory.createGold("mh");
-						gold->setCoords(currCoords);
-						goldVec.emplace_back(gold);
-						theBoard[i][j] = 'G'; // Must be displayed as P
-					}
-					else if (curr == '9') {
-						auto gold = factory.createGold("dh");
-						gold->setCoords(currCoords);
-						goldVec.emplace_back(gold);
-						theBoard[i][j] = 'G'; // Must be displayed as P
-					}
+					theBoard[i][j] = 'P'; // Must be displayed as P
+				}
+				else if (curr == '1') {
+					auto potion = factory.createPotion("ba");
+					potion->setCoords(currCoords);
+					potionVec.emplace_back(potion);
+					theBoard[i][j] = 'P'; // Must be displayed as P
+				}
+				else if (curr == '2') {
+					auto potion = factory.createPotion("bd");
+					potion->setCoords(currCoords);
+					potionVec.emplace_back(potion);
+					theBoard[i][j] = 'P'; // Must be displayed as P
+				}
+				else if (curr == '3') {
+					auto potion = factory.createPotion("ph");
+					potion->setCoords(currCoords);
+					potionVec.emplace_back(potion);
+					theBoard[i][j] = 'P'; // Must be displayed as P
+				}
+				else if (curr == '4') {
+					auto potion = factory.createPotion("wa");
+					potion->setCoords(currCoords);
+					potionVec.emplace_back(potion);
+					theBoard[i][j] = 'P'; // Must be displayed as P
+				}
+				else if (curr == '5') {
+					auto potion = factory.createPotion("wd");
+					potion->setCoords(currCoords);
+					potionVec.emplace_back(potion);
+					theBoard[i][j] = 'P'; // Must be displayed as P
+				}
+				else if (curr == '6') {
+					auto gold = factory.createGold("nh");
+					gold->setCoords(currCoords);
+					goldVec.emplace_back(gold);
+					theBoard[i][j] = 'G'; // Must be displayed as P
+				}
+				else if (curr == '7') {
+					auto gold = factory.createGold("sh");
+					gold->setCoords(currCoords);
+					goldVec.emplace_back(gold);
+					theBoard[i][j] = 'G'; // Must be displayed as P
+				}
+				else if (curr == '8') {
+					auto gold = factory.createGold("mh");
+					gold->setCoords(currCoords);
+					goldVec.emplace_back(gold);
+					theBoard[i][j] = 'G'; // Must be displayed as P
+				}
+				else if (curr == '9') {
+					auto gold = factory.createGold("dh");
+					gold->setCoords(currCoords);
+					goldVec.emplace_back(gold);
+					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 			}
-			for(int i = 0; i < goldVec.size(); ++i) {
-				if (goldVec[i]->goldType == 'd') {
-					auto dragonHoardCoords = goldVec[i]->getCoords();
-					auto dragonCoords = scanDragon(dragonHoardCoords);
-					auto dragon = findEnemy(dragonCoords);
-					goldVec[i]->attach(dragon);
-				}
-			}
-			if(!(filePresent)) { // Must have random generation.
-				spawnPlayer();
-			}
-		} catch(ios::failure&) {
-			cout << "File not present"<< endl;
 		}
+		for(int i = 0; i < goldVec.size(); ++i) {
+			if (goldVec[i]->goldType == 'd') {
+				auto dragonHoardCoords = goldVec[i]->getCoords();
+				auto dragonCoords = scanDragon(dragonHoardCoords);
+				auto dragon = findEnemy(dragonCoords);
+				goldVec[i]->attach(dragon);
+			}
+		}
+		if(!(filePresent)) { // Must have random generation.
+			spawnPlayer();
+		}
+	} catch(ios::failure&) {
+		cout << "File not present"<< endl;
 	}
-	Floor::~Floor() {}
+}
+
+Floor::~Floor() {}
 
 pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 	int xcoord = get<0>(coords);
@@ -162,39 +163,39 @@ pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 }
 
 
-	void Floor::display() {
-		for(int i = 0; i < numRows; ++i) {
-			for(int j = 0; j < numCols; ++j) {
-				cout << theBoard[i][j];
-			}
-			cout<<endl;
+void Floor::display() {
+	for(int i = 0; i < numRows; ++i) {
+		for(int j = 0; j < numCols; ++j) {
+			cout << theBoard[i][j];
 		}
+		cout<<endl;
 	}
+}
 
-	void Floor::spawnPlayer() {
+void Floor::spawnPlayer() {
 	// Assuming there is an srand() before.
+	int chamberNum = rand() % 5;
+	pair <int, int> playerCoords = chamberArr[chamberNum]->placeElement();
+	myPlayer->setCoords(playerCoords);
+	theBoard [get<0>(playerCoords)] [get<1>(playerCoords)] = '@';
+	spawnStairs(chamberNum);
+}
+
+void Floor::spawnStairs(int chamberNum) {
+	int stairNum = rand() % 5;
+	while(stairNum == chamberNum) {
+		stairNum = rand() % 5;
+	}
+	pair<int, int> stairCoords = chamberArr[stairNum]->placeElement();
+	theBoard [get<0>(stairCoords)] [get<1>(stairCoords)] = '\\';
+	spawnPotions();
+}
+
+void Floor::spawnPotions() {
+	for(int i = 0; i < numItems; ++i) {
 		int chamberNum = rand() % 5;
-		pair <int, int> playerCoords = chamberArr[chamberNum]->placeElement();
-		myPlayer->setCoords(playerCoords);
-		theBoard [get<0>(playerCoords)] [get<1>(playerCoords)] = '@';
-		spawnStairs(chamberNum);
-	}
-
-	void Floor::spawnStairs(int chamberNum) {
-		int stairNum = rand() % 5;
-		while(stairNum == chamberNum) {
-			stairNum = rand() % 5;
-		}
-		pair<int, int> stairCoords = chamberArr[stairNum]->placeElement();
-		theBoard [get<0>(stairCoords)] [get<1>(stairCoords)] = '\\';
-		spawnPotions();
-	}
-
-	void Floor::spawnPotions() {
-		for(int i = 0; i < numItems; ++i) {
-			int chamberNum = rand() % 5;
-			int potionNum = rand() % 6;
-			potionVec.emplace_back(factory.createPotion(potionType[potionNum]));
+		int potionNum = rand() % 6;
+		potionVec.emplace_back(factory.createPotion(potionType[potionNum]));
 
 		do { // Ensure the cell chosen is empty
 			pair <int, int> potionCoords = chamberArr[chamberNum]->placeElement();
