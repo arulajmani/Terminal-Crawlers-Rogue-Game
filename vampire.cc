@@ -5,7 +5,7 @@ const int hpVal = 50;
 const int atkVal = 25;
 const int defVal = 25;
 
-Vampire::Vampire():Enemy(hpVal, atkVal, defVal, 'V'){}
+Vampire::Vampire():Enemy(hpVal, atkVal, defVal, 'V', "Vampire"){}
 
 Vampire::~Vampire(){}
 
