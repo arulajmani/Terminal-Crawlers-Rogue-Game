@@ -6,7 +6,7 @@ Enemy::Enemy(int hp, int atk, int def, char displaySymbol): Character(hp, atk, d
 
 Enemy::~Enemy(){}
 
-virtual bool Enemy::isHostile(){
+bool Enemy::isHostile(){
 	return true;
 }
 
