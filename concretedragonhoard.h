@@ -3,7 +3,7 @@
 #include "publisherdragonhoard.h"
 #include "player.h"
 
-class ConcreteDragonHoard {
+class ConcreteDragonHoard:public PublisherDragonHoard {
 public:
 	ConcreteDragonHoard();
 	~ConcreteDragonHoard();

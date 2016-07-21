@@ -3,7 +3,7 @@
 #include "gameelement.h"
 #include "player.h"
 
-class Item {
+class Item:public GameElement {
 public:
 	Item();
 	~Item();
