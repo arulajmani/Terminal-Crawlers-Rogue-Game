@@ -1,6 +1,7 @@
-#ifnded _BD_H_
+#ifndef _BD_H_
 #define _BD_H_
 #include "player.h"
+#include "potion.h"
 
 class BD: public Potion {
 public:

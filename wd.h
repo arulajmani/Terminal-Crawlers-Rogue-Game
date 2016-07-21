@@ -1,5 +1,8 @@
-#ifnded _WD_H_
+#ifndef _WD_H_
 #define _WD_H_
+#include "potion.h"
+#include "player.h"
+
 
 class WD: public Potion {
 public:

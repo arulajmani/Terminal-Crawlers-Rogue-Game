@@ -9,7 +9,7 @@ class GameElement {
 
 public:
 	GameElement();
-	~GameElement()=0;
+	virtual ~GameElement()=0;
 
 	std::pair<int, int> getCoords();
 

@@ -5,5 +5,7 @@
 
 class Item {
 public:
-	virtual getPickedBy(Player &p)=0;
-}
+	virtual void getPickedBy(Player &p)=0;
+};
+
+#endif

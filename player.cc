@@ -38,11 +38,11 @@ string Player::getRace() {
 	return race;
 }
 
-virtual void pickItem(Gold &g) {
+virtual void Player::pickItem(Gold &g) {
 	gold += g.value;
 }
 
-virtual void pickItem(Potion &p) {
+virtual void Player::pickItem(Potion &p) {
 	if (levelAtk + p.atkChange < 0) {
 		levelAtk = 0;
 	} else {
@@ -61,7 +61,7 @@ virtual void pickItem(Potion &p) {
 }
 
 
-pair<int, int> checkMove(string direction) {
+pair<int, int> Player::checkMove(string direction) {
 	pair <int, int> checkCoords = this->getCoords();
 	if (direction == "no") {
 		get<0>(checkCoords) += 1;

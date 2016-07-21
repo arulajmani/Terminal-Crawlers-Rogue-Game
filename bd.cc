@@ -1,10 +1,10 @@
 #include "bd.h"
 
-const int hpChange = 0;
-const int atkChange = 0;
-const int defChange = 5;
+const int hpDelt = 0;
+const int atkDelt = 0;
+const int defDelt = 5;
 
-BD::BD():Potion(hpChange, atkChange, defChange){}
+BD::BD():Potion(hpDelt, atkDelt, defDelt){}
 
 BD::~BD(){}
 

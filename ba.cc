@@ -1,10 +1,10 @@
 #include "ba.h"
 
-const int hpChange = 0;
-const int atkChange = 5;
-const int defChange = 0;
+const int hpDelt = 0;
+const int atkDelt = 5;
+const int defDelt = 0;
 
-BA::BA():Potion(hpChange, atkChange, defChange){}
+BA::BA():Potion(hpDelt, atkDelt, defDelt){}
 
 BA::~BA(){}
 

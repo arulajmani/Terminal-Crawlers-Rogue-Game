@@ -9,8 +9,8 @@ class Potion: public Item{
 	const int hpChange;
 
 public:
-	Potion(int atkChange, int defChange, int hpChange);
-	~Potion()=0;
+	Potion(const int atkChange, const int defChange, const int hpChange);
+	virtual ~Potion()=0;
 
 	int getAtkChange();
 	int getDefChange();

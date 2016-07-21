@@ -8,7 +8,7 @@
 class Gold; 
 class Potion;
 
-class Player: public class Character {
+class Player: public Character {
 	std::string race;
 	int gold;
 	int levelAtk;
@@ -16,7 +16,7 @@ class Player: public class Character {
 
 public:
 	Player(std::string race, int hp, int atk, int def);
-	~Player()=0;
+	virtual ~Player()=0;
 
 	int getLevelAtk() const;
 	int getLevelDef() const;

@@ -1,13 +1,14 @@
-#ifnded _WA_H_
+#ifndef _WA_H_
 #define _WA_H_
+#include "potion.h"
 #include "player.h"
 
-class WH: public Potion {
+class WA: public Potion {
 public:
-	WH();
-	~WH();
+	WA();
+	~WA();
 
-	getPickedBy(Player &p);
+	void getPickedBy(Player &p);
 };
 
 #endif

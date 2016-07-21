@@ -1,10 +1,10 @@
 #include "rh.h"
 
-const int hpChange = 10;
-const int atkChange = 0;
-const int defChange = 0;
+const int hpDelt = 10;
+const int atkDelt = 0;
+const int defDelt = 0;
 
-RH::RH():Potion(hpChange, atkChange, defChange){}
+RH::RH():Potion(hpDelt, atkDelt, defDelt){}
 
 RH::~RH(){}
 

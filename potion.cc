@@ -1,11 +1,8 @@
 #include "potion.h"
 
 
-Potion::Potion(int atkChange, int defChange, int hpChange): atkChange{atkChange}, defChange{defChange}, hpChange{hpChange} {}
-
-
-
-
+Potion::Potion(const int atkChange, const int defChange, const int hpChange): atkChange{atkChange}, defChange{defChange}, hpChange{hpChange} {}
+Potion::~Potion(){}
 
 int Potion::getAtkChange() { return atkChange; }
 int Potion::getDefChange() { return defChange; }

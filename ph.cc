@@ -1,10 +1,10 @@
 #include "ph.h"
 
-const int hpChange = -10;
-const int atkChange = 0;
-const int defChange = 0;
+const int hpDelt = -10;
+const int atkDelt = 0;
+const int defDelt = 0;
 
-PH::PH():Potion(hpChange, atkChange, defChange){}
+PH::PH():Potion(hpDelt, atkDelt, defDelt){}
 
 PH::~PH(){}
 

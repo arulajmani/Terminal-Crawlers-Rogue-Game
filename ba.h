@@ -1,6 +1,7 @@
-#ifnded _BA_H_
+#ifndef _BA_H_
 #define _BA_H_
 #include "player.h"
+#include "potion.h"
 
 class BA: public Potion {
 public:

@@ -1,10 +1,10 @@
 #include "wd.h"
 
-const int hpChange = 0;
-const int atkChange = 0;
-const int defChange = -5;
+const int hpDelta = 0;
+const int atkDelta = 0;
+const int defDelta = -5;
 
-WD::WD():Potion(hpChange, atkChange, defChange){}
+WD::WD():Potion(hpDelta, atkDelta, defDelta){}
 
 WD::~WD(){}
 
