@@ -15,6 +15,7 @@ void View::setBoard(char theBoard[numberRows][numberCols]) {
 	for(int i = 0; i < numberRows; ++i) {
 		for(int j = 0; j < numberCols; ++j) {
 			displayBoard[i][j] = theBoard[i][j];
+			cout << "Has this happened? "<<endl;
 		}
 	}
 }

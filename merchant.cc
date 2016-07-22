@@ -19,3 +19,6 @@ bool Merchant::isHostile(){
 	return hostile;
 }
 
+void Merchant::whenDead(Player &p) {
+	p.pickItem(merchantHoard);
+}

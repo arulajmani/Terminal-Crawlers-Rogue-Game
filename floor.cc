@@ -5,6 +5,7 @@
 #include <fstream>
 #include "chamber.h"
 #include "view.h"
+#include <iostream>
 
 // Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
 
@@ -64,6 +65,7 @@ void Floor::makeChamber() {
 
 Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view}{
 	try {
+		cout << "Entered floor constructor"<<endl;
 		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);
 		int startRead = (floorNum - 1) * numRows + 1;
@@ -188,7 +190,9 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 				castDragonHoard->attach(dragonCast);
 			}
 		}
+		cout << "Before";
 		makeChamber();
+		cout << "After";
 		view->setBoard(theBoard);
 		view->addMessage("Player character has been spawned.\n");
 		if(!(filePresent)) { // Must have random generation.

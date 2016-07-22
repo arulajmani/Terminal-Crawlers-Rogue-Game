@@ -14,8 +14,8 @@ public:
 	~Merchant();
 
 	bool isHostile();
-	void makeHostile(); // Flips the static hostile field. Must be called first time the player attacks any merchant. 
-	void whenDead(Player &p);
+	void makeHostile(); // Flips the static hostile field. Must be called first time the player attacks any merchant.
+	void whenDead(Player&p); 
 
 };
 
