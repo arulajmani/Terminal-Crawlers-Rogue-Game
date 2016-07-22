@@ -22,5 +22,5 @@ bool ConcreteDragon::isHostile(){
 }
 
 void ConcreteDragon::whenDead(Player &p){
-	p.pickItem(dragonHoard); //this should add the value of nh to p's gold
+	p.pickItem(*dragonHoard); //this should add the value of nh to p's gold
 }

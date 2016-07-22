@@ -2,7 +2,7 @@
 
 using namespace std; 
 
-GameElement::GameElement(): get<0>(coords){-1}, get<1>(coords){-1} {}
+GameElement::GameElement(): coords{make_pair(-1, -1)}{}
 GameElement::~GameElement() {}
 
 pair<int, int> GameElement::getCoords() {
