@@ -1,6 +1,6 @@
 #include "view.h"
 #include <iostream>
-
+// Figure out the displayin of the floor num, probably store it as a variable in view itself. 
 using namespace std;
 
 View::View() {}
@@ -37,10 +37,10 @@ void View::display() {
 	int goldAmt = myPlayer->getGold();
 	string race = myPlayer->getRace();
 	cout << "Race: "<< race<< " Gold: "<< goldAmt<<endl;
-	cout<< "HP: "<<hp;
-	cout<<"Attack: "<<atk;
-	cout<<"Defence: "<<def;
+	cout<< "HP: "<<hp<<endl;
+	cout<<"Attack: "<<atk<<endl;
+	cout<<"Defence: "<<def<<enld;
 	string message = displayMessage.str();
-	cout<<message;
-	displayMessage.str(""); // From stackovderfow, to reset the string stream. Must check.
+	cout<<"Action: "<<message;
+	displayMessage.str(""); // From stackoverflow, to reset the string stream. Must check.
 }

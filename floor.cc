@@ -189,6 +189,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 		}
 		makeChamber();
 		view->setBoard(theBoard);
+		view->addMessage("Player character has been spawned.\n")
 		if(!(filePresent)) { // Must have random generation.
 			spawnPlayer();
 		}
@@ -244,7 +245,7 @@ void Floor::spawnPotion() {
 		potionVec.emplace_back(factory.createPotion(potionType[potionNum]));
 		pair <int, int> potionCoords;
 		do { // Ensure the cell chosen is empty
-			pair <int, int> potionCoords = chamberVec[chamberNum]->placeElement();
+			potionCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(potionCoords)] [get<1>(potionCoords)] != '.');
 
 		potionVec.back()->setCoords(potionCoords);
@@ -261,7 +262,7 @@ void Floor::spawnGold() {
 		goldVec.emplace_back(factory.createGold(goldType[goldNum]));
 		pair <int, int> goldCoords;
 		do { // Ensure the cell chosen is empty
-			pair <int, int> goldCoords = chamberVec[chamberNum]->placeElement();
+			goldCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] != '.');
 
 		goldVec.back()->setCoords(goldCoords);
@@ -274,7 +275,7 @@ void Floor::spawnGold() {
 			castDragonHoard->attach(dragonCast); // attach the dragon to the hoard. 
 			pair<int, int> dragonCoords;
 			do {
-				pair<int, int> dragonCoords = chamberVec[chamberNum]->placeDragon(goldCoords);
+				dragonCoords = chamberVec[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
 			theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] = 'D';
 			view->updateAt(dragonCoords, 'D');
@@ -291,7 +292,7 @@ void Floor::spawnEnemies() {
 		enemyVec.emplace_back(factory.createEnemy(enemyType[enemyNum]));
 		pair <int, int> enemyCoords;
 		do {
-			pair <int, int> enemyCoords = chamberVec[chamberNum]->placeElement();
+			enemyCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(enemyCoords)] [get<1>(enemyCoords)] != '.');
 
 		enemyVec.back()->setCoords(enemyCoords);

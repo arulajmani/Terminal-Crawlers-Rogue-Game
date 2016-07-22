@@ -1,8 +1,9 @@
 #include "game.h"
 
-Game::Game(int level): floorNum{0} myPlayer{nullptr} {
+Game::Game(): floorNum{0} myPlayer{nullptr}, floor{nullptr} {
 	view = make_shared<View>();
 } 
+
 Game::~Game() {}
 
 void Game::Display() {
@@ -14,9 +15,24 @@ void Game::init(bool filePresent,char *floorPlan) {
 	if (floorNum == 6) {
 		// Print victory stuff. 
 	}
-	floor = new Floor{floorNum, myPlayer, floorNum, filePresent, floorPlan, view};
+	floor = make_shared<Floor>(floorNum, myPlayer, filePresent, floorPlan, view);
 }
 
 void Game::createPlayer(std::string race) {
 	myPlayer = factory.createPlayer(race);
+}
+
+void Game::movePlayer(std::string direction) {
+	floor->movePlayer(direction);
+}
+
+void Game::usePotion(std::string direction) {
+	floor->pickPotion(direction);
+}
+void Game::attackEnemy(std::string direction) {
+	floor->playerAttack(direction);
+}
+
+bool Game::isDead() {
+	return !(myPlayer->getHP());
 }
