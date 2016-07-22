@@ -3,6 +3,7 @@
 #include <string> 
 #include <sstream>
 #include <fstream>
+#include "chamber.h"
 
 // Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
 
@@ -181,7 +182,9 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 				auto dragonHoardCoords = goldVec[i]->getCoords();
 				auto dragonCoords = scanDragon(dragonHoardCoords);
 				auto dragon = findEnemy(dragonCoords);
-				goldVec[i]->attach(dragon);
+				shared_ptr<ConcreteDragon> dragonCast = static_pointer_cast<ConcreteDragon>(dragon);
+				shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec[i]);
+				castDragonHoard->attach(dragonCast);
 			}
 		}
 		makeChamber();
@@ -266,7 +269,9 @@ void Floor::spawnGold() {
 		view->updateAt(goldCoords, 'G');
 		if (goldNum == 1) { // We created a dragon gold type, so we must spawn the dragon in this case!
 			enemyVec.emplace_back(factory.createEnemy("d"));
-			goldVec.back()->attach(enemyVec.back()); // attach the dragon to the hoard. 
+			shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec.back());
+			shared_ptr<ConcreteDragon> dragonCast = static_pointer_cast<ConcreteDragon>(enemyVec.back());
+			castDragonHoard->attach(dragonCast); // attach the dragon to the hoard. 
 			pair<int, int> dragonCoords;
 			do {
 				pair<int, int> dragonCoords = chamberVec[chamberNum]->placeDragon(goldCoords);
@@ -411,7 +416,8 @@ void Floor::scanDragonHoards() {
 			if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
 				dragonHostile = true; // Player is in the vicinity. Dragon should be hostile. 
 			}
-			goldVec[i]->NotifyObservers(dragonHostile);
+			shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec[i]);
+			castDragonHoard->notifyObservers(dragonHostile);
 		}
 	}
 }

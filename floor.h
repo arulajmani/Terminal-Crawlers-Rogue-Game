@@ -1,11 +1,11 @@
 #ifndef _FLOOR_H_
 #define _FLOOR_H_
 #include "enemy.h"
-#include "chamber.h"
 #include <vector>
 #include "factory.h"
 #include "view.h"
-#include "chamber.h"
+
+class Chamber;
 
 const int displayRows = 5;
 //const int numRows = 25;
