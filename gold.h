@@ -7,7 +7,7 @@ class Gold: public Item{
 	const int value;
 
 public:
-	Gold(int value);
+	Gold(int value, std::string itemName);
 	virtual ~Gold()=0;
 
 	int getValue();

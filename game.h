@@ -3,11 +3,14 @@
 #include <race>
 #include "floor.h"
 #include "factory.h"
+#include "view.h"
 
 class Game {
+	Factory factory;
 	Floor *floor;
-	std::shared_ptr <Player>myPlayer;
+	std::shared_ptr<Player> myPlayer;
 	int floorNum;
+	std::shared_ptr<View> view;
 
 public:
 	Game();

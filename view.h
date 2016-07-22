@@ -16,4 +16,5 @@ public:
 	void updateAt(std::pair<int, int> coords, char updateTo);
 	void setBoard(char theBoard[numRows][numCols]);
 	void addMessage(std::string message);
+	void display();
 }

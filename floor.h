@@ -4,6 +4,7 @@
 #include "chamber.h"
 #include <vector>
 #include "factory.h"
+#include "view.h"
 
 const int displayRows = 5;
 const int numRows = 25;
@@ -19,6 +20,7 @@ class Floor {
 	Factory factory;
 	bool filePresent;
 	char *floorPlan;
+	stdd::shared_ptr<View> view;
 
 	std::shared_ptr<Player> myPlayer;
 	std::vector <std::shared_ptr<Gold>> goldVec;
@@ -31,7 +33,7 @@ class Floor {
 	pair<int, int> scanDragon(pair<int, int> coords);
 
 public:
-	Floor(int floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan);
+	Floor(int floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, std::shared_ptr<View> view);
 	~Floor();
 
 	void nextState();

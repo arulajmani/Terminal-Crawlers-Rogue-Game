@@ -1,6 +1,7 @@
 #include "floor.h"
 #include <utility>
 #include <string> 
+#include <sstream>
 
 // Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
 
@@ -12,7 +13,7 @@ string goldType[8] {"dh", "sh", "sh",  "nh", "nh", "nh", "nh", "nh"};
 char allEnemies[7] = {'M', 'X', 'V', 'T', 'N', 'W', 'D'};
 
 
-Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan): floorNum{floorNum}, myPlayer{myPlayer}  filePresent {filePresent} floorPlan{floorPlan} {
+Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}  filePresent {filePresent} floorPlan{floorPlan} view{view}{
 	try {
 		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);
@@ -136,11 +137,12 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 				goldVec[i]->attach(dragon);
 			}
 		}
+		view->setBoard(theBoard);
 		if(!(filePresent)) { // Must have random generation.
 			spawnPlayer();
 		}
 	} catch(ios::failure&) {
-		cout << "File not present"<< endl;
+		view->addMessage("File not present, you must try again.\n")
 	}
 }
 
@@ -163,21 +165,12 @@ pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 }
 
 
-void Floor::display() {
-	for(int i = 0; i < numRows; ++i) {
-		for(int j = 0; j < numCols; ++j) {
-			cout << theBoard[i][j];
-		}
-		cout<<endl;
-	}
-}
-
 void Floor::spawnPlayer() {
-	// Assuming there is an srand() before.
 	int chamberNum = rand() % 5;
 	pair <int, int> playerCoords = chamberArr[chamberNum]->placeElement();
 	myPlayer->setCoords(playerCoords);
 	theBoard [get<0>(playerCoords)] [get<1>(playerCoords)] = '@';
+	view->updateAt(playerCoords, '@');
 	spawnStairs(chamberNum);
 }
 
@@ -188,6 +181,7 @@ void Floor::spawnStairs(int chamberNum) {
 	}
 	pair<int, int> stairCoords = chamberArr[stairNum]->placeElement();
 	theBoard [get<0>(stairCoords)] [get<1>(stairCoords)] = '\\';
+	view->updateAt(stairCoords, '\\');
 	spawnPotions();
 }
 
@@ -203,6 +197,7 @@ void Floor::spawnPotions() {
 
 		potionVec.back()->setCoords(potionCoords);
 		theBoard [get<0>(potionCoords)] [get<1>(potionCoords)] = 'P';
+		view->updateAt(potionCoords, 'P');
 	}
 	spawnGold();
 }
@@ -219,7 +214,7 @@ void Floor::spawnGold() {
 
 		goldVec.back()->setCoords(goldCoords);
 		theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] = 'G';
-
+		view->updateAt(goldCoords, 'G');
 		if (goldNum == 1) { // We created a dragon gold type, so we must spawn the dragon in this case!
 			enemyVec.emplace_back(factory.createEnemy("d"));
 			goldVec.back()->attach(enemyVec.back()); // attach the dragon to the hoard. 
@@ -227,6 +222,7 @@ void Floor::spawnGold() {
 				pair<int, int> dragonCoords = chamberArr[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
 			theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] = 'D';
+			view->updateAt(dragonCoords, 'D');
 		}
 	}
 	spawnEnemies();
@@ -245,6 +241,7 @@ void Floor::spawnEnemies() {
 
 		enemyVec.back()->setCoords(enemyCoords);
 		theBoard [get<0>(enemyCoords)] [get<1>(enemyCoords)] = enemyVec.back()->displayDisplaySymbol();
+		view->updateAt(enemyCoords, theBoard[get<0>(enemyCoords)][get<1>(enemyCoords)]);
 	}
 }
 
@@ -255,6 +252,7 @@ void Floor::removePotion(pair <int, int> coords) {
 			potionVec[i].reset();
 			potionVec.erase( potionVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.'; // Board now displays a '.' where earlier there was a potion.
+			view->updateAt(coords, '.');
 		}
 	}
 }
@@ -266,6 +264,7 @@ void Floor::removeGold(pair <int, int> coords) {
 			goldVec[i].reset();
 			goldVec.erase( goldVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.';
+			view->updateAt(coords, '.');
 		}
 	}
 }
@@ -277,6 +276,7 @@ void Floor::removeEnemy(pair <int, int> coords) {
 			enemyVec[i].reset();
 			enemyVec.erase( enemyVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.';
+			view->updateAt(coords, '.');
 		}
 	}
 }
@@ -316,12 +316,14 @@ void Floor::movePlayer(string direction) {
 	char nextPos = theBoard[get<0>(checkCoords)] [get<1>(checkCoords)];
 	if(nextPos == '.' || nextPos == '+' || nextPos == '#' ) {
 		theBoard[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())] = defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())];
+		view->updateAt(myPlayer->getCoords(), defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())]); // Update previous coords as default coords in view.
 		// Replace theBoard with default symbol at the vacated position.
-		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] == '@';
+		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
+		view->updateAt(checkCoords, '@');
 		myPlayer->setCoords(checkCoords);
 	}
 	else if (nextPos == 'P') {
-		cout<<"Try picking up instead eh? gg"<<endl;
+		view->addMessage("Try picking up instead eh? gg\n");
 	}
 	else if (nextPos == 'G') {
 		auto g = findGold(checkCoords);
@@ -329,24 +331,24 @@ void Floor::movePlayer(string direction) {
 			g.getPickedBy(*myPlayer);
 			removeGold(checkCoords);
 		} else {
-			cout << "The dragon gets angrier. gg"<<endl;
+			view->addMessage("The dragon gets angrier. gg\n");
 		}
 	}
 	else if (nextPos == '-' || nextPos == '|') {
-		cout<< "Ooops watch where you're going eh? gg"<<endl;
+		view->addMessage("Ooops watch where you're going eh? gg\n");
 	}
 	else if (nextPos == '\\') {
 		if (floorNum != 5) {
-			cout << "On to the next floor there, eh? gg"<<endl;
+			view->addMessage("On to the next floor there, eh? gg\n");
 		}
 		else {
-			cout << "You're the man now, eh? gg"<<endl;
+			view->addMessage("You're the man now, eh? gg\n");
 			// Game ends
 		}
 		return;
 	}
 	else { // Enemy case
-		cout << "Moving ain't gonna cut it, try attacking eh? gg" <<endl;
+		view->addMessage("Player tried to move on a spot occupied by an enemy. Player should try attacking instead. \n");
 	}
 }
 
@@ -407,14 +409,27 @@ void Floor::moveEnemy() {
 						pair<int, int> scannedCoords = scanAttack(enemyCoords);
 						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
 							int hitMiss = rand() % 2;
+							string enemyName = foundEnemy->getEnemyName()
 							if (hitMiss) {
-								foundEnemy.attack(*myPlayer);
-								cout << "The enemy hit the player. _____ Damage has been dealt." << endl;
+								int before = myPlayer->getHP();
+								foundEnemy->attack(*myPlayer);
+								ostringstream ss; 
+								int damage = before - myPlayer->getHP();
+								ss << damage;
+								string damageDealt = ss.str();
+								view->addMessage("The ");
+								view->addMessage(enemyName);
+								view->addMessage(" attacked the player. It resulted in HP loss of");
+								view->addMessage(damageDealt);
+								view->addMessage("\n");
 							} else {
-								cout << " The enemy tried to attack, but he missed." << endl; // Give desc. of type of enemy.
+								view->addMessage("The ");
+								view->addMessage(enemyName);
+								view->addMessage(" tried to attack the player, but he missed.\n");
 							}
 							if (myPlayer->getHP() == 0) {
-								cout << "Game over." << endl;
+								view->addMessage("The player's HP has reached 0, you lost the game.\n"); // Restart etc has to be done.
+								return;
 								// Game over.
 							}
 							return; // Because then you do not want the enemy to move.
@@ -428,7 +443,9 @@ void Floor::moveEnemy() {
 						if(theBoard[i][j] != 'D') {
 							foundEnemy->setCoords(possible[move]); // Move the enemy to new co-ordinates, randomly generated. 
 							theBoard[i][j] = defaultGrid[i][j]; // The vacated co-ordinates
+							view->updateAt(pair<int, int> {i, j}, defaultGrid[i][j]);
 							theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
+							view->updateAt(possible[move], foundEnemy->displayDisplaySymbol());
 						}
 					}
 				}
@@ -440,24 +457,44 @@ void Floor::moveEnemy() {
 
 void Floor::pickPotion(string direction) {
 	pair<int, int> tentativePotion = myPlayer->checkMove(direction);
-	if (findPotion(tentativePotion)) {
-		findPotion(tentativePotion)->getPickedBy(*myPlayer);
-		removePotion(tentativePotion); // Display which potion you used, do this in potion class.
+	auto foundPotion = findPotion(tentativePotion);
+	if (foundPotion) {
+		foundPotion->getPickedBy(*myPlayer);
+		removePotion(tentativePotion); 
+		string itemName = foundPotion->getItemName();
+		view->addMessage("Player used a potion of type ");
+		view->addMessage(itemName);
+		view->addMessage(".\n");
 	} else {
-		cout << "Try picking a potion next time, eh? gg." << endl; 
+		view->addMessage("The direction chosen did not contain a potion, no effect on player.\n")
 	}
 }
 
 void Floor::playerAttack(string direction) {
 	pair<int, int> enemyCoords = myPlayer->checkMove(direction);
-	if (findEnemy(enemyCoords)) {
-		auto foundEnemy = findEnemy(enemyCoords);
+	auto foundEnemy = findEnemy(enemyCoords);
+	if (foundEnemy) {
+		int before = foundEnemy->getHP();
 		myPlayer->attack(*foundEnemy);
+		string enemyName = foundEnemy->getEnemyName();
+		int damage = before - foundEnemy->getHP();
+		ostringstream ss;
+		ss << damage;
+		string damageDealt = ss.str();
+		view->addMessage("Player attacked the ");
+		view->addMessage(enemyName);
+		view->addMessage(". Amount of damage dealt was: ")
+		view->addMessage(damageDealt);
+		view->addMessage(".")
 		if (foundEnemy->getHP() == 0) {
 			foundEnemy->whenDead(*myPlayer);
 			removeEnemy(enemyCoords);
+			view->addMessage("Player managed to kill the ");
+			view->addMessage(enemyName);
+			view->addMessage(".");
 		}
+		view->addMessage("\n");
 	} else {
-		cout << " You missed." <<endl;
+		view->addMessage("Player tried to attack thin air, it was not very effective.\n");
 	}
 }

@@ -5,7 +5,7 @@ const int hpVal = 120;
 const int atkVal = 25;
 const int defVal = 15;
 
-Troll::Troll(): Enemy(hpVal, atkVal, defVal,'T'){}
+Troll::Troll(): Enemy(hpVal, atkVal, defVal,'T', "Troll"){}
 
 Troll::~Troll(){}
 

@@ -6,7 +6,7 @@ const int hpVal = 120;
 const int atkVal = 30;
 const int defVal = 5;
 
-Werewolf::Werewolf(): Enemy(hpVal, atkVal, defVal, 'W'){}
+Werewolf::Werewolf(): Enemy(hpVal, atkVal, defVal, 'W', "Werewolf"){}
 
 Werewolf::~Werewolf(){}
 

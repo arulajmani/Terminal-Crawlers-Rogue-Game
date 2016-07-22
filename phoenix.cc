@@ -6,7 +6,7 @@ const int hpVal = 50;
 const int atkVal = 35;
 const int defVal = 20;
 
-Phoenix::Phoenix(): Enemy(hpVal, atkVal, defVal, 'P'){}
+Phoenix::Phoenix(): Enemy(hpVal, atkVal, defVal, 'X', "Phoenix"){}
 
 Phoenix::~Phoenix(){}
 

@@ -6,7 +6,7 @@ const int hpVal = 70;
 const int atkVal = 5;
 const int defVal = 10;
 
-Goblin::Goblin(): Enemy(hpVal, atkVal, defVal, 'G'){}
+Goblin::Goblin(): Enemy(hpVal, atkVal, defVal, 'N', "Goblin"){}
 
 Goblin::~Goblin(){}
 

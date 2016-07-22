@@ -7,7 +7,7 @@ const int defVal = 5;
 
 bool Merchant::hostile = false;
 
-Merchant::Merchant(): Enemy(hpVal, atkVal, defVal, 'M'){}
+Merchant::Merchant(): Enemy(hpVal, atkVal, defVal, 'M', "Merchant"){}
 
 Merchant::~Merchant(){}
 
