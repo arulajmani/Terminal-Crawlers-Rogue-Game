@@ -6,12 +6,11 @@
 
 class Chamber: public Floor {
 	int chamberNum;
-	std::vector <pair<int, int>> validCoords;
+	std::vector <std::pair<int, int>> validCoords;
 
 public:
-	Chamber(int chamberNum, std::vector<pair<int, int>> v);
-	~Chamber();
-
+	Chamber(int chamberNum, std::vector<std::pair<int, int>> v);
+	
 	std::pair<int, int> placeElement();
 	std::pair<int,int> placeDragon(std::pair<int, int> goldCoords);
 

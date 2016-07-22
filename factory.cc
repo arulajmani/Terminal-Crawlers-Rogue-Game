@@ -11,7 +11,7 @@ shared_ptr<GameElement> Factory::createPlayer(string race) {
 	shared_ptr<GameElement> newPlayer = nullptr;
 
 	if(race == "h") {
-		return make_shared<Human>();
+		newPlayer = make_shared<Human>();
 	}
 	else if(race == "e") {
 		newPlayer = make_shared<Elf>();

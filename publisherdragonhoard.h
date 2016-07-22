@@ -5,6 +5,7 @@
 class SubscriberDragon;
 
 class PublisherDragonHoard : public Gold  {
+protected:
 	SubscriberDragon *dragon; // There always has to be one dragon, so not a vector
 public: 
 	PublisherDragonHoard();

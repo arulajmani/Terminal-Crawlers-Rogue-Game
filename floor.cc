@@ -2,6 +2,7 @@
 #include <utility>
 #include <string> 
 #include <sstream>
+#include <fstream>
 
 // Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
 
@@ -13,18 +14,63 @@ string goldType[8] {"dh", "sh", "sh",  "nh", "nh", "nh", "nh", "nh"};
 char allEnemies[7] = {'M', 'X', 'V', 'T', 'N', 'W', 'D'};
 
 
-Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}  filePresent {filePresent} floorPlan{floorPlan} view{view}{
+void Floor::recursiveChamber(int xcoord, int ycoord, shared_ptr<Chamber> newChamber, bool checkedGrid[numRows][numCols]) {
+
+	if(xcoord < 0 || ycoord < 0 || xcoord >= numRows || ycoord >= numCols) {return;}
+
+	checkedGrid[xcoord][ycoord] = true;
+	pair<int, int> validChamCoords {xcoord, ycoord};
+	if(defaultGrid[xcoord][ycoord] == '.') {
+		newChamber.validCoords.emplace_back(validChamCoords);
+	}
+	if(defaultGrid[xcoord + 1][ycoord] == '.' && checkedGrid[xcoord + 1][ycoord] ==  false) {
+		recursiveChamber(xcoord + 1, ycoord, newChamber, checkedGrid);
+	}
+	if(defaultGrid[xcoord - 1][ycoord] == '.' && checkedGrid[xcoord - 1][ycoord] == false) {
+		recursiveChamber(xcoord - 1, ycoord, newChamber, checkedGrid);
+	}
+	if(defaultGrid[xcoord][ycoord + 1] == '.' && checkedGrid[xcoord][ycoord + 1] == false) {
+		recursiveChamber(xcoord, ycoord + 1, newChamber, checkedGrid);
+	}
+	if(defaultGrid[xcoord][ycoord - 1] == '.' && checkedGrid[xcoord][ycoord - 1] == false) {
+		recursiveChamber(xcoord, ycoord - 1, newChamber, checkedGrid);
+	}
+
+}
+
+void Floor::makeChamber() {
+	int chamberNum = 1;
+	vector<pair<int, int>> v;
+	bool checkedGrid[numRows][numCols] = {{ false }};
+	for (int i = 0; i < numRows; ++i) {
+		for (int j = 0; j < numCols; ++j) {
+			v.clear();
+			if(defaultGrid[i][j] == '.' && checkedGrid[i][j] == false) {
+				shared_ptr<Chamber> newChamber = make_shared<Chamber(chamberNum, v)>();
+				recursiveChamber(i, j, newChamber, checkedGrid);
+				chamberVec.emplace_back(newChamber);
+				++chamberNum;
+				checkedGrid[i][j] = true;
+			}
+			checkedGrid[i][j] = true;
+		}
+	}
+}
+
+
+
+Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view}{
 	try {
 		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);
 		int startRead = (floorNum - 1) * numRows + 1;
 		for (int i = 0; i < startRead; ++i) {
 			string discard;
-			getline(file, discard);
+			getline(f, discard);
 		}
 		for(int i = 0; i < numRows; ++i) {
 			string row;
-			getline(file, row);
+			getline(f, row);
 			for(int j = 0; j < numCols; ++i) {
 				char curr = row[j];
 				theBoard[i][j] = curr;
@@ -130,7 +176,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 			}
 		}
 		for(int i = 0; i < goldVec.size(); ++i) {
-			if (goldVec[i]->goldType == 'd') {
+			if (goldVec[i]->goldType() == 'd') {
 				auto dragonHoardCoords = goldVec[i]->getCoords();
 				auto dragonCoords = scanDragon(dragonHoardCoords);
 				auto dragon = findEnemy(dragonCoords);
@@ -143,18 +189,19 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 			spawnPlayer();
 		}
 	} catch(ios::failure&) {
-		view->addMessage("File not present, you must try again.\n")
+		view->addMessage("File not present, you must try again.\n");
 	}
 }
 
 Floor::~Floor() {}
 
+
 pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 	int xcoord = get<0>(coords);
 	int ycoord = get<1>(coords);
-	pair <int, int> dragonCoords {-1, -1}
+	pair <int, int> dragonCoords {-1, -1};
 	for(int i = -1; i <= 1; ++i) {
-		for(int j = -1; j <= ++j) {
+		for(int j = -1; j <= 1; ++j) {
 			if (theBoard[xcoord + i][ycoord + j] == 'D') {
 				get<0>(dragonCoords) = xcoord + i;
 				get<1>(dragonCoords) = ycoord + j;
@@ -168,7 +215,7 @@ pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 
 void Floor::spawnPlayer() {
 	int chamberNum = rand() % 5;
-	pair <int, int> playerCoords = chamberArr[chamberNum]->placeElement();
+	pair <int, int> playerCoords = chamberVec[chamberNum]->placeElement();
 	myPlayer->setCoords(playerCoords);
 	theBoard [get<0>(playerCoords)] [get<1>(playerCoords)] = '@';
 	view->updateAt(playerCoords, '@');
@@ -180,20 +227,20 @@ void Floor::spawnStairs(int chamberNum) {
 	while(stairNum == chamberNum) {
 		stairNum = rand() % 5;
 	}
-	pair<int, int> stairCoords = chamberArr[stairNum]->placeElement();
+	pair<int, int> stairCoords = chamberVec[stairNum]->placeElement();
 	theBoard [get<0>(stairCoords)] [get<1>(stairCoords)] = '\\';
 	view->updateAt(stairCoords, '\\');
-	spawnPotions();
+	spawnPotion();
 }
 
-void Floor::spawnPotions() {
+void Floor::spawnPotion() {
 	for(int i = 0; i < numItems; ++i) {
 		int chamberNum = rand() % 5;
 		int potionNum = rand() % 6;
 		potionVec.emplace_back(factory.createPotion(potionType[potionNum]));
 
 		do { // Ensure the cell chosen is empty
-			pair <int, int> potionCoords = chamberArr[chamberNum]->placeElement();
+			pair <int, int> potionCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(potionCoords)] [get<1>(potionCoords)] != '.');
 
 		potionVec.back()->setCoords(potionCoords);
@@ -210,7 +257,7 @@ void Floor::spawnGold() {
 		goldVec.emplace_back(factory.createGold(goldType[goldNum]));
 
 		do { // Ensure the cell chosen is empty
-			pair <int, int> goldCoords = chamberArr[chamberNum]->placeElement();
+			pair <int, int> goldCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(goldCoords)] [get<1>(goldCoordsd)] != '.');
 
 		goldVec.back()->setCoords(goldCoords);
@@ -220,7 +267,7 @@ void Floor::spawnGold() {
 			enemyVec.emplace_back(factory.createEnemy("d"));
 			goldVec.back()->attach(enemyVec.back()); // attach the dragon to the hoard. 
 			do {
-				pair<int, int> dragonCoords = chamberArr[chamberNum]->placeDragon(goldCoords);
+				pair<int, int> dragonCoords = chamberVec[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
 			theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] = 'D';
 			view->updateAt(dragonCoords, 'D');
@@ -237,7 +284,7 @@ void Floor::spawnEnemies() {
 		enemyVec.emplace_back(factory.createEnemy(enemyType[enemyNum]));
 
 		do {
-			pair <int, int> enemyCoords = chamberArr[chamberNum]->placeElement();
+			pair <int, int> enemyCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(enemyCoords)] [get<1>(enemyCoords)] != '.');
 
 		enemyVec.back()->setCoords(enemyCoords);
@@ -498,49 +545,4 @@ void Floor::playerAttack(string direction) {
 	} else {
 		view->addMessage("Player tried to attack thin air, it was not very effective.\n");
 	}
-}
-
-
-void Floor::makeChamber() {
-	int chamberNum = 1;
-	vector<pair<int, int>> v;
-	bool checkedGrid[numRows][numCols] = {{ false }};
-	for (int i = 0; i < numRows; ++i) {
-		for (int j = 0; j < numCols; ++j) {
-			v.clear();
-			if(defaultGrid[i][j] == '.' && checkedGrid[i][j] == false) {
-				shared_ptr<Chamber> newChamber = new Chamber(chamberNum, v);
-				recursiveChamber(i, j, newChamber, checkedGrid);
-				chamberVec.emplace_back(newChamber);
-				++chamberNum;
-				checkedGrid[i][j] = true;
-			}
-			checkedGrid[i][j] = true;
-		}
-	}
-}
-
-
-void Floor::recursiveChamber(int xcoord, int ycoord, shared_ptr<Chamber> newChamber, bool checkedGrid[numRows][numCols]) {
-
-	if(xcoord < 0 || ycoord < 0 || xcoord >= numRows || ycoord >= numCols) {return;}
-
-	checkedGrid[xcoord][ycoord] = true;
-	pair<int, int> validChamCoords {xcoord, ycoord};
-	if(defaultGrid[xcoord][ycoord] == '.') {
-		newChamber.chamberCoords.emplace_back(validChamCoords);
-	}
-	if(defaultGrid[xcoord + 1][ycoord] == '.' && checkedGrid[xcoord + 1][ycoord] ==  false) {
-		recursiveChamber(xcoord + 1, ycoord, newChamber, checkedGrid);
-	}
-	if(defaultGrid[xcoord - 1][ycoord] == '.' && checkedGrid[xcoord - 1][ycoord] == false) {
-		recursiveChamber(xcoord - 1, ycoord, newChamber, checkedGrid);
-	}
-	if(defaultGrid[xcoord][ycoord + 1] == '.' && checkedGrid[xcoord][ycoord + 1] == false) {
-		recursiveChamber(xcoord, ycoord + 1, newChamber, checkedGrid);
-	}
-	if(defaultGrid[xcoord][ycoord - 1] == '.' && checkedGrid[xcoord][ycoord - 1] == false) {
-		recursiveChamber(xcoord, ycoord - 1, newChamber, checkedGrid)
-	}
-
 }
