@@ -376,7 +376,7 @@ void Floor::movePlayer(string direction) {
 	}
 	else if (nextPos == 'G') {
 		auto g = findGold(checkCoords);
-		if (g->canPick()) {
+		if (g->canPickup()) {
 			g->getPickedBy(*myPlayer);
 			removeGold(checkCoords);
 		} else {
@@ -420,7 +420,7 @@ pair<int, int> Floor::scanAttack(pair<int, int> coords) {
 	int ycoord = get<1>(coords);
 	pair <int, int> playerCoords {-1, -1};
 	for(int i = -1; i <= 1; ++i) {
-		for(int j = -1; j <= ++j) {
+		for(int j = -1; j <= 1; ++j) {
 			if (theBoard[xcoord + i][ycoord + j] == '@') {
 				get<0>(playerCoords) = xcoord + i;
 				get<1>(playerCoords) = ycoord + j;
@@ -458,7 +458,7 @@ void Floor::moveEnemy() {
 						pair<int, int> scannedCoords = scanAttack(enemyCoords);
 						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
 							int hitMiss = rand() % 2;
-							string enemyName = foundEnemy->getEnemyName()
+							string enemyName = foundEnemy->getEnemyName();
 							if (hitMiss) {
 								int before = myPlayer->getHP();
 								foundEnemy->attack(*myPlayer);
@@ -534,7 +534,7 @@ void Floor::playerAttack(string direction) {
 		view->addMessage(enemyName);
 		view->addMessage(". Amount of damage dealt was: ");
 		view->addMessage(damageDealt);
-		view->addMessage(".")
+		view->addMessage(".");
 		if (foundEnemy->getHP() == 0) {
 			foundEnemy->whenDead(*myPlayer);
 			removeEnemy(enemyCoords);
