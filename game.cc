@@ -12,7 +12,7 @@ void Game::display() {
 	view->display();
 }
 
-void Game::init(bool filePresent,char *floorPlan) {
+void Game::init(bool filePresent,string floorPlan) {
 	floorNum += 1;
 	if (floorNum == 6) {
 		// Print victory stuff. 

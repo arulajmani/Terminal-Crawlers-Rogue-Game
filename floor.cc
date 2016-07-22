@@ -61,7 +61,7 @@ void Floor::makeChamber() {
 
 
 
-Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view}{
+Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view}{
 	try {
 		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);

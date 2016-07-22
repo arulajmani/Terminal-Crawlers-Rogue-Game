@@ -18,7 +18,7 @@ public:
 	Game();
 	~Game();
 
-	void init(bool filePresent, char *floorPlan);
+	void init(bool filePresent, std::string floorPlan);
 	void createPlayer(std::string race);
 	void play();
 	void display();

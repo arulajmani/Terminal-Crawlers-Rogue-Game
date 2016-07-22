@@ -42,15 +42,15 @@ string chooseRace() {
 			cout<<"Choose a player race, or quit the game."<<endl;
 		}	
 	}
-	if (input == "q") {
-		return;
-	}
 	return input;
 }
 
-shared_ptr<Game> restartGame(shared_ptr<Game> game) {
+shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string floorPlan) {
 	game = make_shared<Game>();
 	string input = chooseRace();
+	if (input == "q") {
+		return nullptr;
+	}
 	game->createPlayer(input);
 	game->init(filePresent, floorPlan);
 	cout << "Here is your new starting board"<<endl;
@@ -63,13 +63,16 @@ int main(int argc, char *argv[]) {
 	srand(time(NULL)); // Seeding the rand for the whole game.
 	shared_ptr<Game> game = make_shared<Game>();
 	bool filePresent = false; 
-	char *floorPlan = "default.txt";
+	string floorPlan = "default.txt";
 	if (argc >= 2) { // File was supplied.
 		filePresent = true;
 		floorPlan = argv[1];
 	}
-	greetings();
+	greeting();
 	string input = chooseRace();
+	if (input == "q") {
+		return 0;
+	}
 	game->createPlayer(input);
 	game->init(filePresent, floorPlan);
 	instructions();
@@ -87,10 +90,13 @@ int main(int argc, char *argv[]) {
 				cout << "Please enter a valid command"<<endl;
 			}
 			if (decision == "y") {
-				game = restartGame(game);
+				game = restartGame(game, filePresent, floorPlan);
+				if (game == nullptr) {
+					return 0;
+				}
 			} else {
 				cout << "Thanks for playing CC3K"<< endl;
-				return;
+				return 0;
 			}
 		}
 		string playerMove;
@@ -129,11 +135,12 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		else if(playerMove == "r") {
-			game = restartGame(game);
+			game = restartGame(game, filePresent, floorPlan);
+			if (game == nullptr) {return 0;}
 		}
 		else if (playerMove == "q") {
 			cout <<"Thanks for playing CC3K."<<endl;
-			return;
+			return 0;
 		} else {
 			cout <<"Please enter a valid command"<<endl;
 		}

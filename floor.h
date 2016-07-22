@@ -20,7 +20,7 @@ class Floor {
 	char defaultGrid[numRows][numCols]; // To help with movement and replacement of vacated position
 	Factory factory;
 	bool filePresent;
-	char *floorPlan;
+	std::string floorPlan;
 	std::shared_ptr<View> view;
 
 	std::shared_ptr<Player> myPlayer;
@@ -34,7 +34,7 @@ class Floor {
 	std::pair<int, int> scanDragon(std::pair<int, int> coords);
 
 public:
-	Floor(int floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, char *floorPlan, std::shared_ptr<View> view);
+	Floor(int floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, std::string floorPlan, std::shared_ptr<View> view);
 	~Floor();
 
 	void recursiveChamber(int xcoord, int ycoord, std::shared_ptr<Chamber> newChamber, bool checkedGrid[numRows][numCols]);
