@@ -1,13 +1,13 @@
 #ifndef _GAME_H_
 #define _GAME_H_
-#include <race>
 #include "floor.h"
 #include "factory.h"
 #include "view.h"
+#include <string>
 
 class Game {
 	Factory factory;
-	Floor *floor;
+	std::shared_ptr<Floor> floor;
 	std::shared_ptr<Player> myPlayer;
 	int floorNum;
 	std::shared_ptr<View> view;
@@ -21,6 +21,11 @@ public:
 	void play();
 	void display();
 
+	void movePlayer(std::string direction);
+	// Not made
+	void usePotion(std::string direction);
+	void attackEnemy(std::string direction);
+	bool isDead();
 };
 
 #endif

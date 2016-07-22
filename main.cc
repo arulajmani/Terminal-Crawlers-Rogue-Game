@@ -1,5 +1,11 @@
 #include "game.h"
+#include <ctime>
+#include <vector>
+#include <algorithm>
 using namespace std;
+#include <iostream>
+
+vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
 
 void greeting() {
 	cout << "Welcome to Chamber Crawler 3000. Choose your race from any of: h, e, o, d."<<endl;
@@ -20,19 +26,9 @@ void instructions() {
 
 }
 
-
-int main(int argc, char *argv[]) {
-	srand(time(null)); // Seeding the rand for the whole game.
-	game = new Game{};
-	bool filePresent = false; 
-	char *floorPlan = "default.txt";
-	if (argc >= 2) { // File was supplied.
-		filePresent = true;
-		floorPlan = argv[1];
-	}
-	greetings();
-	cin.exceptions(ios::failbit|ios::eofbit);
+string chooseRace() {
 	string input;
+	cin.exceptions(ios::failbit|ios::eofbit);
 	while(true) {
 		try {
 			cin >> input;
@@ -49,9 +45,97 @@ int main(int argc, char *argv[]) {
 	if (input == "q") {
 		return;
 	}
+	return input;
+}
+
+shared_ptr<Game> restartGame(shared_ptr<Game> game) {
+	game = make_shared<Game>();
+	string input = chooseRace();
+	game->createPlayer(input);
+	game->init(filePresent, floorPlan);
+	cout << "Here is your new starting board"<<endl;
+	game->display();
+	return game;
+}
+
+
+int main(int argc, char *argv[]) {
+	srand(time(NULL)); // Seeding the rand for the whole game.
+	shared_ptr<Game> game = make_shared<Game>();
+	bool filePresent = false; 
+	char *floorPlan = "default.txt";
+	if (argc >= 2) { // File was supplied.
+		filePresent = true;
+		floorPlan = argv[1];
+	}
+	greetings();
+	string input = chooseRace();
 	game->createPlayer(input);
 	game->init(filePresent, floorPlan);
 	instructions();
 	cout << "Here is the starting board"<<endl;
 	game->display();
+	cin.exceptions(ios::failbit|ios::eofbit);
+	// Set up, now allow player interaction and him to make moves.
+	while(true) {
+		if (game->isDead()) {
+			cout << "You lost the game, the player is dead. Would you like to play again? (y/n)"<<endl;
+			string decision;
+			try {
+				cin >> decision;
+			} catch (ios::failure&) {
+				cout << "Please enter a valid command"<<endl;
+			}
+			if (decision == "y") {
+				game = restartGame(game);
+			} else {
+				cout << "Thanks for playing CC3K"<< endl;
+				return;
+			}
+		}
+		string playerMove;
+		try {
+			cin >> playerMove;
+		} catch(ios::failure&) {
+			cout << "Please enter a valid command."<<endl;
+		}
+		if (find(directions.begin(), directions.end(), playerMove) != directions.end()) {
+			game->movePlayer(playerMove);
+		}
+		else if (playerMove == "u") {
+			string direction;
+			try {
+				cin >> direction;
+			} catch(ios::failure&) {
+				cout << " Please enter a valid command. "<<endl;
+			}
+			if (find(directions.begin(), directions.end(), direction) != directions.end()){
+				game->usePotion(direction);
+			} else {
+				cout << "The direction you entered was not valid. "<<endl;
+			}
+		}
+		else if(playerMove == "a") {
+			string direction;
+			try {
+				cin >> direction;
+			} catch(ios::failure&) {
+				cout << " Please enter a valid command. "<<endl;
+			}
+			if (find(directions.begin(), directions.end(), direction) != directions.end()){
+				game->attackEnemy(direction);
+			} else {
+				cout << "The direction you entered was not valid. "<<endl;
+			}
+		}
+		else if(playerMove == "r") {
+			game = restartGame(game);
+		}
+		else if (playerMove == "q") {
+			cout <<"Thanks for playing CC3K."<<endl;
+			return;
+		} else {
+			cout <<"Please enter a valid command"<<endl;
+		}
+	}
 }
