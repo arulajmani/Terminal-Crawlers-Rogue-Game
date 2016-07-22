@@ -2,7 +2,7 @@
 #include <algorithm> 
 using namespace std;
 
-Chamber::Chamber() {}
+Chamber::Chamber(int chamberNum, vector <pair<int, int>> v):chamberNum{chamberNum}, v{v}{}
 Chamber::~Chamber() {}
 
 pair<int, int> Chamber::placeElement() {

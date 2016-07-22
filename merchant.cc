@@ -19,6 +19,3 @@ bool Merchant::isHostile(){
 	return hostile;
 }
 
-void Merchant::whenDead(Player &p){
-	p.pickItem(merchantHoard); //this should add the value of nh to p's gold
-}

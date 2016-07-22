@@ -5,9 +5,11 @@
 #include <vector>
 
 class Chamber: public Floor {
-	std::vector<std::pair<int, int>> chamberCoords;
+	int chamberNum;
+	std::vector <pair<int, int>> validCoords;
+
 public:
-	Chamber();
+	Chamber(int chamberNum, std::vector<pair<int, int>> v);
 	~Chamber();
 
 	std::pair<int, int> placeElement();
