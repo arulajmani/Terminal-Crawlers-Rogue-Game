@@ -238,7 +238,7 @@ void Floor::spawnPotion() {
 		int chamberNum = rand() % 5;
 		int potionNum = rand() % 6;
 		potionVec.emplace_back(factory.createPotion(potionType[potionNum]));
-
+		pair <int, int> potionCoords;
 		do { // Ensure the cell chosen is empty
 			pair <int, int> potionCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(potionCoords)] [get<1>(potionCoords)] != '.');
@@ -255,10 +255,10 @@ void Floor::spawnGold() {
 		int chamberNum = rand() % 5;
 		int goldNum = rand() % 8;
 		goldVec.emplace_back(factory.createGold(goldType[goldNum]));
-
+		pair <int, int> goldCoords;
 		do { // Ensure the cell chosen is empty
 			pair <int, int> goldCoords = chamberVec[chamberNum]->placeElement();
-		}while (theBoard [get<0>(goldCoords)] [get<1>(goldCoordsd)] != '.');
+		}while (theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] != '.');
 
 		goldVec.back()->setCoords(goldCoords);
 		theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] = 'G';
@@ -266,6 +266,7 @@ void Floor::spawnGold() {
 		if (goldNum == 1) { // We created a dragon gold type, so we must spawn the dragon in this case!
 			enemyVec.emplace_back(factory.createEnemy("d"));
 			goldVec.back()->attach(enemyVec.back()); // attach the dragon to the hoard. 
+			pair<int, int> dragonCoords;
 			do {
 				pair<int, int> dragonCoords = chamberVec[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
@@ -282,7 +283,7 @@ void Floor::spawnEnemies() {
 		int chamberNum = rand() % 5;
 		int enemyNum = rand() % 18;
 		enemyVec.emplace_back(factory.createEnemy(enemyType[enemyNum]));
-
+		pair <int, int> enemyCoords;
 		do {
 			pair <int, int> enemyCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(enemyCoords)] [get<1>(enemyCoords)] != '.');
@@ -375,8 +376,8 @@ void Floor::movePlayer(string direction) {
 	}
 	else if (nextPos == 'G') {
 		auto g = findGold(checkCoords);
-		if (g.canPick()) {
-			g.getPickedBy(*myPlayer);
+		if (g->canPick()) {
+			g->getPickedBy(*myPlayer);
 			removeGold(checkCoords);
 		} else {
 			view->addMessage("The dragon gets angrier. gg\n");
@@ -404,8 +405,8 @@ void Floor::scanDragonHoards() {
 	int length = goldVec.size();
 	for (int i = 0; i < length; ++i) {
 		if (goldVec[i]->goldType() == 'd') {
-			pair<int, int> scannedCoords = scanAtack(goldVec[i]->getCoords());
-			bool DragonHostile = false;
+			pair<int, int> scannedCoords = scanAttack(goldVec[i]->getCoords());
+			bool dragonHostile = false;
 			if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
 				dragonHostile = true; // Player is in the vicinity. Dragon should be hostile. 
 			}
@@ -417,7 +418,7 @@ void Floor::scanDragonHoards() {
 pair<int, int> Floor::scanAttack(pair<int, int> coords) {
 	int xcoord = get<0>(coords);
 	int ycoord = get<1>(coords);
-	pair <int, int> playerCoords {-1, -1}
+	pair <int, int> playerCoords {-1, -1};
 	for(int i = -1; i <= 1; ++i) {
 		for(int j = -1; j <= ++j) {
 			if (theBoard[xcoord + i][ycoord + j] == '@') {
@@ -434,7 +435,7 @@ void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possibl
 	int xcoord = get<0>(coords);
 	int ycoord = get<1>(coords);
 	for(int i = -1; i <= 1; ++i) {
-		for(int j = -1; j <= ++j) {
+		for(int j = -1; j <= 1; ++j) {
 			if (theBoard[xcoord + i][ycoord + j] == '.') {
 				pair <int, int> moveCoords;
 				get<0>(moveCoords) = xcoord + i;
@@ -452,7 +453,7 @@ void Floor::moveEnemy() {
 			for(int k = 0; k < 7; ++k) {
 				if (theBoard[i][j] == allEnemies[k]) {
 					pair<int, int> enemyCoords{i, j};
-					auto foundEnemy = findEnemy(coords);
+					auto foundEnemy = findEnemy(enemyCoords);
 					if (foundEnemy->isHostile()) {
 						pair<int, int> scannedCoords = scanAttack(enemyCoords);
 						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
@@ -485,23 +486,23 @@ void Floor::moveEnemy() {
 					}
 					// Move the player now. 
 					vector<pair <int, int>> possible; 
-					possibleMoves(enemyCoords, possible) {
-						int length = possible.size();
-						int move = rand() % length;
-						if(theBoard[i][j] != 'D') {
-							foundEnemy->setCoords(possible[move]); // Move the enemy to new co-ordinates, randomly generated. 
-							theBoard[i][j] = defaultGrid[i][j]; // The vacated co-ordinates
-							view->updateAt(pair<int, int> {i, j}, defaultGrid[i][j]);
-							theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
-							view->updateAt(possible[move], foundEnemy->displayDisplaySymbol());
-						}
+					possibleMoves(enemyCoords, possible); 
+					int length = possible.size();
+					int move = rand() % length;
+					if(theBoard[i][j] != 'D') {
+						foundEnemy->setCoords(possible[move]); // Move the enemy to new co-ordinates, randomly generated. 
+						theBoard[i][j] = defaultGrid[i][j]; // The vacated co-ordinates
+						view->updateAt(pair<int, int> {i, j}, defaultGrid[i][j]);
+						theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
+						view->updateAt(possible[move], foundEnemy->displayDisplaySymbol());
 					}
 				}
 			}
-
 		}
+
 	}
 }
+
 
 void Floor::pickPotion(string direction) {
 	pair<int, int> tentativePotion = myPlayer->checkMove(direction);
@@ -514,7 +515,7 @@ void Floor::pickPotion(string direction) {
 		view->addMessage(itemName);
 		view->addMessage(".\n");
 	} else {
-		view->addMessage("The direction chosen did not contain a potion, no effect on player.\n")
+		view->addMessage("The direction chosen did not contain a potion, no effect on player.\n");
 	}
 }
 
@@ -531,7 +532,7 @@ void Floor::playerAttack(string direction) {
 		string damageDealt = ss.str();
 		view->addMessage("Player attacked the ");
 		view->addMessage(enemyName);
-		view->addMessage(". Amount of damage dealt was: ")
+		view->addMessage(". Amount of damage dealt was: ");
 		view->addMessage(damageDealt);
 		view->addMessage(".")
 		if (foundEnemy->getHP() == 0) {
