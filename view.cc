@@ -31,7 +31,16 @@ void View::display() {
 		}
 		cout<<endl;
 	}
+	int hp = myPlayer->getHP();
+	int atk = myPlayer->getAtk();
+	int def = myPlayer->getDef();
+	int goldAmt = myPlayer->getGold();
+	string race = myPlayer->getRace();
+	cout << "Race: "<< race<< " Gold: "<< goldAmt<<endl;
+	cout<< "HP: "<<hp;
+	cout<<"Attack: "<<atk;
+	cout<<"Defence: "<<def;
 	string message = displayMessage.str();
 	cout<<message;
-	displayMessage.str(""); // From stackoverfow, to reset the string stream. Must check.
+	displayMessage.str(""); // From stackovderfow, to reset the string stream. Must check.
 }
