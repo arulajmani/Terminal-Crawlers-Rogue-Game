@@ -137,6 +137,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, char *
 				goldVec[i]->attach(dragon);
 			}
 		}
+		makeChamber();
 		view->setBoard(theBoard);
 		if(!(filePresent)) { // Must have random generation.
 			spawnPlayer();
@@ -497,4 +498,49 @@ void Floor::playerAttack(string direction) {
 	} else {
 		view->addMessage("Player tried to attack thin air, it was not very effective.\n");
 	}
+}
+
+
+void Floor::makeChamber() {
+	int chamberNum = 1;
+	vector<pair<int, int>> v;
+	bool checkedGrid[numRows][numCols] = {{ false }};
+	for (int i = 0; i < numRows; ++i) {
+		for (int j = 0; j < numCols; ++j) {
+			v.clear();
+			if(defaultGrid[i][j] == '.' && checkedGrid[i][j] == false) {
+				shared_ptr<Chamber> newChamber = new Chamber(chamberNum, v);
+				recursiveChamber(i, j, newChamber, checkedGrid);
+				chamberVec.emplace_back(newChamber);
+				++chamberNum;
+				checkedGrid[i][j] = true;
+			}
+			checkedGrid[i][j] = true;
+		}
+	}
+}
+
+
+void Floor::recursiveChamber(int xcoord, int ycoord, shared_ptr<Chamber> newChamber, bool checkedGrid[numRows][numCols]) {
+
+	if(xcoord < 0 || ycoord < 0 || xcoord >= numRows || ycoord >= numCols) {return;}
+
+	checkedGrid[xcoord][ycoord] = true;
+	pair<int, int> validChamCoords {xcoord, ycoord};
+	if(defaultGrid[xcoord][ycoord] == '.') {
+		newChamber.chamberCoords.emplace_back(validChamCoords);
+	}
+	if(defaultGrid[xcoord + 1][ycoord] == '.' && checkedGrid[xcoord + 1][ycoord] ==  false) {
+		recursiveChamber(xcoord + 1, ycoord, newChamber, checkedGrid);
+	}
+	if(defaultGrid[xcoord - 1][ycoord] == '.' && checkedGrid[xcoord - 1][ycoord] == false) {
+		recursiveChamber(xcoord - 1, ycoord, newChamber, checkedGrid);
+	}
+	if(defaultGrid[xcoord][ycoord + 1] == '.' && checkedGrid[xcoord][ycoord + 1] == false) {
+		recursiveChamber(xcoord, ycoord + 1, newChamber, checkedGrid);
+	}
+	if(defaultGrid[xcoord][ycoord - 1] == '.' && checkedGrid[xcoord][ycoord - 1] == false) {
+		recursiveChamber(xcoord, ycoord - 1, newChamber, checkedGrid)
+	}
+
 }
