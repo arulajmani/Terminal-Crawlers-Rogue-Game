@@ -39,7 +39,7 @@ void View::display() {
 	cout << "Race: "<< race<< " Gold: "<< goldAmt<<endl;
 	cout<< "HP: "<<hp<<endl;
 	cout<<"Attack: "<<atk<<endl;
-	cout<<"Defence: "<<def<<enld;
+	cout<<"Defence: "<<def<<endl;
 	string message = displayMessage.str();
 	cout<<"Action: "<<message;
 	displayMessage.str(""); // From stackoverflow, to reset the string stream. Must check.
