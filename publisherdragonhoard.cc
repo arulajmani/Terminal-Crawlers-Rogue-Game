@@ -7,7 +7,7 @@ PublisherDragonHoard::PublisherDragonHoard():Gold(goldValue, "Dragon Hoard"), dr
 
 PublisherDragonHoard::~PublisherDragonHoard(){}
 
-void PublisherDragonHoard::attach(SubscriberDragon* subDragon){
+void PublisherDragonHoard::attach(shared_ptr <SubscriberDragon> subDragon){
 	dragon = subDragon;
 }
 
