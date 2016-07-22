@@ -1,12 +1,11 @@
 #ifndef _PUBLDRAGHO_H_
 #define _PUBLDRAGHO_H_
 #include "gold.h"
-
 class SubscriberDragon;
 
 class PublisherDragonHoard : public Gold  {
 protected:
-	SubscriberDragon *dragon; // There always has to be one dragon, so not a vector
+	std::shared_ptr <SubscriberDragon> dragon; // There always has to be one dragon, so not a vector
 public: 
 	PublisherDragonHoard();
 	virtual ~PublisherDragonHoard()=0;

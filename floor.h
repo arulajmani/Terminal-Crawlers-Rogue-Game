@@ -3,13 +3,13 @@
 #include "enemy.h"
 #include <vector>
 #include "factory.h"
-#include "view.h"
 
 class Chamber;
+class View;
 
 const int displayRows = 5;
-//const int numRows = 25;
-//const int numCols = 79;
+const int numRows = 25;
+const int numCols = 79;
 const int numItems = 10;
 const int numEnemies = 20;
 const int numChambers = 5;

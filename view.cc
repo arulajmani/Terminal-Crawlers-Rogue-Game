@@ -11,9 +11,9 @@ void View::updateAt(std::pair<int, int> coords, char updateTo) {
 }
 
 
-void View::setBoard(char theBoard[numRows][numCols]) {
-	for(int i = 0; i < numRows; ++i) {
-		for(int j = 0; j < numCols; ++j) {
+void View::setBoard(char theBoard[numberRows][numberCols]) {
+	for(int i = 0; i < numberRows; ++i) {
+		for(int j = 0; j < numberCols; ++j) {
 			displayBoard[i][j] = theBoard[i][j];
 		}
 	}
@@ -25,8 +25,8 @@ void View::addMessage(std::string message) {
 }
 
 void View::display() {
-	for(int i = 0; i < numRows; ++i) {
-		for(int j = 0; j < numCols; ++j) {
+	for(int i = 0; i < numberRows; ++i) {
+		for(int j = 0; j < numberCols; ++j) {
 			cout<<displayBoard[i][j];
 		}
 		cout<<endl;

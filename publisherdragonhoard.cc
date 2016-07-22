@@ -1,5 +1,7 @@
 #include "publisherdragonhoard.h"
 #include "subscriberdragon.h"
+using namespace std;
+
 
 const int goldValue = 8;
 

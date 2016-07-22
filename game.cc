@@ -1,4 +1,5 @@
 #include "game.h"
+#include "view.h"
 
 using namespace std;
 

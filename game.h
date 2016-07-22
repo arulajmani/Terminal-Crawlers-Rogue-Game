@@ -2,10 +2,10 @@
 #define _GAME_H_
 #include "floor.h"
 #include "factory.h"
-#include "view.h"
 #include <string>
 #include "player.h"
 
+class View;
 
 class Game {
 	Factory factory;

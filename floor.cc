@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include "chamber.h"
+#include "view.h"
 
 // Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
 
@@ -189,7 +190,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 		}
 		makeChamber();
 		view->setBoard(theBoard);
-		view->addMessage("Player character has been spawned.\n")
+		view->addMessage("Player character has been spawned.\n");
 		if(!(filePresent)) { // Must have random generation.
 			spawnPlayer();
 		}
