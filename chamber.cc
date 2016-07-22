@@ -20,3 +20,7 @@ pair<int,int> Chamber::placeDragon(std::pair<int, int> goldCoords) {
 	} while( find (validCoords.begin(), validCoords.end(), dragonCoords) == validCoords.end()); // Didn't find the coordinates in chamber, go again.
 	return dragonCoords;
 }
+
+void Chamber::addCoords(std::pair<int, int> coords) {
+	validCoords.emplace_back(coords);
+}

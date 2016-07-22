@@ -38,10 +38,10 @@ public:
 	Factory();
 	~Factory();
 
-	std::shared_ptr<GameElement> createPlayer(std::string race);
-	std::shared_ptr<GameElement> createPotion(std::string potionType);
-	std::shared_ptr<GameElement> createGold(std::string hoardType);
-	std::shared_ptr<GameElement> createEnemy(std::string enemyType);
+	std::shared_ptr<Player> createPlayer(std::string race);
+	std::shared_ptr<Potion> createPotion(std::string potionType);
+	std::shared_ptr<Gold> createGold(std::string hoardType);
+	std::shared_ptr<Enemy> createEnemy(std::string enemyType);
 	
 };
 

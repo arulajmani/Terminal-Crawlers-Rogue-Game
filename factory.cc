@@ -7,8 +7,8 @@ Factory::Factory(){}
 Factory::~Factory(){}
 
 
-shared_ptr<GameElement> Factory::createPlayer(string race) {
-	shared_ptr<GameElement> newPlayer = nullptr;
+shared_ptr<Player> Factory::createPlayer(string race) {
+	shared_ptr<Player> newPlayer = nullptr;
 
 	if(race == "h") {
 		newPlayer = make_shared<Human>();
@@ -26,8 +26,8 @@ shared_ptr<GameElement> Factory::createPlayer(string race) {
 }
 
 
-shared_ptr<GameElement> Factory::createPotion(string potionType) {
-	shared_ptr<GameElement> newPotion = nullptr;
+shared_ptr<Potion> Factory::createPotion(string potionType) {
+	shared_ptr<Potion> newPotion = nullptr;
 
 	if(potionType == "rh") {
 		newPotion = make_shared<RH>();
@@ -51,8 +51,8 @@ shared_ptr<GameElement> Factory::createPotion(string potionType) {
 }
 
 
-shared_ptr<GameElement> Factory::createEnemy(string enemyType) {
-	shared_ptr<GameElement> newEnemy = nullptr;
+shared_ptr<Enemy> Factory::createEnemy(string enemyType) {
+	shared_ptr<Enemy> newEnemy = nullptr;
 
 	if(enemyType == "m") {
 		newEnemy = make_shared<Merchant>();
@@ -78,8 +78,8 @@ shared_ptr<GameElement> Factory::createEnemy(string enemyType) {
 	return newEnemy;
 }
 
-shared_ptr<GameElement> Factory::createGold(string hoardType) {
-	shared_ptr<GameElement> newGold = nullptr;
+shared_ptr<Gold> Factory::createGold(string hoardType) {
+	shared_ptr<Gold> newGold = nullptr;
 
 	if(hoardType == "nh") {
 		newGold = make_shared<NormalHoard>();

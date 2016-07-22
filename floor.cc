@@ -21,7 +21,7 @@ void Floor::recursiveChamber(int xcoord, int ycoord, shared_ptr<Chamber> newCham
 	checkedGrid[xcoord][ycoord] = true;
 	pair<int, int> validChamCoords {xcoord, ycoord};
 	if(defaultGrid[xcoord][ycoord] == '.') {
-		newChamber.validCoords.emplace_back(validChamCoords);
+		newChamber->addCoords(validChamCoords);
 	}
 	if(defaultGrid[xcoord + 1][ycoord] == '.' && checkedGrid[xcoord + 1][ycoord] ==  false) {
 		recursiveChamber(xcoord + 1, ycoord, newChamber, checkedGrid);
@@ -46,7 +46,8 @@ void Floor::makeChamber() {
 		for (int j = 0; j < numCols; ++j) {
 			v.clear();
 			if(defaultGrid[i][j] == '.' && checkedGrid[i][j] == false) {
-				shared_ptr<Chamber> newChamber = make_shared<Chamber(chamberNum, v)>();
+				shared_ptr<Chamber> newChamber;
+				newChamber = make_shared<Chamber>(chamberNum, v);
 				recursiveChamber(i, j, newChamber, checkedGrid);
 				chamberVec.emplace_back(newChamber);
 				++chamberNum;
