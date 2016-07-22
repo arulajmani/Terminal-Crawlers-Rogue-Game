@@ -9,7 +9,7 @@ ConcreteDragonHoard::~ConcreteDragonHoard(){}
 }*/
 
 void ConcreteDragonHoard::getPickedBy(Player &p) {
-	p.PickItem(*this);
+	p.pickItem(*this);
 }
 
 char ConcreteDragonHoard::goldType() {

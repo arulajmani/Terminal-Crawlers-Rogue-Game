@@ -1,10 +1,10 @@
 #include "wa.h"
 
-const int hpChange = 0;
-const int atkChange = -5;
-const int defChange = 0;
+const int hpDelt = 0;
+const int atkDelt = -5;
+const int defDelt = 0;
 
-WA::WA():Potion(hpChange, atkChange, defChange, "Wound Attack"){}
+WA::WA():Potion(hpDelt, atkDelt, defDelt, "Wound Attack"){}
 
 WA::~WA(){}
 

@@ -9,6 +9,7 @@ public:
 	~ConcreteDragonHoard();
 	void getPickedBy(Player &p);
 	void detatchObservers();
+	char goldType();
 	//bool getState(); // To check if the player is within one step of the haord
 	// Will be used in isHostile of the dragon.
 

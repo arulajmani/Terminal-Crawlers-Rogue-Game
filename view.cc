@@ -33,5 +33,4 @@ void View::display() {
 	string message = dispalyMessage.str();
 	cout<<message;
 	displayMessage(string()); // From stackoverfow, to reset the string stream. Must check.
-
 }
