@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-
+#include <iostream>
 
 vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
 

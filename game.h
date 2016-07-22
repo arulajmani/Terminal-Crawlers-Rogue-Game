@@ -1,6 +1,5 @@
 #ifndef _GAME_H_
 #define _GAME_H_
-#include "race"
 #include "floor.h"
 #include "factory.h"
 #include "view.h"
