@@ -17,4 +17,6 @@ public:
 	void setBoard(char theBoard[numRows][numCols]);
 	void addMessage(std::string message);
 	void display();
-}
+};
+
+#endif

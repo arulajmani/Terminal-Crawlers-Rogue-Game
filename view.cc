@@ -1,4 +1,5 @@
 #include "view.h"
+#include <iostream>
 
 using namespace std;
 
@@ -6,7 +7,7 @@ View::View() {}
 View::~View() {}
 
 void View::updateAt(std::pair<int, int> coords, char updateTo) {
-	displayBoard[get<0>(coords)][get<1>coords] = updateTo;
+	displayBoard[get<0>(coords)][get<1>(coords)] = updateTo;
 }
 
 
@@ -20,7 +21,7 @@ void View::setBoard(char theBoard[numRows][numCols]) {
 
 
 void View::addMessage(std::string message) {
-	dispalyMessage << message;
+	displayMessage << message;
 }
 
 void View::display() {
@@ -30,7 +31,7 @@ void View::display() {
 		}
 		cout<<endl;
 	}
-	string message = dispalyMessage.str();
+	string message = displayMessage.str();
 	cout<<message;
-	displayMessage(string()); // From stackoverfow, to reset the string stream. Must check.
+	displayMessage.str(""); // From stackoverfow, to reset the string stream. Must check.
 }
