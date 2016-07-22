@@ -4,6 +4,8 @@
 #include "factory.h"
 #include "view.h"
 #include <string>
+#include "player.h"
+
 
 class Game {
 	Factory factory;

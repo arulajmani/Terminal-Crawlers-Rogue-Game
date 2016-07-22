@@ -1,12 +1,14 @@
 #include "game.h"
 
-Game::Game(): floorNum{0} myPlayer{nullptr}, floor{nullptr} {
+using namespace std;
+
+Game::Game(): floorNum{0}, myPlayer{nullptr}, floor{nullptr} {
 	view = make_shared<View>();
 } 
 
 Game::~Game() {}
 
-void Game::Display() {
+void Game::display() {
 	view->display();
 }
 
