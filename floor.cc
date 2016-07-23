@@ -63,169 +63,171 @@ void Floor::makeChamber() {
 
 
 
-Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view}{
+Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view} {
 	try {
-		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);
-		int startRead = (floorNum - 1) * numRows;
-		for (int i = 0; i < startRead; ++i) {
-			string discard;
-			getline(f, discard);
-		}
-		for(int i = 0; i < numRows; ++i) {
-			string row;
-			getline(f, row);
-			for(int j = 0; j < numCols; ++j) {
-				defaultGrid[i][j] = row[j];
-				char curr = row[j];
-				theBoard[i][j] = curr;
-				pair <int, int> currCoords{i, j};
-				if (curr == '@') {
-					myPlayer->setCoords(currCoords);
-					defaultGrid[i][j] = '.';
-				}
-				else if(curr == 'M') {
-					auto merchant = factory.createEnemy("m");
-					merchant->setCoords(currCoords);
-					enemyVec.emplace_back(merchant);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == 'X') {
-					auto phoenix = factory.createEnemy("p");
-					phoenix->setCoords(currCoords);
-					enemyVec.emplace_back(phoenix);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == 'W') {
-					auto wwolf = factory.createEnemy("w");
-					wwolf->setCoords(currCoords);
-					enemyVec.emplace_back(wwolf);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == 'T') {
-					auto troll = factory.createEnemy("t");
-					troll->setCoords(currCoords);
-					enemyVec.emplace_back(troll);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == 'V') {
-					auto twilight = factory.createEnemy("v");
-					twilight->setCoords(currCoords);
-					enemyVec.emplace_back(twilight);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == 'N') {
-					auto osbourne = factory.createEnemy("g");
-					osbourne->setCoords(currCoords);
-					enemyVec.emplace_back(osbourne);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == 'D') {
-					auto eragon = factory.createEnemy("d");
-					eragon->setCoords(currCoords);
-					enemyVec.emplace_back(eragon);
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == '0') {
-					auto potion = factory.createPotion("rh");
-					potion->setCoords(currCoords);
-					potionVec.emplace_back(potion);
-					defaultGrid[i][j] = '.';
+		ifstream f{floorPlan};
+	}
+	catch(ios::failure&) {
+		view->addMessage("File not present, you must try again.");
+	}
+
+	int startRead = (floorNum - 1) * numRows;
+	for (int i = 0; i < startRead; ++i) {
+		string discard;
+		getline(f, discard);
+	}
+	for(int i = 0; i < numRows; ++i) {
+		string row;
+		getline(f, row);
+		for(int j = 0; j < numCols; ++j) {
+			defaultGrid[i][j] = row[j];
+			char curr = row[j];
+			theBoard[i][j] = curr;
+			pair <int, int> currCoords{i, j};
+			if (curr == '@') {
+				myPlayer->setCoords(currCoords);
+				defaultGrid[i][j] = '.';
+			}
+			else if(curr == 'M') {
+				auto merchant = factory.createEnemy("m");
+				merchant->setCoords(currCoords);
+				enemyVec.emplace_back(merchant);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == 'X') {
+				auto phoenix = factory.createEnemy("p");
+				phoenix->setCoords(currCoords);
+				enemyVec.emplace_back(phoenix);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == 'W') {
+				auto wwolf = factory.createEnemy("w");
+				wwolf->setCoords(currCoords);
+				enemyVec.emplace_back(wwolf);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == 'T') {
+				auto troll = factory.createEnemy("t");
+				troll->setCoords(currCoords);
+				enemyVec.emplace_back(troll);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == 'V') {
+				auto twilight = factory.createEnemy("v");
+				twilight->setCoords(currCoords);
+				enemyVec.emplace_back(twilight);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == 'N') {
+				auto osbourne = factory.createEnemy("g");
+				osbourne->setCoords(currCoords);
+				enemyVec.emplace_back(osbourne);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == 'D') {
+				auto eragon = factory.createEnemy("d");
+				eragon->setCoords(currCoords);
+				enemyVec.emplace_back(eragon);
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == '0') {
+				auto potion = factory.createPotion("rh");
+				potion->setCoords(currCoords);
+				potionVec.emplace_back(potion);
+				defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '1') {
 					auto potion = factory.createPotion("ba");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
-					theBoard[i][j] = 'P'; // Must be displayed as P
-					defaultGrid[i][j] = '.';
-				}
-				else if (curr == '2') {
-					auto potion = factory.createPotion("bd");
-					potion->setCoords(currCoords);
-					potionVec.emplace_back(potion);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'P'; // Must be displayed as P
-				}
-				else if (curr == '3') {
-					auto potion = factory.createPotion("ph");
-					potion->setCoords(currCoords);
-					potionVec.emplace_back(potion);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'P'; // Must be displayed as P
-				}
-				else if (curr == '4') {
-					auto potion = factory.createPotion("wa");
-					potion->setCoords(currCoords);
-					potionVec.emplace_back(potion);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'P'; // Must be displayed as P
-				}
-				else if (curr == '5') {
-					auto potion = factory.createPotion("wd");
-					potion->setCoords(currCoords);
-					potionVec.emplace_back(potion);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'P'; // Must be displayed as P
-				}
-				else if (curr == '6') {
-					cout << "gold 6" << endl;
-					auto gold = factory.createGold("nh");
-					gold->setCoords(currCoords);
-					goldVec.emplace_back(gold);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'G'; // Must be displayed as P
-				}
-				else if (curr == '7') {
-					cout << "gold 7" << endl;
-					auto gold = factory.createGold("sh");
-					gold->setCoords(currCoords);
-					goldVec.emplace_back(gold);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'G'; // Must be displayed as P
-				}
-				else if (curr == '8') {
-					cout << "gold 8" << endl;
-					auto gold = factory.createGold("mh");
-					gold->setCoords(currCoords);
-					goldVec.emplace_back(gold);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'G'; // Must be displayed as P
-				}
-				else if (curr == '9') {
-					cout << "gold 9" << endl;
-					auto gold = factory.createGold("dh");
-					gold->setCoords(currCoords);
-					goldVec.emplace_back(gold);
-					defaultGrid[i][j] = '.';
-					theBoard[i][j] = 'G'; // Must be displayed as P
-				}
+				theBoard[i][j] = 'P'; // Must be displayed as P
+				defaultGrid[i][j] = '.';
+			}
+			else if (curr == '2') {
+				auto potion = factory.createPotion("bd");
+				potion->setCoords(currCoords);
+				potionVec.emplace_back(potion);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'P'; // Must be displayed as P
+			}
+			else if (curr == '3') {
+				auto potion = factory.createPotion("ph");
+				potion->setCoords(currCoords);
+				potionVec.emplace_back(potion);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'P'; // Must be displayed as P
+			}
+			else if (curr == '4') {
+				auto potion = factory.createPotion("wa");
+				potion->setCoords(currCoords);
+				potionVec.emplace_back(potion);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'P'; // Must be displayed as P
+			}
+			else if (curr == '5') {
+				auto potion = factory.createPotion("wd");
+				potion->setCoords(currCoords);
+				potionVec.emplace_back(potion);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'P'; // Must be displayed as P
+			}
+			else if (curr == '6') {
+				cout << "gold 6" << endl;
+				auto gold = factory.createGold("nh");
+				gold->setCoords(currCoords);
+				goldVec.emplace_back(gold);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'G'; // Must be displayed as P
+			}
+			else if (curr == '7') {
+				cout << "gold 7" << endl;
+				auto gold = factory.createGold("sh");
+				gold->setCoords(currCoords);
+				goldVec.emplace_back(gold);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'G'; // Must be displayed as P
+			}
+			else if (curr == '8') {
+				cout << "gold 8" << endl;
+				auto gold = factory.createGold("mh");
+				gold->setCoords(currCoords);
+				goldVec.emplace_back(gold);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'G'; // Must be displayed as P
+			}
+			else if (curr == '9') {
+				cout << "gold 9" << endl;
+				auto gold = factory.createGold("dh");
+				gold->setCoords(currCoords);
+				goldVec.emplace_back(gold);
+				defaultGrid[i][j] = '.';
+				theBoard[i][j] = 'G'; // Must be displayed as P
 			}
 		}
-		for(int i = 0; i < goldVec.size(); ++i) {
-			if (goldVec[i]->goldType() == 'd') {
-				auto dragonHoardCoords = goldVec[i]->getCoords();
-				auto dragonCoords = scanDragon(dragonHoardCoords);
-				auto dragon = findEnemy(dragonCoords);
-				shared_ptr<ConcreteDragon> dragonCast = static_pointer_cast<ConcreteDragon>(dragon);
-				shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec[i]);
-				castDragonHoard->attach(dragonCast);
-				dragonCast->attachHoard(castDragonHoard);
-			}
+	}
+	for(int i = 0; i < goldVec.size(); ++i) {
+		if (goldVec[i]->goldType() == 'd') {
+			auto dragonHoardCoords = goldVec[i]->getCoords();
+			auto dragonCoords = scanDragon(dragonHoardCoords);
+			auto dragon = findEnemy(dragonCoords);
+			shared_ptr<ConcreteDragon> dragonCast = static_pointer_cast<ConcreteDragon>(dragon);
+			shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec[i]);
+			castDragonHoard->attach(dragonCast);
+			dragonCast->attachHoard(castDragonHoard);
 		}
-		makeChamber();
-		view->setBoard(theBoard);
-		view->addMessage("Player character has been spawned.");
-		if(!(filePresent)) { // Must have random generation.
-			spawnPlayer();
-		}
-	} catch(ios::failure&) {
-		view->addMessage("File not present, you must try again.");
+	}
+	makeChamber();
+	cout << "Here here" << endl;
+	view->setBoard(theBoard);
+	view->addMessage("Player character has been spawned.");
+	if(!(filePresent)) { // Must have random generation.
+		spawnPlayer();		
 	}
 }
 
 Floor::~Floor() {}
-
 
 pair<int, int> Floor::scanDragon(pair<int, int> coords) {
 	int xcoord = get<0>(coords);
