@@ -220,7 +220,6 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 		}
 	}
 	makeChamber();
-	cout << "Here here" << endl;
 	view->setBoard(theBoard);
 	view->addMessage("Player character has been spawned.");
 	if(!(filePresent)) { // Must have random generation.
