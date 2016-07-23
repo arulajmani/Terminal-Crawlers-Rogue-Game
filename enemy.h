@@ -9,6 +9,7 @@
 class Enemy: public Character {
 	char displaySymbol;
 	std::string enemyName;
+	bool moved;
 
 public:
 	Enemy(int hp, int atk, int def, char displaySymbol, std::string enemyName);
@@ -18,6 +19,9 @@ public:
 										// to player p
 	char displayDisplaySymbol();
 	std::string getEnemyName();
+
+	bool hasMoved(); // Returns true if the enemy has moved on current turn.
+	void setMoved(bool state);
 
 };
 

@@ -413,31 +413,31 @@ void Floor::movePlayer(string direction) {
 		if (g->canPickup()) {
 			g->getPickedBy(*myPlayer);
 			removeGold(checkCoords);
-			// Gold has been picked up, now you must move over the grid as normal.
+				// Gold has been picked up, now you must move over the grid as normal.
 			char defaultSymbol = defaultGrid[get<0>(playerCoords)][get<1>(playerCoords)];
 			theBoard[get<0>(playerCoords)][get<1>(playerCoords)] = defaultSymbol;
-			view->updateAt(playerCoords, defaultSymbol); // Update previous coords as default coords in view.
-			// Replace theBoard with default symbol at the vacated position.
-			theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
-			view->updateAt(checkCoords, '@');
-			myPlayer->setCoords(checkCoords);
-	} else {
-		view->addMessage("The dragon gets angrier. gg");
-	}
-}
-else if (nextPos == '-' || nextPos == '|') {
-	view->addMessage("Ooops watch where you're going eh? gg");
-}
-else if (nextPos == '\\') {
-	if (floorNum != 5) {
-		view->addMessage("On to the next floor there, eh? gg");
-	}
-	else {
-		view->addMessage("You're the man now, eh? gg");
+				view->updateAt(playerCoords, defaultSymbol); // Update previous coords as default coords in view.
+				// Replace theBoard with default symbol at the vacated position.
+				theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
+				view->updateAt(checkCoords, '@');
+				myPlayer->setCoords(checkCoords);
+			} else {
+				view->addMessage("The dragon gets angrier. gg");
+			}
+		}
+		else if (nextPos == '-' || nextPos == '|') {
+			view->addMessage("Ooops watch where you're going eh? gg");
+		}
+		else if (nextPos == '\\') {
+			if (floorNum != 5) {
+				view->addMessage("On to the next floor there, eh? gg");
+			}
+			else {
+				view->addMessage("You're the man now, eh? gg");
 			// Game ends
-	}
-	return;
-}
+			}
+			return;
+		}
 	else { // Enemy case
 		view->addMessage("Player tried to move on a spot occupied by an enemy. Player should try attacking instead. ");
 	}
@@ -479,7 +479,7 @@ void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possibl
 	int ycoord = get<1>(coords);
 	for(int i = -1; i <= 1; ++i) {
 		for(int j = -1; j <= 1; ++j) {
-			if (theBoard[xcoord + i][ycoord + j] == '.' && (i != 0 || j != 0)) {
+			if (theBoard[xcoord + i][ycoord + j] == '.' && !(i == 0 && j == 0)) {
 				pair <int, int> moveCoords;
 				get<0>(moveCoords) = xcoord + i;
 				get<1>(moveCoords) = ycoord + j;
@@ -496,9 +496,14 @@ void Floor::moveEnemies() {
 			for(int k = 0; k < 7; ++k) {
 				if (theBoard[i][j] == allEnemies[k]) {
 					pair<int, int> enemyCoords{i, j};
-					
 					auto foundEnemy = findEnemy(enemyCoords);
-					cout << foundEnemy->getEnemyName()<<endl;
+					if (foundEnemy->hasMoved()) {
+						break; // Enemy has already moved on this turn.
+					} else {
+						foundEnemy->setMoved(true);
+						// To avoid more than one moves, the enemy has not mvoed this turn.
+						// Allow it to move, and set it's moved to reflect that.
+					}
 					if (foundEnemy->isHostile()) {
 						pair<int, int> scannedCoords = scanAttack(enemyCoords);
 						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
@@ -511,7 +516,7 @@ void Floor::moveEnemies() {
 								int damage = before - myPlayer->getHP();
 								ss << damage;
 								string damageDealt = ss.str();
-								view->addMessage("The ");
+								view->addMessage(" The ");
 								view->addMessage(enemyName);
 								view->addMessage(" attacked the player. It resulted in HP loss of ");
 								view->addMessage(damageDealt);
@@ -522,7 +527,7 @@ void Floor::moveEnemies() {
 								view->addMessage(" tried to attack the player, but he missed.");
 							}
 							if (myPlayer->getHP() == 0) {
-								view->addMessage("The player's HP has reached 0, you lost the game."); // Restart etc has to be done.
+								view->addMessage(" The player's HP has reached 0, you lost the game."); // Restart etc has to be done.
 								return;
 								// Game over.
 							}
@@ -546,6 +551,10 @@ void Floor::moveEnemies() {
 			}
 		}
 
+	}
+	// Reset the move in every enemy. 
+	for(int i = 0; i < enemyVec.size(); ++i) {
+		enemyVec[i]->setMoved(false);
 	}
 }
 
@@ -584,7 +593,7 @@ void Floor::playerAttack(string direction) {
 		if (foundEnemy->getHP() == 0) {
 			foundEnemy->whenDead(*myPlayer);
 			removeEnemy(enemyCoords);
-			view->addMessage("Player managed to kill the ");
+			view->addMessage(" Player managed to kill the ");
 			view->addMessage(enemyName);
 			view->addMessage(".");
 		}
