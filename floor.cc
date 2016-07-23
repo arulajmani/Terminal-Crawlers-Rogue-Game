@@ -590,6 +590,9 @@ void Floor::playerAttack(string direction) {
 		view->addMessage(". Amount of damage dealt was: ");
 		view->addMessage(damageDealt);
 		view->addMessage(".");
+		if (enemyName == "Merchant") {
+			static_pointer_cast<Merchant>(foundEnemy)->makeHostile();
+		}
 		if (foundEnemy->getHP() == 0) {
 			foundEnemy->whenDead(*myPlayer);
 			removeEnemy(enemyCoords);
