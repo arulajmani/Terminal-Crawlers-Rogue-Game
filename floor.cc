@@ -198,6 +198,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 				}
 			}
 		}
+		cout << goldVec.size() << endl;
 		for(int i = 0; i < goldVec.size(); ++i) {
 			if (goldVec[i]->goldType() == 'd') {
 				auto dragonHoardCoords = goldVec[i]->getCoords();
