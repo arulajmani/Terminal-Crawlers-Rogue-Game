@@ -169,6 +169,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '6') {
+					cout << "gold 6" << endl;
 					auto gold = factory.createGold("nh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
@@ -176,6 +177,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 				else if (curr == '7') {
+					cout << "gold 7" << endl;
 					auto gold = factory.createGold("sh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
@@ -183,6 +185,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 				else if (curr == '8') {
+					cout << "gold 8" << endl;
 					auto gold = factory.createGold("mh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
@@ -190,6 +193,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 				else if (curr == '9') {
+					cout << "gold 9" << endl;
 					auto gold = factory.createGold("dh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
@@ -198,7 +202,6 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 				}
 			}
 		}
-		cout << goldVec.size() << endl;
 		for(int i = 0; i < goldVec.size(); ++i) {
 			if (goldVec[i]->goldType() == 'd') {
 				auto dragonHoardCoords = goldVec[i]->getCoords();
