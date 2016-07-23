@@ -1,7 +1,7 @@
 #include "troll.h"
 
 using namespace std;
-const int hpVal = 120;
+const int hpVal = 120; 
 const int atkVal = 25;
 const int defVal = 15;
 

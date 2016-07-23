@@ -2,6 +2,7 @@
 #include "potion.h"
 #include "gold.h"
 using namespace std;
+#include <iostream>
 
 Player::Player(string race, int hp, int atk, int def): Character{hp, atk, def}, race{race}, levelAtk{0}, levelDef{0}, gold{0} {}
 Player::~Player() {}
@@ -43,13 +44,13 @@ void Player::pickItem(Gold &g) {
 }
 
 void Player::pickItem(Potion &p) {
-	if (levelAtk + p.getAtkChange() < 0) {
+	if (this->getAtk() + p.getAtkChange() < 0) {
 		levelAtk = 0;
 	} else {
 		levelAtk += p.getAtkChange();
 	}
 
-	if (levelDef + p.getDefChange() < 0) {
+	if (this->getDef() + p.getDefChange() < 0) {
 		levelDef = 0;
 	} else {
 		levelDef += p.getDefChange();
@@ -64,11 +65,11 @@ void Player::pickItem(Potion &p) {
 pair<int, int> Player::checkMove(string direction) {
 	pair <int, int> checkCoords = this->getCoords();
 	if (direction == "no") {
-		get<0>(checkCoords) += 1;
+		get<0>(checkCoords) += -1;
 		get<1>(checkCoords) += 0;
 	}
 	if (direction == "so") {
-		get<0>(checkCoords) += -1;
+		get<0>(checkCoords) += 1;
 		get<1>(checkCoords) += 0;
 	}
 	if (direction == "ea") {
@@ -80,19 +81,19 @@ pair<int, int> Player::checkMove(string direction) {
 		get<1>(checkCoords) += -1;
 	}
 	if (direction == "nw") {
-		get<0>(checkCoords) += 1;
+		get<0>(checkCoords) += -1;
 		get<1>(checkCoords) += -1;
 	}
 	if (direction == "ne") {
-		get<0>(checkCoords) += 1;
+		get<0>(checkCoords) += -1;
 		get<1>(checkCoords) += 1;
 	}
 	if (direction == "se") {
-		get<0>(checkCoords) += -1;
+		get<0>(checkCoords) += 1;
 		get<1>(checkCoords) += 1;
 	}
 	if (direction == "sw") {
-		get<0>(checkCoords) += -1;
+		get<0>(checkCoords) += 1;
 		get<1>(checkCoords) += -1;
 	}
 	return checkCoords;

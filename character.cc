@@ -1,5 +1,6 @@
 #include "character.h"
 #include <cmath>
+#include <iostream>
 using namespace std; 
 
 Character::Character(int hp, int atk, int def): hp{hp}, atk{atk}, def{def}, alive{true} {}
@@ -42,8 +43,8 @@ void Character::attack(Character &c) {
 	int beforeHP = c.getHP();
 	int defenderDef = c.getDef();
 	int attackerAtk = this->getAtk();
-	int damage = ceil( (100 / ( 100 + defenderDef)) * attackerAtk);
-	int newHP = beforeHP - damage;
+	float damage = ceil((100.0 / ( 100.0 + static_cast<float>(defenderDef)) * static_cast<float>(attackerAtk)));
+	int newHP = beforeHP - static_cast<int>(damage);
 	if (newHP < 0) {
 		newHP = 0;
 	}

@@ -65,10 +65,9 @@ void Floor::makeChamber() {
 
 Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view}{
 	try {
-		cout << "Entered floor constructor"<<endl;
 		ifstream f{floorPlan};
 		f.exceptions(ios::failbit|ios::eofbit);
-		int startRead = (floorNum - 1) * numRows + 1;
+		int startRead = (floorNum - 1) * numRows;
 		for (int i = 0; i < startRead; ++i) {
 			string discard;
 			getline(f, discard);
@@ -76,52 +75,62 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 		for(int i = 0; i < numRows; ++i) {
 			string row;
 			getline(f, row);
-			for(int j = 0; j < numCols; ++i) {
+			for(int j = 0; j < numCols; ++j) {
+				defaultGrid[i][j] = row[j];
 				char curr = row[j];
 				theBoard[i][j] = curr;
 				pair <int, int> currCoords{i, j};
 				if (curr == '@') {
 					myPlayer->setCoords(currCoords);
+					defaultGrid[i][j] = '.';
 				}
 				else if(curr == 'M') {
 					auto merchant = factory.createEnemy("m");
 					merchant->setCoords(currCoords);
 					enemyVec.emplace_back(merchant);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == 'X') {
 					auto phoenix = factory.createEnemy("p");
 					phoenix->setCoords(currCoords);
 					enemyVec.emplace_back(phoenix);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == 'W') {
 					auto wwolf = factory.createEnemy("w");
 					wwolf->setCoords(currCoords);
 					enemyVec.emplace_back(wwolf);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == 'T') {
 					auto troll = factory.createEnemy("t");
 					troll->setCoords(currCoords);
 					enemyVec.emplace_back(troll);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == 'V') {
 					auto twilight = factory.createEnemy("v");
 					twilight->setCoords(currCoords);
 					enemyVec.emplace_back(twilight);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == 'N') {
 					auto osbourne = factory.createEnemy("g");
 					osbourne->setCoords(currCoords);
 					enemyVec.emplace_back(osbourne);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == 'D') {
 					auto eragon = factory.createEnemy("d");
 					eragon->setCoords(currCoords);
 					enemyVec.emplace_back(eragon);
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == '0') {
 					auto potion = factory.createPotion("rh");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '1') {
@@ -129,53 +138,62 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
 					theBoard[i][j] = 'P'; // Must be displayed as P
+					defaultGrid[i][j] = '.';
 				}
 				else if (curr == '2') {
 					auto potion = factory.createPotion("bd");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '3') {
 					auto potion = factory.createPotion("ph");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '4') {
 					auto potion = factory.createPotion("wa");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '5') {
 					auto potion = factory.createPotion("wd");
 					potion->setCoords(currCoords);
 					potionVec.emplace_back(potion);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'P'; // Must be displayed as P
 				}
 				else if (curr == '6') {
 					auto gold = factory.createGold("nh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 				else if (curr == '7') {
 					auto gold = factory.createGold("sh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 				else if (curr == '8') {
 					auto gold = factory.createGold("mh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 				else if (curr == '9') {
 					auto gold = factory.createGold("dh");
 					gold->setCoords(currCoords);
 					goldVec.emplace_back(gold);
+					defaultGrid[i][j] = '.';
 					theBoard[i][j] = 'G'; // Must be displayed as P
 				}
 			}
@@ -190,16 +208,14 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 				castDragonHoard->attach(dragonCast);
 			}
 		}
-		cout << "Before";
 		makeChamber();
-		cout << "After";
 		view->setBoard(theBoard);
-		view->addMessage("Player character has been spawned.\n");
+		view->addMessage("Player character has been spawned.");
 		if(!(filePresent)) { // Must have random generation.
 			spawnPlayer();
 		}
 	} catch(ios::failure&) {
-		view->addMessage("File not present, you must try again.\n");
+		view->addMessage("File not present, you must try again.");
 	}
 }
 
@@ -314,6 +330,7 @@ void Floor::removePotion(pair <int, int> coords) {
 			potionVec.erase( potionVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.'; // Board now displays a '.' where earlier there was a potion.
 			view->updateAt(coords, '.');
+			break;
 		}
 	}
 }
@@ -326,6 +343,7 @@ void Floor::removeGold(pair <int, int> coords) {
 			goldVec.erase( goldVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.';
 			view->updateAt(coords, '.');
+			break;
 		}
 	}
 }
@@ -338,8 +356,10 @@ void Floor::removeEnemy(pair <int, int> coords) {
 			enemyVec.erase( enemyVec.begin() + i ); // Remove the pointer from the vector as well.
 			theBoard[get<0>(coords)][get<1>(coords)] = '.';
 			view->updateAt(coords, '.');
+			break;
 		}
 	}
+	cout << "Exit remove"<<endl;
 }
 
 shared_ptr<Enemy> Floor::findEnemy(pair <int, int> coords) const {
@@ -375,41 +395,51 @@ shared_ptr<Gold> Floor::findGold(pair <int, int> coords) const {
 void Floor::movePlayer(string direction) {
 	pair <int, int> checkCoords = myPlayer->checkMove(direction);
 	char nextPos = theBoard[get<0>(checkCoords)] [get<1>(checkCoords)];
+	pair <int, int> playerCoords = myPlayer->getCoords();
 	if(nextPos == '.' || nextPos == '+' || nextPos == '#' ) {
-		theBoard[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())] = defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())];
-		view->updateAt(myPlayer->getCoords(), defaultGrid[get<0>(myPlayer->getCoords())][get<1>(myPlayer->getCoords())]); // Update previous coords as default coords in view.
+		char defaultSymbol = defaultGrid[get<0>(playerCoords)][get<1>(playerCoords)];
+		theBoard[get<0>(playerCoords)][get<1>(playerCoords)] = defaultSymbol;
+		view->updateAt(playerCoords, defaultSymbol); // Update previous coords as default coords in view.
 		// Replace theBoard with default symbol at the vacated position.
 		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
 		view->updateAt(checkCoords, '@');
 		myPlayer->setCoords(checkCoords);
 	}
 	else if (nextPos == 'P') {
-		view->addMessage("Try picking up instead eh? gg\n");
+		view->addMessage("Try picking up instead eh? gg");
 	}
 	else if (nextPos == 'G') {
 		auto g = findGold(checkCoords);
 		if (g->canPickup()) {
 			g->getPickedBy(*myPlayer);
 			removeGold(checkCoords);
-		} else {
-			view->addMessage("The dragon gets angrier. gg\n");
-		}
+			// Gold has been picked up, now you must move over the grid as normal.
+			char defaultSymbol = defaultGrid[get<0>(playerCoords)][get<1>(playerCoords)];
+			theBoard[get<0>(playerCoords)][get<1>(playerCoords)] = defaultSymbol;
+			view->updateAt(playerCoords, defaultSymbol); // Update previous coords as default coords in view.
+			// Replace theBoard with default symbol at the vacated position.
+			theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
+			view->updateAt(checkCoords, '@');
+			myPlayer->setCoords(checkCoords);
+	} else {
+		view->addMessage("The dragon gets angrier. gg");
 	}
-	else if (nextPos == '-' || nextPos == '|') {
-		view->addMessage("Ooops watch where you're going eh? gg\n");
+}
+else if (nextPos == '-' || nextPos == '|') {
+	view->addMessage("Ooops watch where you're going eh? gg");
+}
+else if (nextPos == '\\') {
+	if (floorNum != 5) {
+		view->addMessage("On to the next floor there, eh? gg");
 	}
-	else if (nextPos == '\\') {
-		if (floorNum != 5) {
-			view->addMessage("On to the next floor there, eh? gg\n");
-		}
-		else {
-			view->addMessage("You're the man now, eh? gg\n");
+	else {
+		view->addMessage("You're the man now, eh? gg");
 			// Game ends
-		}
-		return;
 	}
+	return;
+}
 	else { // Enemy case
-		view->addMessage("Player tried to move on a spot occupied by an enemy. Player should try attacking instead. \n");
+		view->addMessage("Player tried to move on a spot occupied by an enemy. Player should try attacking instead. ");
 	}
 }
 
@@ -483,14 +513,14 @@ void Floor::moveEnemy() {
 								view->addMessage(enemyName);
 								view->addMessage(" attacked the player. It resulted in HP loss of");
 								view->addMessage(damageDealt);
-								view->addMessage("\n");
+								view->addMessage("");
 							} else {
 								view->addMessage("The ");
 								view->addMessage(enemyName);
-								view->addMessage(" tried to attack the player, but he missed.\n");
+								view->addMessage(" tried to attack the player, but he missed.");
 							}
 							if (myPlayer->getHP() == 0) {
-								view->addMessage("The player's HP has reached 0, you lost the game.\n"); // Restart etc has to be done.
+								view->addMessage("The player's HP has reached 0, you lost the game."); // Restart etc has to be done.
 								return;
 								// Game over.
 							}
@@ -526,9 +556,9 @@ void Floor::pickPotion(string direction) {
 		string itemName = foundPotion->getItemName();
 		view->addMessage("Player used a potion of type ");
 		view->addMessage(itemName);
-		view->addMessage(".\n");
+		view->addMessage(".");
 	} else {
-		view->addMessage("The direction chosen did not contain a potion, no effect on player.\n");
+		view->addMessage("The direction chosen did not contain a potion, no effect on player.");
 	}
 }
 
@@ -555,8 +585,7 @@ void Floor::playerAttack(string direction) {
 			view->addMessage(enemyName);
 			view->addMessage(".");
 		}
-		view->addMessage("\n");
 	} else {
-		view->addMessage("Player tried to attack thin air, it was not very effective.\n");
+		view->addMessage("Player tried to attack thin air, it was not very effective.");
 	}
 }

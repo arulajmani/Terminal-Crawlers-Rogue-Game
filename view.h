@@ -12,7 +12,7 @@ class View {
 	std::ostringstream displayMessage;
 	std::shared_ptr<Player> myPlayer; 
 public:
-	View();
+	View(std::shared_ptr<Player> myPlayer);
 	~View();
 
 	void updateAt(std::pair<int, int> coords, char updateTo);

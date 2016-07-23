@@ -62,7 +62,7 @@ shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string flo
 int main(int argc, char *argv[]) {
 	srand(time(NULL)); // Seeding the rand for the whole game.
 	shared_ptr<Game> game = make_shared<Game>();
-	bool filePresent = false; 
+	bool filePresent = true; // Change this to false at teh end.
 	string floorPlan = "default.txt";
 	if (argc >= 2) { // File was supplied.
 		filePresent = true;
@@ -144,5 +144,6 @@ int main(int argc, char *argv[]) {
 		} else {
 			cout <<"Please enter a valid command"<<endl;
 		}
+		game->display();
 	}
 }

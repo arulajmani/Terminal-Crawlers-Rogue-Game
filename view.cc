@@ -3,7 +3,7 @@
 // Figure out the displayin of the floor num, probably store it as a variable in view itself. 
 using namespace std;
 
-View::View() {}
+View::View(shared_ptr <Player> myPlayer): myPlayer{myPlayer} {}
 View::~View() {}
 
 void View::updateAt(std::pair<int, int> coords, char updateTo) {
@@ -15,7 +15,6 @@ void View::setBoard(char theBoard[numberRows][numberCols]) {
 	for(int i = 0; i < numberRows; ++i) {
 		for(int j = 0; j < numberCols; ++j) {
 			displayBoard[i][j] = theBoard[i][j];
-			cout << "Has this happened? "<<endl;
 		}
 	}
 }
@@ -33,8 +32,8 @@ void View::display() {
 		cout<<endl;
 	}
 	int hp = myPlayer->getHP();
-	int atk = myPlayer->getAtk();
-	int def = myPlayer->getDef();
+	int atk = myPlayer->getAtk() + myPlayer->getLevelAtk();
+	int def = myPlayer->getDef() + myPlayer->getLevelDef();
 	int goldAmt = myPlayer->getGold();
 	string race = myPlayer->getRace();
 	cout << "Race: "<< race<< " Gold: "<< goldAmt<<endl;
@@ -42,6 +41,6 @@ void View::display() {
 	cout<<"Attack: "<<atk<<endl;
 	cout<<"Defence: "<<def<<endl;
 	string message = displayMessage.str();
-	cout<<"Action: "<<message;
+	cout<<"Action: "<<message<<endl;
 	displayMessage.str(""); // From stackoverflow, to reset the string stream. Must check.
 }

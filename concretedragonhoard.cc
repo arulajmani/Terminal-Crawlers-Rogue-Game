@@ -19,3 +19,5 @@ char ConcreteDragonHoard::goldType() {
 void ConcreteDragonHoard::detatchObservers(){
 	dragon = nullptr;
 }
+
+void whenDead(Player &p) {}

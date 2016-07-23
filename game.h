@@ -24,7 +24,6 @@ public:
 	void display();
 
 	void movePlayer(std::string direction);
-	// Not made
 	void usePotion(std::string direction);
 	void attackEnemy(std::string direction);
 	bool isDead();

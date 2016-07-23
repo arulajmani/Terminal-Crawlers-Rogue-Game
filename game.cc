@@ -1,10 +1,12 @@
 #include "game.h"
 #include "view.h"
+#include <iostream> 
+
 
 using namespace std;
 
-Game::Game(): floorNum{0}, myPlayer{nullptr}, floor{nullptr} {
-	view = make_shared<View>();
+Game::Game(): floorNum{0}, myPlayer{nullptr}, floor{nullptr}, view{nullptr} {
+	//view = make_shared<View>(myPlayer);
 } 
 
 Game::~Game() {}
@@ -23,16 +25,17 @@ void Game::init(bool filePresent,string floorPlan) {
 
 void Game::createPlayer(std::string race) {
 	myPlayer = factory.createPlayer(race);
+	view = make_shared<View>(myPlayer);
 }
 
-void Game::movePlayer(std::string direction) {
+void Game::movePlayer(string direction) {
 	floor->movePlayer(direction);
 }
 
-void Game::usePotion(std::string direction) {
+void Game::usePotion(string direction) {
 	floor->pickPotion(direction);
 }
-void Game::attackEnemy(std::string direction) {
+void Game::attackEnemy(string direction) {
 	floor->playerAttack(direction);
 }
 
