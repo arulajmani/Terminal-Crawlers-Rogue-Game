@@ -55,7 +55,7 @@ public:
 	void removeGold(std::pair <int, int> coords);
 
 	void movePlayer(std::string direction);
-	void moveEnemy();
+	void moveEnemies();
 	void playerAttack(std::string direction);
 	void pickPotion(std::string direction);
 

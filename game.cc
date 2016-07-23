@@ -30,13 +30,16 @@ void Game::createPlayer(std::string race) {
 
 void Game::movePlayer(string direction) {
 	floor->movePlayer(direction);
+	floor->moveEnemies();
 }
 
 void Game::usePotion(string direction) {
 	floor->pickPotion(direction);
+	floor->moveEnemies();
 }
 void Game::attackEnemy(string direction) {
 	floor->playerAttack(direction);
+	floor->moveEnemies();
 }
 
 bool Game::isDead() {

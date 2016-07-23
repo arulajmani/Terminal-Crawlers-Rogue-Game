@@ -206,6 +206,7 @@ Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string
 				shared_ptr<ConcreteDragon> dragonCast = static_pointer_cast<ConcreteDragon>(dragon);
 				shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec[i]);
 				castDragonHoard->attach(dragonCast);
+				dragonCast->attachHoard(castDragonHoard);
 			}
 		}
 		makeChamber();
@@ -359,7 +360,6 @@ void Floor::removeEnemy(pair <int, int> coords) {
 			break;
 		}
 	}
-	cout << "Exit remove"<<endl;
 }
 
 shared_ptr<Enemy> Floor::findEnemy(pair <int, int> coords) const {
@@ -479,7 +479,7 @@ void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possibl
 	int ycoord = get<1>(coords);
 	for(int i = -1; i <= 1; ++i) {
 		for(int j = -1; j <= 1; ++j) {
-			if (theBoard[xcoord + i][ycoord + j] == '.') {
+			if (theBoard[xcoord + i][ycoord + j] == '.' && (i != 0 || j != 0)) {
 				pair <int, int> moveCoords;
 				get<0>(moveCoords) = xcoord + i;
 				get<1>(moveCoords) = ycoord + j;
@@ -489,14 +489,16 @@ void Floor::possibleMoves(pair<int, int> coords, vector<pair<int, int>> &possibl
 	}
 }
 
-void Floor::moveEnemy() {
+void Floor::moveEnemies() {
 	scanDragonHoards(); // To reflect player movements in hostility of dragons.
 	for(int i = 0; i < numRows; ++i) {
-		for(int j = 0; j < numCols; ++i) {
+		for(int j = 0; j < numCols; ++j) {
 			for(int k = 0; k < 7; ++k) {
 				if (theBoard[i][j] == allEnemies[k]) {
 					pair<int, int> enemyCoords{i, j};
+					
 					auto foundEnemy = findEnemy(enemyCoords);
+					cout << foundEnemy->getEnemyName()<<endl;
 					if (foundEnemy->isHostile()) {
 						pair<int, int> scannedCoords = scanAttack(enemyCoords);
 						if (get<0>(scannedCoords) != -1 && get<1>(scannedCoords) != -1) {
@@ -511,7 +513,7 @@ void Floor::moveEnemy() {
 								string damageDealt = ss.str();
 								view->addMessage("The ");
 								view->addMessage(enemyName);
-								view->addMessage(" attacked the player. It resulted in HP loss of");
+								view->addMessage(" attacked the player. It resulted in HP loss of ");
 								view->addMessage(damageDealt);
 								view->addMessage("");
 							} else {
@@ -524,7 +526,7 @@ void Floor::moveEnemy() {
 								return;
 								// Game over.
 							}
-							return; // Because then you do not want the enemy to move.
+							break; // Because then you do not want the enemy to move.
 						}
 					}
 					// Move the player now. 
@@ -538,6 +540,7 @@ void Floor::moveEnemy() {
 						view->updateAt(pair<int, int> {i, j}, defaultGrid[i][j]);
 						theBoard[get<0>(possible[move])] [get<1>(possible[move])] = foundEnemy->displayDisplaySymbol();
 						view->updateAt(possible[move], foundEnemy->displayDisplaySymbol());
+						break;
 					}
 				}
 			}
