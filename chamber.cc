@@ -1,5 +1,7 @@
 #include "chamber.h"
 #include <algorithm> 
+#include <cstdlib>
+
 using namespace std;
 
 Chamber::Chamber(int chamberNum, vector <pair<int, int>> v):chamberNum{chamberNum}, validCoords{v}{}
