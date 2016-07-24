@@ -37,6 +37,21 @@ void Game::movePlayer(string direction) {
 	floor->moveEnemies();
 }
 
+void Game::wasd(std::string direction) {
+	pair <int, int> moveCoords = myPlayer->checkMove(direction);
+	if (floor->findEnemy(moveCoords)) {
+		attackEnemy(direction);
+	}
+	else if (floor->findPotion(moveCoords)) {
+		usePotion(direction);
+	}
+	else {
+		movePlayer(direction);
+	}
+}
+
+
+
 void Game::usePotion(string direction) {
 	floor->pickPotion(direction);
 	floor->moveEnemies();

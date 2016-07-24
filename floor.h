@@ -40,10 +40,6 @@ public:
 	void recursiveChamber(int xcoord, int ycoord, std::shared_ptr<Chamber> newChamber, bool checkedGrid[numRows][numCols]);
 	void makeChamber();
 
-	void nextState();
-	void setChambers();
-	void getOneChamber();
-
 	void spawnPlayer();
 	void spawnStairs(int playerChamber);
 	void spawnPotion();

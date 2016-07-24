@@ -31,6 +31,7 @@ public:
 	void attackEnemy(std::string direction);
 	bool isDead();
 	bool isWon();
+	void wasd(std::string direction);
 };
 
 #endif

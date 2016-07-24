@@ -142,8 +142,8 @@ int main(int argc, char *argv[]) {
 				cout << "The direction you entered was not valid. "<<endl;
 			}
 		}
-		else if (playerMove == "w" || playerMove == "a" || playerMove == "s" || playerMove == "d" and dlcWASD) {
-			game->wasd();
+		else if ((playerMove == "w" || playerMove == "a" || playerMove == "s" || playerMove == "d") and dlcWASD) {
+			game->wasd(wasd[playerMove]);
 		}
 		else if(playerMove == "r") {
 			game = restartGame(game, filePresent, floorPlan);
