@@ -9,6 +9,8 @@ using namespace std;
 
 vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
 map<int, string> wasd {{119,"no"}, {97,"we"}, {115, "so"}, {100,"ea"}};
+vector<string> dlcDescription {"WASD Controls"};
+vector<bool> dlcBool {false};
 
 void greeting() {
 	cout << "Welcome to Chamber Crawler 3000. Choose your race from any of: h, e, o, d."<<endl;
@@ -62,9 +64,24 @@ shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string flo
 	return game;
 }
 
+shared_ptr<Game> playerDead (shared_ptr<Game> game, bool filePresent, string floorPlan) {
+	cout << "You lost the game, the player is dead. Would you like to play again? (y/n)"<<endl;
+	string decision;
+	try {
+		cin >> decision;
+	} catch (ios::failure&) {
+		cout << "Please enter a valid command"<<endl;
+	}
+	if (decision == "y") {
+		game = restartGame(game, filePresent, floorPlan);
+	} else {
+		cout << "Thanks for playing CC3K"<< endl;
+		return nullptr;
+	}
+	return game;
+}
 
 int main(int argc, char *argv[]) {
-	bool dlcWASD = true; // DLC
 	srand(time(NULL)); // Seeding the rand for the whole game.
 	bool filePresent = true; // Change this to false at teh end.
 	string floorPlan = "provided_1.txt";
@@ -84,11 +101,30 @@ int main(int argc, char *argv[]) {
 	cout << "Here is the starting board"<<endl;
 	game->display();
 	cin.exceptions(ios::failbit|ios::eofbit);
-	// Set up, now allow player interaction and him to make moves.
-	if (dlcWASD) {
-		
-		//noecho();
+
+	// DLC set up.
+	for (int i = 0; i < dlcDescription.size(); ++i) {
+		cout << "Would you like to turn on "<< dlcDescription[i] << "(y/n)";
+		string decision;
+		cin >> decision;
+		if (decision == "y") {
+			dlcBool[i] = true;
+		}
+	}
+
+	// To let user use WASD.
+	if (dlcBool[0]) {
 		while(true) {
+			if (game->isDead()) {
+				game = playerDead(game, filePresent, floorPlan);
+				if (not game) {
+					return 0;
+				}
+			}
+			if (game->isWon()) {
+				cout << "Thanks for playing CC3K"<<endl;
+				return 0;
+			}
 			initscr();
 			cbreak();
 			noecho();
@@ -97,83 +133,78 @@ int main(int argc, char *argv[]) {
 			if (move == 119 || move == 97 || move == 115 || move == 100) {
 				game->wasd(wasd[move]);
 				game->display();
-			} else {
-				endwin();
-				cout << "HEre" << endl;
 			}
-		}
-
-	} else {
-		while(true) {
-			if (game->isDead()) {
-				cout << "You lost the game, the player is dead. Would you like to play again? (y/n)"<<endl;
-				string decision;
-				try {
-					cin >> decision;
-				} catch (ios::failure&) {
-					cout << "Please enter a valid command"<<endl;
-				}
-				if (decision == "y") {
-					game = restartGame(game, filePresent, floorPlan);
-					if (game == nullptr) {
-						return 0;
-					}
-				} else {
-					cout << "Thanks for playing CC3K"<< endl;
-					return 0;
-				}
+			else if (move == 'q') {
+				return 0;
 			}
-			if (game->isWon()) {
-				cout << "Thanks for playing CC3K"<<endl;
-				break;
-			}
-			string playerMove;
-			try {
-				cin >> playerMove;
-			} catch(ios::failure&) {
-				cout << "Please enter a valid command."<<endl;
-			}
-			if (find(directions.begin(), directions.end(), playerMove) != directions.end()) {
-				game->movePlayer(playerMove);
-			}
-			else if (playerMove == "u") {
-				string direction;
-				try {
-					cin >> direction;
-				} catch(ios::failure&) {
-					cout << " Please enter a valid command. "<<endl;
-				}
-				if (find(directions.begin(), directions.end(), direction) != directions.end()){
-					game->usePotion(direction);
-				} else {
-					cout << "The direction you entered was not valid. "<<endl;
-				}
-			}
-			else if(playerMove == "a") {
-				string direction;
-				try {
-					cin >> direction;
-				} catch(ios::failure&) {
-					cout << " Please enter a valid command. "<<endl;
-				}
-				if (find(directions.begin(), directions.end(), direction) != directions.end()){
-					game->attackEnemy(direction);
-				} else {
-					cout << "The direction you entered was not valid. "<<endl;
-				}
-			}
-			else if(playerMove == "r") {
+			else if (move == 'r') {
 				game = restartGame(game, filePresent, floorPlan);
 				if (game == nullptr) {return 0;}
 			}
-			else if (playerMove == "q") {
-				cout <<"Thanks for playing CC3K."<<endl;
-				return 0;
-			} else {
-				cout <<"Please enter a valid command"<<endl;
+			else {
+				cout << "Please enter a valid command."<<endl;
 			}
-			game->display();
 		}
+	}
+
+	// Normal play, without WASD
+	while(true) {
+		if (game->isDead()) {
+			game = playerDead(game, filePresent, floorPlan);
+			if (not game) {
+				return 0;
+			}
+		}
+		if (game->isWon()) {
+			cout << "Thanks for playing CC3K"<<endl;
+			return 0;
+		}
+		string playerMove;
+		try {
+			cin >> playerMove;
+		} catch(ios::failure&) {
+			cout << "Please enter a valid command."<<endl;
+		}
+		if (find(directions.begin(), directions.end(), playerMove) != directions.end()) {
+			game->movePlayer(playerMove);
+		}
+		else if (playerMove == "u") {
+			string direction;
+			try {
+				cin >> direction;
+			} catch(ios::failure&) {
+				cout << " Please enter a valid command. "<<endl;
+			}
+			if (find(directions.begin(), directions.end(), direction) != directions.end()){
+				game->usePotion(direction);
+			} else {
+				cout << "The direction you entered was not valid. "<<endl;
+			}
+		}
+		else if(playerMove == "a") {
+			string direction;
+			try {
+				cin >> direction;
+			} catch(ios::failure&) {
+				cout << " Please enter a valid command. "<<endl;
+			}
+			if (find(directions.begin(), directions.end(), direction) != directions.end()){
+				game->attackEnemy(direction);
+			} else {
+				cout << "The direction you entered was not valid. "<<endl;
+			}
+		}
+		else if(playerMove == "r") {
+			game = restartGame(game, filePresent, floorPlan);
+			if (game == nullptr) {return 0;}
+		}
+		else if (playerMove == "q") {
+			cout <<"Thanks for playing CC3K."<<endl;
+			return 0;
+		} else {
+			cout <<"Please enter a valid command"<<endl;
+		}
+		game->display();
 	}
 	
 }

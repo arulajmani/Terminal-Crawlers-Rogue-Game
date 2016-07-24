@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-const int hpVal = 15;
+const int hpVal = 150;
 const int atkVal = 20;
 const int defVal = 20;
 

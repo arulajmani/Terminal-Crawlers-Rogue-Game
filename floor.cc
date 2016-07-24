@@ -417,7 +417,7 @@ bool Floor::movePlayer(string direction) {
 		myPlayer->setCoords(checkCoords);
 	}
 	else if (nextPos == 'P') {
-		view->addMessage("Try picking up instead eh? gg");
+		view->addMessage("Try picking up the potion instead.");
 	}
 	else if (nextPos == 'G') {
 		auto g = findGold(checkCoords);
@@ -433,11 +433,11 @@ bool Floor::movePlayer(string direction) {
 				view->updateAt(checkCoords, '@');
 				myPlayer->setCoords(checkCoords);
 			} else {
-				view->addMessage("The dragon gets angrier. gg");
+				view->addMessage("You must kill the dragon first. The dragon is getting angry.");
 			}
 		}
 		else if (nextPos == '-' || nextPos == '|') {
-			view->addMessage("Ooops watch where you're going eh? gg");
+			view->addMessage("Ooops watch where you're going.");
 		}
 		else if (nextPos == '\\') {
 			if (floorNum < 5) {
@@ -534,7 +534,7 @@ void Floor::moveEnemies() {
 								view->addMessage(enemyName);
 								view->addMessage(" attacked the player. It resulted in HP loss of ");
 								view->addMessage(damageDealt);
-								view->addMessage("");
+								view->addMessage(".");
 							} else {
 								view->addMessage("The ");
 								view->addMessage(enemyName);
