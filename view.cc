@@ -34,7 +34,7 @@ void View::display() {
 	int hp = myPlayer->getHP();
 	int atk = myPlayer->getAtk() + myPlayer->getLevelAtk();
 	int def = myPlayer->getDef() + myPlayer->getLevelDef();
-	float goldAmt = myPlayer->printGold();
+	double goldAmt = myPlayer->printGold();
 	string race = myPlayer->getRace();
 	cout << "Race: "<< race<< "        Gold: "<< goldAmt<< "                                      Floor Number: " << floorNum <<endl;
 	cout<< "HP: "<<hp<<endl;
