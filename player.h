@@ -12,7 +12,6 @@ class Player: public Character {
 	std::string race;
 	int levelAtk;
 	int levelDef;
-protected:
 	int gold;
 public:
 	Player(std::string race, int hp, int atk, int def);
@@ -20,7 +19,8 @@ public:
 
 	int getLevelAtk() const;
 	int getLevelDef() const;
-	virtual int getGold() const;
+	int getGold() const;
+	virtual float printGold(); 
 
 	void setLevelAtk(int levelAtk);
 	void setLevelDef(int levelDef);

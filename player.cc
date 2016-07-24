@@ -33,6 +33,10 @@ void Player::setGold(int value) {
 	this->gold = value;
 }
 
+float Player::printGold() {
+	return gold;
+}
+
 
 
 string Player::getRace() {

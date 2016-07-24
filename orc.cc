@@ -8,6 +8,7 @@ const int defaultDef = 25;
 Orc::Orc(): Player{"Orc", defaultHP, defaultDef, defaultAtk} {}
 Orc::~Orc() {}
 
-int Orc::getGold() const {
-	return gold / 2;
+float Orc::printGold() {
+	float value = static_cast<float> (this->getGold());
+	return value / 2;
 }
