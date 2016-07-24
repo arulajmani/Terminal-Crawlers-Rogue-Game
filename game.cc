@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Game::Game(): floorNum{0}, myPlayer{nullptr}, floor{nullptr}, view{nullptr} {
+Game::Game(string floorPlan, bool filePresent): floorPlan{floorPlan} , filePresent{filePresent}, floorNum{0}, myPlayer{nullptr}, floor{nullptr}, view{nullptr} {
 	//view = make_shared<View>(myPlayer);
 } 
 
@@ -15,7 +15,7 @@ void Game::display() {
 	view->display();
 }
 
-void Game::init(bool filePresent,string floorPlan) {
+void Game::init() {
 	floorNum += 1;
 	if (floorNum == 6) {
 		// Print victory stuff. 

@@ -12,13 +12,15 @@ class Game {
 	std::shared_ptr<Floor> floor;
 	std::shared_ptr<Player> myPlayer;
 	int floorNum;
+	bool filePresent;
+	std::string floorPlan;
 	std::shared_ptr<View> view;
 
 public:
-	Game();
+	Game(std::string floorPlan, bool filePresent);
 	~Game();
 
-	void init(bool filePresent, std::string floorPlan);
+	void init();
 	void createPlayer(std::string race);
 	void play();
 	void display();

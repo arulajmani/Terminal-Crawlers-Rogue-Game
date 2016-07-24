@@ -9,7 +9,7 @@ class Chamber{
 	std::vector <std::pair<int, int>> validCoords;
 
 public:
-	Chamber(int chamberNum, std::vector<std::pair<int, int>> v);
+	Chamber(int chamberNum, std::vector<std::pair<int, int>> &v);
 	
 	void addCoords(std::pair<int, int> coords);
 	std::pair<int, int> placeElement();

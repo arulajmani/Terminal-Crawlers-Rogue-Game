@@ -6,6 +6,7 @@
 #include "chamber.h"
 #include "view.h"
 #include <iostream>
+#include <cstdlib>
 
 // Gold picked and Enemy attacked and enemy attacking descriptions have to be done. 
 
@@ -49,8 +50,7 @@ void Floor::makeChamber() {
 		for (int j = 0; j < numCols; ++j) {
 			v.clear();
 			if(defaultGrid[i][j] == '.' && checkedGrid[i][j] == false) {
-				shared_ptr<Chamber> newChamber;
-				newChamber = make_shared<Chamber>(chamberNum, v);
+				shared_ptr<Chamber> newChamber = make_shared<Chamber>(chamberNum, v);
 				recursiveChamber(i, j, newChamber, checkedGrid);
 				chamberVec.emplace_back(newChamber);
 				++chamberNum;
@@ -64,15 +64,17 @@ void Floor::makeChamber() {
 
 
 Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view} {
-	ifstream f;
+	ifstream f{floorPlan};
+	
 	f.exceptions(ios::failbit|ios::eofbit);
+	/*
 	try {
 		ifstream f{floorPlan};
 	}
 	catch(ios::failure&) {
 		view->addMessage("File not present, you must try again.");
 	}
-
+	*/
 	int startRead = (floorNum - 1) * numRows;
 	for (int i = 0; i < startRead; ++i) {
 		string discard;
@@ -263,6 +265,7 @@ void Floor::spawnStairs(int chamberNum) {
 	pair<int, int> stairCoords = chamberVec[stairNum]->placeElement();
 	theBoard [get<0>(stairCoords)] [get<1>(stairCoords)] = '\\';
 	view->updateAt(stairCoords, '\\');
+	cout << "Stair spawned"<<endl;
 	spawnPotion();
 }
 
@@ -280,35 +283,46 @@ void Floor::spawnPotion() {
 		theBoard [get<0>(potionCoords)] [get<1>(potionCoords)] = 'P';
 		view->updateAt(potionCoords, 'P');
 	}
+	cout << "Potions spawned"<<endl;
 	spawnGold();
 }
 
 void Floor::spawnGold() {
 	for(int i = 0; i < numItems; ++i) {
+		cout << "for started"<< endl;
 		int chamberNum = rand() % 5;
 		int goldNum = rand() % 8;
+		goldNum = 0;
+		cout << goldNum<<endl;
+
 		goldVec.emplace_back(factory.createGold(goldType[goldNum]));
 		pair <int, int> goldCoords;
+
 		do { // Ensure the cell chosen is empty
 			goldCoords = chamberVec[chamberNum]->placeElement();
 		}while (theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] != '.');
 
-		goldVec.back()->setCoords(goldCoords);
-		theBoard [get<0>(goldCoords)] [get<1>(goldCoords)] = 'G';
+		(goldVec.back())->setCoords(goldCoords);
+		theBoard[get<0>(goldCoords)][get<1>(goldCoords)] = 'G';
 		view->updateAt(goldCoords, 'G');
-		if (goldNum == 1) { // We created a dragon gold type, so we must spawn the dragon in this case!
+		cout << "here::::::"<<endl;
+		if (goldNum == 0) { // We created a dragon gold typ.e, so we must spawn the dragon in this case!
+			cout << "Here";
 			enemyVec.emplace_back(factory.createEnemy("d"));
 			shared_ptr<ConcreteDragonHoard> castDragonHoard = static_pointer_cast <ConcreteDragonHoard>(goldVec.back());
 			shared_ptr<ConcreteDragon> dragonCast = static_pointer_cast<ConcreteDragon>(enemyVec.back());
-			castDragonHoard->attach(dragonCast); // attach the dragon to the hoard. 
+			cout << (enemyVec.back())->getEnemyName();
+			castDragonHoard->attach(dragonCast); // attach the dragon to the hoard.
+			dragonCast->attachHoard(castDragonHoard);
 			pair<int, int> dragonCoords;
 			do {
 				dragonCoords = chamberVec[chamberNum]->placeDragon(goldCoords);
 			} while( theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] != '.');
 			theBoard[get<0>(dragonCoords)] [get<1>(dragonCoords)] = 'D';
 			view->updateAt(dragonCoords, 'D');
-		}
+		} 
 	}
+	cout << "Golds spawned"<<endl;
 	spawnEnemies();
 }
 
@@ -327,6 +341,7 @@ void Floor::spawnEnemies() {
 		theBoard [get<0>(enemyCoords)] [get<1>(enemyCoords)] = enemyVec.back()->displayDisplaySymbol();
 		view->updateAt(enemyCoords, theBoard[get<0>(enemyCoords)][get<1>(enemyCoords)]);
 	}
+	cout << "Enemies spawned"<<endl;
 }
 
 void Floor::removePotion(pair <int, int> coords) {

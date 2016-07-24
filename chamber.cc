@@ -1,10 +1,10 @@
 #include "chamber.h"
 #include <algorithm> 
 #include <cstdlib>
-
+#include <iostream>
 using namespace std;
 
-Chamber::Chamber(int chamberNum, vector <pair<int, int>> v):chamberNum{chamberNum}, validCoords{v}{}
+Chamber::Chamber(int chamberNum, vector <pair<int, int>> &v):chamberNum{chamberNum}, validCoords{v}{}
 
 pair<int, int> Chamber::placeElement() {
 	int position = rand() % validCoords.size();

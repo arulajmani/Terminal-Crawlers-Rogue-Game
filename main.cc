@@ -46,13 +46,13 @@ string chooseRace() {
 }
 
 shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string floorPlan) {
-	game = make_shared<Game>();
+	game = make_shared<Game>(floorPlan, filePresent);
 	string input = chooseRace();
 	if (input == "q") {
 		return nullptr;
 	}
 	game->createPlayer(input);
-	game->init(filePresent, floorPlan);
+	game->init();
 	cout << "Here is your new starting board"<<endl;
 	game->display();
 	return game;
@@ -61,9 +61,8 @@ shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string flo
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL)); // Seeding the rand for the whole game.
-	shared_ptr<Game> game = make_shared<Game>();
 	bool filePresent = false; // Change this to false at teh end.
-	string floorPlan = "default.txt";
+	string floorPlan = "provided.txt";
 	if (argc >= 2) { // File was supplied.
 		filePresent = true;
 		floorPlan = argv[1];
@@ -73,8 +72,9 @@ int main(int argc, char *argv[]) {
 	if (input == "q") {
 		return 0;
 	}
+	shared_ptr<Game> game = make_shared<Game>(floorPlan, filePresent);
 	game->createPlayer(input);
-	game->init(filePresent, floorPlan);
+	game->init();
 	instructions();
 	cout << "Here is the starting board"<<endl;
 	game->display();
