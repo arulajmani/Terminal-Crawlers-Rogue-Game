@@ -15,11 +15,15 @@ pair<int,int> Chamber::placeDragon(std::pair<int, int> goldCoords) {
 	int xcoord = get<0>(goldCoords);
 	int ycoord = get<1>(goldCoords);
 	pair <int, int> dragonCoords;
+	int i;
+	int j;
 	do {
-		xcoord = xcoord + (rand() % 3) - 1; // xcoord + 0/1/-1
-		ycoord = ycoord + (rand() % 3) - 1; // ycoord + 0/1/-1
-		pair <int, int> dragonCoords = {xcoord, ycoord};
-	} while( find (validCoords.begin(), validCoords.end(), dragonCoords) == validCoords.end()); // Didn't find the coordinates in chamber, go again.
+		i = (rand() % 3) - 1;
+		j = (rand() % 3) - 1;
+		xcoord = xcoord + i; // xcoord + 0/1/-1
+		ycoord = ycoord + j; // ycoord + 0/1/-1
+		dragonCoords = {xcoord, ycoord};
+	} while( find (validCoords.begin(), validCoords.end(), dragonCoords) == validCoords.end() && !(i == 0 && j == 0)); // Didn't find the coordinates in chamber, go again.
 	return dragonCoords;
 }
 

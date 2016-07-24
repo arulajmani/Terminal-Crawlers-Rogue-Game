@@ -30,6 +30,7 @@ void Game::createPlayer(std::string race) {
 
 void Game::movePlayer(string direction) {
 	floor->movePlayer(direction);
+	cout << "Player moved"<<endl;
 	floor->moveEnemies();
 }
 

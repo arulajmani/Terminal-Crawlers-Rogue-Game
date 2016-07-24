@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-const int hpVal = 150;
+const int hpVal = 15;
 const int atkVal = 20;
 const int defVal = 20;
 
@@ -22,8 +22,7 @@ bool ConcreteDragon::isHostile(){
 }
 
 void ConcreteDragon::whenDead(Player &p){ 
-	cout << "HEre"<< endl;
-	dragonHoard->detatchObservers();
+	dragonHoard->dragonSlayed();
 }
 
 void ConcreteDragon::attachHoard(shared_ptr<ConcreteDragonHoard> concDragonHoard) {

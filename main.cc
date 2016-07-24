@@ -61,8 +61,8 @@ shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string flo
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL)); // Seeding the rand for the whole game.
-	bool filePresent = false; // Change this to false at teh end.
-	string floorPlan = "provided.txt";
+	bool filePresent = true; // Change this to false at teh end.
+	string floorPlan = "provided_1.txt";
 	if (argc >= 2) { // File was supplied.
 		filePresent = true;
 		floorPlan = argv[1];

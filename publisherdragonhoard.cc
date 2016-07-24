@@ -5,7 +5,7 @@ using namespace std;
 
 const int goldValue = 8;
 
-PublisherDragonHoard::PublisherDragonHoard():Gold(goldValue, "Dragon Hoard"), dragon{nullptr}{}
+PublisherDragonHoard::PublisherDragonHoard():Gold(goldValue, "Dragon Hoard"), dragon{nullptr}, dragonPresent{true}{}
 
 PublisherDragonHoard::~PublisherDragonHoard(){}
 
@@ -15,15 +15,13 @@ void PublisherDragonHoard::attach(shared_ptr <SubscriberDragon> subDragon){
 
 
 bool PublisherDragonHoard::canPickup(){
-	if(dragon == nullptr){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return not dragonPresent;
 }
 
 void PublisherDragonHoard::notifyObservers(bool dragonHostile){
 	dragon->notify(dragonHostile);
 }
 
+void PublisherDragonHoard::dragonSlayed() {
+	dragonPresent = false;
+}

@@ -1,6 +1,6 @@
 #include "concretedragonhoard.h"
 
-ConcreteDragonHoard::ConcreteDragonHoard(){}
+ConcreteDragonHoard::ConcreteDragonHoard() {}
 
 ConcreteDragonHoard::~ConcreteDragonHoard(){}
 
