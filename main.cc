@@ -86,18 +86,23 @@ int main(int argc, char *argv[]) {
 	cin.exceptions(ios::failbit|ios::eofbit);
 	// Set up, now allow player interaction and him to make moves.
 	if (dlcWASD) {
-		initscr();
-		cbreak();
-		noecho();
+		
+		//noecho();
 		while(true) {
+			initscr();
+			cbreak();
+			noecho();
 			int move = getch();
+			endwin();
 			if (move == 119 || move == 97 || move == 115 || move == 100) {
 				game->wasd(wasd[move]);
+				game->display();
 			} else {
-				cout << "HEre" << endl;
 				endwin();
+				cout << "HEre" << endl;
 			}
 		}
+
 	} else {
 		while(true) {
 			if (game->isDead()) {
