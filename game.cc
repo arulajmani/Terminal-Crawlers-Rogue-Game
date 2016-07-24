@@ -1,6 +1,6 @@
 #include "game.h"
 #include "view.h"
-#include <iostream> 
+#include <iostream>
 
 
 using namespace std;
