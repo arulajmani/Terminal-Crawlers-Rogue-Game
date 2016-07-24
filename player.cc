@@ -33,8 +33,9 @@ void Player::setGold(int value) {
 	this->gold = value;
 }
 
-float Player::printGold() {
-	return gold;
+double Player::printGold() {
+	double value = static_cast<double>(gold);
+	return value;
 }
 
 

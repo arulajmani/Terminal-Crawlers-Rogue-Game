@@ -20,7 +20,7 @@ public:
 	int getLevelAtk() const;
 	int getLevelDef() const;
 	int getGold() const;
-	virtual float printGold(); 
+	virtual double printGold(); 
 
 	void setLevelAtk(int levelAtk);
 	void setLevelDef(int levelDef);

@@ -10,7 +10,7 @@ public:
 	Orc();
 	~Orc();
 
-	float printGold() override;
+	double printGold() override;
 
 };
 
