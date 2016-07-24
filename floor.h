@@ -15,7 +15,7 @@ const int numEnemies = 20;
 const int numChambers = 5;
 
 class Floor {
-	const int floorNum;
+	int &floorNum;
 	char theBoard[numRows][numCols];
 	char defaultGrid[numRows][numCols]; // To help with movement and replacement of vacated position
 	Factory factory;
@@ -34,7 +34,7 @@ class Floor {
 	std::pair<int, int> scanDragon(std::pair<int, int> coords);
 
 public:
-	Floor(int floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, std::string floorPlan, std::shared_ptr<View> view);
+	Floor(int &floorNum, std::shared_ptr<Player> myPlayer, bool filePresent, std::string floorPlan, std::shared_ptr<View> view);
 	~Floor();
 
 	void recursiveChamber(int xcoord, int ycoord, std::shared_ptr<Chamber> newChamber, bool checkedGrid[numRows][numCols]);
@@ -54,7 +54,7 @@ public:
 	void removeEnemy(std::pair <int, int> coords);
 	void removeGold(std::pair <int, int> coords);
 
-	void movePlayer(std::string direction);
+	bool movePlayer(std::string direction);
 	void moveEnemies();
 	void playerAttack(std::string direction);
 	void pickPotion(std::string direction);

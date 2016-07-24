@@ -61,6 +61,11 @@ void Player::pickItem(Potion &p) {
 	this->setHP(hp);
 }
 
+void Player::reset() {
+	levelDef = 0;
+	levelAtk = 0;
+}
+
 
 pair<int, int> Player::checkMove(string direction) {
 	pair <int, int> checkCoords = this->getCoords();

@@ -63,7 +63,7 @@ void Floor::makeChamber() {
 
 
 
-Floor::Floor(int floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view} {
+Floor::Floor(int &floorNum, shared_ptr<Player> myPlayer, bool filePresent, string floorPlan, shared_ptr<View> view): floorNum{floorNum}, myPlayer{myPlayer}, filePresent {filePresent}, floorPlan{floorPlan}, view{view} {
 	ifstream f{floorPlan};
 	
 	f.exceptions(ios::failbit|ios::eofbit);
@@ -403,7 +403,7 @@ shared_ptr<Gold> Floor::findGold(pair <int, int> coords) const {
 	return nullptr;
 }
 
-void Floor::movePlayer(string direction) {
+bool Floor::movePlayer(string direction) {
 	pair <int, int> checkCoords = myPlayer->checkMove(direction);
 	char nextPos = theBoard[get<0>(checkCoords)] [get<1>(checkCoords)];
 	pair <int, int> playerCoords = myPlayer->getCoords();
@@ -440,18 +440,20 @@ void Floor::movePlayer(string direction) {
 			view->addMessage("Ooops watch where you're going eh? gg");
 		}
 		else if (nextPos == '\\') {
-			if (floorNum != 5) {
-				view->addMessage("On to the next floor there, eh? gg");
+			if (floorNum < 5) {
+				view->addMessage("Congratulations, you crossed this level. On to the next level now.");
+				floorNum++;
+				return true;
 			}
 			else {
-				view->addMessage("You're the man now, eh? gg");
-			// Game ends
+				view->addMessage("Congratulations, you won the game!");
+				return false;
 			}
-			return;
 		}
 	else { // Enemy case
 		view->addMessage("Player tried to move on a spot occupied by an enemy. Player should try attacking instead. ");
 	}
+	return false;
 }
 
 void Floor::scanDragonHoards() {
@@ -541,7 +543,6 @@ void Floor::moveEnemies() {
 							if (myPlayer->getHP() == 0) {
 								view->addMessage(" The player's HP has reached 0, you lost the game."); // Restart etc has to be done.
 								return;
-								// Game over.
 							}
 							break; // Because then you do not want the enemy to move.
 						}

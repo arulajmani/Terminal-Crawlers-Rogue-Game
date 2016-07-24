@@ -8,11 +8,12 @@
 const int numberRows = 25;
 const int numberCols = 79;
 class View {
+	int &floorNum;
 	char displayBoard [numberRows][numberCols];
 	std::ostringstream displayMessage;
 	std::shared_ptr<Player> myPlayer; 
 public:
-	View(std::shared_ptr<Player> myPlayer);
+	View(std::shared_ptr<Player> myPlayer, int &floorNum);
 	~View();
 
 	void updateAt(std::pair<int, int> coords, char updateTo);

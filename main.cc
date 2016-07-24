@@ -4,8 +4,10 @@
 #include <algorithm>
 using namespace std;
 #include <iostream>
+#include <map>
 
 vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
+map<string, string> wasd {{"w","no"}, {"a","we"}, {"s", "so"}, {"d","ea"}};
 
 void greeting() {
 	cout << "Welcome to Chamber Crawler 3000. Choose your race from any of: h, e, o, d."<<endl;
@@ -47,6 +49,7 @@ string chooseRace() {
 
 shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string floorPlan) {
 	game = make_shared<Game>(floorPlan, filePresent);
+	cout << "Please enter a new race to play the new game: "<<endl;
 	string input = chooseRace();
 	if (input == "q") {
 		return nullptr;
@@ -60,6 +63,7 @@ shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string flo
 
 
 int main(int argc, char *argv[]) {
+	bool dlcWASD = true; // DLC
 	srand(time(NULL)); // Seeding the rand for the whole game.
 	bool filePresent = true; // Change this to false at teh end.
 	string floorPlan = "provided_1.txt";
@@ -99,6 +103,10 @@ int main(int argc, char *argv[]) {
 				return 0;
 			}
 		}
+		if (game->isWon()) {
+			cout << "Thanks for playing CC3K"<<endl;
+			break;
+		}
 		string playerMove;
 		try {
 			cin >> playerMove;
@@ -133,6 +141,9 @@ int main(int argc, char *argv[]) {
 			} else {
 				cout << "The direction you entered was not valid. "<<endl;
 			}
+		}
+		else if (playerMove == "w" || playerMove == "a" || playerMove == "s" || playerMove == "d" and dlcWASD) {
+			game->wasd();
 		}
 		else if(playerMove == "r") {
 			game = restartGame(game, filePresent, floorPlan);

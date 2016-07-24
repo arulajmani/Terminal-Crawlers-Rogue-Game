@@ -13,6 +13,7 @@ class Game {
 	std::shared_ptr<Player> myPlayer;
 	int floorNum;
 	bool filePresent;
+	bool won;
 	std::string floorPlan;
 	std::shared_ptr<View> view;
 
@@ -29,6 +30,7 @@ public:
 	void usePotion(std::string direction);
 	void attackEnemy(std::string direction);
 	bool isDead();
+	bool isWon();
 };
 
 #endif

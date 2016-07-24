@@ -26,6 +26,7 @@ public:
 	void setLevelDef(int levelDef);
 	void setGold(int value); // Perform computation in base classes, this will just update. (Allow removal of gold as well)
 	
+	void reset(); // Called when level is crossed, resets everything to 0.
 	std::pair<int, int> checkMove(std::string direction);
 	std::string getRace();
 	virtual void pickItem(Gold &g);

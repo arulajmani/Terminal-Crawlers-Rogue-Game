@@ -3,7 +3,7 @@
 // Figure out the displayin of the floor num, probably store it as a variable in view itself. 
 using namespace std;
 
-View::View(shared_ptr <Player> myPlayer): myPlayer{myPlayer} {}
+View::View(shared_ptr <Player> myPlayer, int &floorNum): myPlayer{myPlayer} , floorNum{floorNum} {}
 View::~View() {}
 
 void View::updateAt(std::pair<int, int> coords, char updateTo) {
@@ -36,7 +36,7 @@ void View::display() {
 	int def = myPlayer->getDef() + myPlayer->getLevelDef();
 	int goldAmt = myPlayer->getGold();
 	string race = myPlayer->getRace();
-	cout << "Race: "<< race<< " Gold: "<< goldAmt<<endl;
+	cout << "Race: "<< race<< " Gold: "<< goldAmt<< "                                             Floor Number: " << floorNum <<endl;
 	cout<< "HP: "<<hp<<endl;
 	cout<<"Attack: "<<atk<<endl;
 	cout<<"Defence: "<<def<<endl;
