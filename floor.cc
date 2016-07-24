@@ -415,6 +415,25 @@ bool Floor::movePlayer(string direction) {
 		theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
 		view->updateAt(checkCoords, '@');
 		myPlayer->setCoords(checkCoords);
+		if (nextPos == '+') {
+			view->addMessage("Player stepped into the doorway");
+		}
+		else if (nextPos == '#') {
+			view->addMessage("Player is trodding the stairways");
+		} else {
+			view->addMessage ("Player moved ");
+			if (direction == "ea") {
+				view->addMessage("East");
+			}
+			else if (direction == "we") {
+				view->addMessage("West");
+			}
+			else if (direction == "so") {
+				view->addMessage("South");
+			} else {
+				view->addMessage("North");
+			}
+		}
 	}
 	else if (nextPos == 'P') {
 		view->addMessage("Try picking up the potion instead.");
