@@ -451,6 +451,10 @@ bool Floor::movePlayer(string direction) {
 				theBoard[get<0>(checkCoords)] [get<1>(checkCoords)] = '@';
 				view->updateAt(checkCoords, '@');
 				myPlayer->setCoords(checkCoords);
+				string hoardType = g->getItemName();
+				view->addMessage("Player encountered a ");
+				view->addMessage (hoardType);
+				view->addMessage(" and decided to pick it up.");
 			} else {
 				view->addMessage("You must kill the dragon first. The dragon is getting angry.");
 			}
