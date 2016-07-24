@@ -10,7 +10,7 @@ public:
 	Orc();
 	~Orc();
 
-	void pickItem(Gold &g) override;
+	int getGold() const;
 
 };
 

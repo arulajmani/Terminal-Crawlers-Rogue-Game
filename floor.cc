@@ -436,7 +436,7 @@ bool Floor::movePlayer(string direction) {
 				view->addMessage("You must kill the dragon first. The dragon is getting angry.");
 			}
 		}
-		else if (nextPos == '-' || nextPos == '|') {
+		else if (nextPos == '-' || nextPos == '|' || nextPos == ' ') {
 			view->addMessage("Ooops watch where you're going.");
 		}
 		else if (nextPos == '\\') {

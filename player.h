@@ -10,17 +10,17 @@ class Potion;
 
 class Player: public Character {
 	std::string race;
-	int gold;
 	int levelAtk;
 	int levelDef;
-
+protected:
+	int gold;
 public:
 	Player(std::string race, int hp, int atk, int def);
 	virtual ~Player()=0;
 
 	int getLevelAtk() const;
 	int getLevelDef() const;
-	int getGold() const;
+	virtual int getGold() const;
 
 	void setLevelAtk(int levelAtk);
 	void setLevelDef(int levelDef);
