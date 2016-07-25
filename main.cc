@@ -112,7 +112,10 @@ int main(int argc, char *argv[]) {
 	shared_ptr<Game> game = make_shared<Game>(floorPlan, filePresent);
 	game->createPlayer(input);
 	game->init();
-	instructions();
+	if (not dlcBool[0])
+	{
+		instructions();
+	}
 	cout << "Here is the starting board"<<endl;
 	game->display();
 	cin.exceptions(ios::failbit|ios::eofbit);
