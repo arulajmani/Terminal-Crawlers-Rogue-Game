@@ -22,7 +22,9 @@ bool Character::isAlive() const {
 	return alive;
 }
 
-
+char Character::displayDisplaySymbol() {
+	return '@';
+}
 
 void Character::setHP(int hp) {
 	this->hp = hp;

@@ -31,6 +31,7 @@
 #include "orc.h"
 #include "dwarf.h"
 #include "charizard.h"
+#include "slayer.h"
 
 
 class Factory {

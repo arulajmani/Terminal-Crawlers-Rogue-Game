@@ -23,6 +23,7 @@ public:
 	void setDef(int def);
 
 	virtual void attack(Character &c);
+	virtual char displayDisplaySymbol();
 
 };
 

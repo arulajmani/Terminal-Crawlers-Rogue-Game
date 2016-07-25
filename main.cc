@@ -11,6 +11,8 @@ vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
 map<int, string> wasd {{119,"no"}, {97,"we"}, {115, "so"}, {100,"ea"}};
 vector<string> dlcDescription {"WASD Controls", "More characters"};
 vector<bool> dlcBool {false, false};
+const int WASD = 0;
+const int players = 1;
 
 void greeting() {
 	cout << "Welcome to Chamber Crawler 3000. Choose your race from any of: h, e, o, d."<<endl;
@@ -18,8 +20,9 @@ void greeting() {
 	cout << "e(lf) -> HP(140) : Attack(30) : Defence(10) : Special Ability (negative potions have positive effects)"<<endl;
 	cout << "o(rc) -> HP(180) : Attack(30) : Defence(25) : Special Ability (Gold counts for half its value)"<<endl;
 	cout << "d(warf) -> HP(100) : Attack(20) : Defence(30) : Special Ability (Gold counts for 2X its value)"<<endl;
-	if (dlcBool[1]) {
+	if (dlcBool[players]) {
 		cout << "c(charizard) -> HP(160) : Attack(40) : Defence(30) : Special Ability (Performs special attack every 4th move, must recharge the next move)"<<endl;
+		cout << "s(layer) -> HP(150) : Attack(25) : Defence(15) : Special Ability (Can kill one prechosen enemy in one strike)"<<endl;
 	}
 	cout <<"q -> Quit"<<endl;
 }
@@ -40,7 +43,7 @@ string chooseRace() {
 	while(true) {
 		try {
 			cin >> input;
-			if (input == "h" || input == "d" || input == "o" || input == "e" || input == "q" || (dlcBool[1] && input == "c")) {
+			if (input == "h" || input == "d" || input == "o" || input == "e" || input == "q" || (dlcBool[players] && (input == "c" || input == "s"))) {
 				break;
 			} else {
 				cout <<"Please enter valid input"<<endl;
@@ -61,6 +64,12 @@ shared_ptr<Game> restartGame(shared_ptr<Game> game, bool filePresent, string flo
 		return nullptr;
 	}
 	game->createPlayer(input);
+	if (input == "s") { // Slayer case, ask user for enemy.
+		cout << "Choose the foe you would like to kill in one strike: V(ampire), N(Goblin), X(Pheonix), M(erchant), W(erewolf), T(roll), D(ragon)"<<endl;
+		char enemy;
+		cin >> enemy;
+		game->setEnemy(enemy);
+	}
 	game->init();
 	cout << "Here is your new starting board"<<endl;
 	game->display();
@@ -111,8 +120,14 @@ int main(int argc, char *argv[]) {
 	}
 	shared_ptr<Game> game = make_shared<Game>(floorPlan, filePresent);
 	game->createPlayer(input);
+	if (input == "s") { // Slayer case, ask user for enemy.
+		cout << "Choose the foe you would like to kill in one strike: V(ampire), N(Goblin), X(Pheonix), M(erchant), W(erewolf), T(roll), D(ragon)"<<endl;
+		char enemy;
+		cin >> enemy;
+		game->setEnemy(enemy);
+	}
 	game->init();
-	if (not dlcBool[0])
+	if (not dlcBool[WASD])
 	{
 		instructions();
 	}
@@ -121,7 +136,7 @@ int main(int argc, char *argv[]) {
 	cin.exceptions(ios::failbit|ios::eofbit);
 
 	// To let user use WASD.
-	if (dlcBool[0]) {
+	if (dlcBool[WASD]) {
 		while(true) {
 			if (game->isDead()) {
 				game = playerDead(game, filePresent, floorPlan);

@@ -4,6 +4,7 @@
 #include "factory.h"
 #include <string>
 #include "player.h"
+#include "slayer.h"
 
 class View;
 
@@ -32,6 +33,7 @@ public:
 	bool isDead();
 	bool isWon();
 	void wasd(std::string direction);
+	void setEnemy(char newEnemy);
 };
 
 #endif

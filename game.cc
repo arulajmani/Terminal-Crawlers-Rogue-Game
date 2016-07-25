@@ -37,6 +37,11 @@ void Game::movePlayer(string direction) {
 	floor->moveEnemies();
 }
 
+void Game::setEnemy(char newEnemy) {
+	auto player = static_pointer_cast<Slayer>(myPlayer);
+	player->changeEnemy(newEnemy);
+}
+
 void Game::wasd(std::string direction) {
 	pair <int, int> moveCoords = myPlayer->checkMove(direction);
 	if (floor->findEnemy(moveCoords)) {
