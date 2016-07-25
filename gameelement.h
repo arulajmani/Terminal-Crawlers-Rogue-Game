@@ -1,6 +1,7 @@
 #ifndef _GAMEELEMENT_H_
 #define _GAMEELEMENT_H_
 #include <utility> 
+#include <memory>
 
 class GameElement {
 	std::pair<int, int> coords;
@@ -15,3 +16,4 @@ public:
 };
 
 #endif
+

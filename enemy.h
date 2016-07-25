@@ -2,7 +2,7 @@
 #define _ENEMY_H_
 #include "character.h"
 #include <string>
-
+#include <memory>
 class Player;
 
 class Enemy: public Character {

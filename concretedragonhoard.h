@@ -1,5 +1,6 @@
 #ifndef _CONCDRAGHO_H_
 #define _CONCDRAGHO_H_
+#include <memory>
 #include "publisherdragonhoard.h"
 #include "player.h"
 

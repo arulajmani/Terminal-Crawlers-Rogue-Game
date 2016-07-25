@@ -3,6 +3,7 @@
 #include "floor.h"
 #include <utility>
 #include <vector>
+#include <memory>
 
 class Chamber{
 	int chamberNum;

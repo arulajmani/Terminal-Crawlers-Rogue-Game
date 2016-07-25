@@ -2,6 +2,7 @@
 #define _CHARIZARD_H_
 #include "player.h"
 #include "enemy.h"
+#include <memory>
 // Every fourth attack is a specialAttack();
 class Charizard: public Player {
 	int attackCounter;

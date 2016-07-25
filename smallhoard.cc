@@ -9,3 +9,4 @@ SmallHoard::~SmallHoard() {}
 void SmallHoard::getPickedBy(Player &p) {
 	p.pickItem(*this);
 }
+

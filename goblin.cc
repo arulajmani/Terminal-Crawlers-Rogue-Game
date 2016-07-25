@@ -13,3 +13,4 @@ Goblin::~Goblin(){}
 void Goblin::whenDead(Player &p){
 	p.pickItem(nh); 
 }
+

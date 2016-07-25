@@ -650,3 +650,4 @@ void Floor::playerAttack(string direction) {
 		view->addMessage("Player tried to attack thin air, it was not very effective.");
 	}
 }
+

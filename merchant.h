@@ -4,6 +4,7 @@
 #include "merchanthoard.h"
 #include "player.h"
 #include "character.h"
+#include <memory>
 
 class Merchant: public Enemy {
 	static bool hostile;
@@ -20,3 +21,4 @@ public:
 };
 
 #endif
+

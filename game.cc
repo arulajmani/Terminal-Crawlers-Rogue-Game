@@ -2,7 +2,6 @@
 #include "view.h"
 #include <iostream>
 
-
 using namespace std;
 
 Game::Game(string floorPlan, bool filePresent): floorPlan{floorPlan} , filePresent{filePresent}, floorNum{1}, myPlayer{nullptr}, floor{nullptr}, won{false}, view{nullptr} {
@@ -73,3 +72,4 @@ bool Game::isDead() {
 bool Game::isWon() {
 	return won;
 }
+

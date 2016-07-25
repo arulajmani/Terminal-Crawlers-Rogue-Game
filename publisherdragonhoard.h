@@ -1,6 +1,9 @@
 #ifndef _PUBLDRAGHO_H_
 #define _PUBLDRAGHO_H_
 #include "gold.h"
+#include <memory>
+
+
 class SubscriberDragon;
 
 class PublisherDragonHoard : public Gold  {

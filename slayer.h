@@ -3,6 +3,7 @@
 #include <string>
 #include "player.h"
 #include "enemy.h"
+#include <memory>
 
 
 class Slayer: public Player {
@@ -16,3 +17,4 @@ public:
 };
 
 #endif
+

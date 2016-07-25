@@ -2,6 +2,7 @@
 #define _CONCDRAGON_H_
 #include "enemy.h"
 #include "subscriberdragon.h"
+#include <memory>
 
 class ConcreteDragonHoard;
 

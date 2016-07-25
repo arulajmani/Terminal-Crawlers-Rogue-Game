@@ -1,6 +1,7 @@
 #ifndef _POTION_H_
 #define _POTION_H_
 #include "item.h"
+#include <memory>
 #include "player.h"
 
 class Potion: public Item{
@@ -19,3 +20,4 @@ public:
 };
 
 #endif
+

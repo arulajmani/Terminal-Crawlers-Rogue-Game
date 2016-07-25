@@ -14,3 +14,4 @@ Werewolf::~Werewolf(){}
 void Werewolf::whenDead(Player &p){
 	p.pickItem(nh);
 }
+

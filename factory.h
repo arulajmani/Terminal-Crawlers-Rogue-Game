@@ -1,6 +1,7 @@
 #ifndef _FACTORY_H_
 #define _FACTORY_H_ // Might make sense to move all these header files to the .cc
 #include <string>
+#include <memory>
 #include "gameelement.h"
 #include "enemy.h"
 #include "werewolf.h"

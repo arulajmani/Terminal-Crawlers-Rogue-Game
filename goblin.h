@@ -4,7 +4,7 @@
 #include "normalhoard.h"
 #include "player.h"
 #include "character.h"
-
+#include <memory>
 
 class Goblin: public Enemy {
 	NormalHoard nh;
@@ -20,3 +20,4 @@ public:
 };
 
 #endif
+

@@ -9,3 +9,4 @@ NormalHoard::~NormalHoard() {}
 void NormalHoard::getPickedBy(Player &p) {
 	p.pickItem(*this);
 }
+

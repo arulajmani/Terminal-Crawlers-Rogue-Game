@@ -4,6 +4,7 @@
 #include "normalhoard.h"
 #include "player.h"
 #include "character.h"
+#include <memory>
 
 
 class Troll: public Enemy {
@@ -19,3 +20,4 @@ public:
 };
 
 #endif
+

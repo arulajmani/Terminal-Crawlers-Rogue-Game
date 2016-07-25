@@ -12,3 +12,4 @@ Troll::~Troll(){}
 void Troll::whenDead(Player &p){
 	p.pickItem(nh);
 }
+

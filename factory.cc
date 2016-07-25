@@ -102,3 +102,4 @@ shared_ptr<Gold> Factory::createGold(string hoardType) {
 
 	return newGold;
 }
+

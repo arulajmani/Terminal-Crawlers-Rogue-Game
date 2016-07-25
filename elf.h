@@ -3,6 +3,8 @@
 #include "player.h"
 #include <string>
 #include "potion.h"
+#include <memory>
+
 
 class Elf: public Player{
 public:

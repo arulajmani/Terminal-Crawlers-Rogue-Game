@@ -2,6 +2,7 @@
 #define _ITEM_H_
 #include "gameelement.h"
 #include "player.h"
+#include <memory>
 
 class Item:public GameElement {
 	std::string itemName;

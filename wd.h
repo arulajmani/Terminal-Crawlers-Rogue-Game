@@ -2,7 +2,7 @@
 #define _WD_H_
 #include "potion.h"
 #include "player.h"
-
+#include <memory>
 
 class WD: public Potion {
 public:
@@ -13,3 +13,4 @@ public:
 };
 
 #endif
+

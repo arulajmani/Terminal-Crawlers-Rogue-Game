@@ -7,3 +7,4 @@ const int defaultDef = 20;
 
 Human::Human(): Player{"Human", defaultHP, defaultDef, defaultAtk} {}
 Human::~Human() {}
+

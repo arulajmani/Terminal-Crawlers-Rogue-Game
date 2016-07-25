@@ -2,6 +2,7 @@
 #define _NORMALHOARD_H_
 #include "gold.h"
 #include "player.h"
+#include <memory>
 
 class NormalHoard : public Gold {
 	public:

@@ -1,6 +1,7 @@
 #ifndef _CHARACTER_H_
 #define _CHARACTER_H_
 #include "gameelement.h"
+#include <memory>
 
 class Character: public GameElement {
 	int hp; 

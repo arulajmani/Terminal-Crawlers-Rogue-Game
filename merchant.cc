@@ -1,4 +1,5 @@
 #include "merchant.h"
+#include <memory>
 
 using namespace std;
 const int hpVal = 30;
@@ -22,3 +23,4 @@ bool Merchant::isHostile(){
 void Merchant::whenDead(Player &p) {
 	p.pickItem(merchantHoard);
 }
+

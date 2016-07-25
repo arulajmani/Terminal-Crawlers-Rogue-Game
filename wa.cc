@@ -11,3 +11,4 @@ WA::~WA(){}
 void WA::getPickedBy(Player &p) {
 	p.pickItem(*this);
 }
+

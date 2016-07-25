@@ -1,5 +1,6 @@
 #include "view.h"
 #include <iostream>
+#include <memory>
 // Figure out the displayin of the floor num, probably store it as a variable in view itself. 
 using namespace std;
 
@@ -45,3 +46,4 @@ void View::display() {
 	cout<<"Action: "<<message<<endl;
 	displayMessage.str(""); // From stackoverflow, to reset the string stream. Must check.
 }
+

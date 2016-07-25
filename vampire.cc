@@ -12,3 +12,4 @@ Vampire::~Vampire(){}
 void Vampire::whenDead(Player &p){
 	p.pickItem(nh);
 }
+

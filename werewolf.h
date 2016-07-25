@@ -1,5 +1,6 @@
 #ifndef _WEREWOLF_H_
 #define _WEREWOLF_H_
+#include <memory>
 #include "enemy.h"
 #include "normalhoard.h"
 #include "player.h"
@@ -20,3 +21,4 @@ public:
 };
 
 #endif
+

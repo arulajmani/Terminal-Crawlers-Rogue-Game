@@ -1,6 +1,6 @@
 #ifndef _DWARF_H_
 #define _DWARF_H_
-
+#include <memory>
 #include "player.h"
 #include <string>
 #include "gold.h"

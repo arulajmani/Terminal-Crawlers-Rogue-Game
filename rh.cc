@@ -11,3 +11,4 @@ RH::~RH(){}
 void RH::getPickedBy(Player &p) {
 	p.pickItem(*this);
 }
+

@@ -2,6 +2,7 @@
 #define _GOLD_H_
 #include "item.h"
 #include "player.h"
+#include <memory>
 
 class Gold: public Item{
 	const int value;

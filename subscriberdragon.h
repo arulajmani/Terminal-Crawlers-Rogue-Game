@@ -1,6 +1,7 @@
 #ifndef _SUBSDRAGON_H_
 #define _SUBSDRAGON_H_
 #include "enemy.h"
+#include <memory>
 
 class SubscriberDragon: public Enemy {
 public:
@@ -11,3 +12,4 @@ public:
 };
 
 #endif
+

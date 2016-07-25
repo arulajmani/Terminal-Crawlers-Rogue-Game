@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include <vector>
 #include "factory.h"
+#include <memory>
 
 class Chamber;
 class View;

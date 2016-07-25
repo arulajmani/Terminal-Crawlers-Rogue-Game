@@ -3,6 +3,7 @@
 #include "floor.h"
 #include "factory.h"
 #include <string>
+#include <memory>
 #include "player.h"
 #include "slayer.h"
 
@@ -37,3 +38,4 @@ public:
 };
 
 #endif
+

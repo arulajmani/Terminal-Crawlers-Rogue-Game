@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include <cmath>
 #include "player.h"
+#include <memory>
 using namespace std;
 
 Enemy::Enemy(int hp, int atk, int def, char displaySymbol, string enemyName): Character(hp, atk, def), displaySymbol{displaySymbol}, enemyName{enemyName},moved{false}{}

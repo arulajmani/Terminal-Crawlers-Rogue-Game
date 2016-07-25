@@ -127,3 +127,4 @@ void Player::attack(Enemy &e) {
 	}
 	e.setHP(newHP);
 }
+

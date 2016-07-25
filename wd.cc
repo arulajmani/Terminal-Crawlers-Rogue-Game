@@ -11,3 +11,4 @@ WD::~WD(){}
 void WD::getPickedBy(Player &p) {
 	p.pickItem(*this);
 }
+

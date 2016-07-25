@@ -30,3 +30,4 @@ void Slayer::attack(Enemy &e) {
 void Slayer::changeEnemy(char newEnemy) {
 	enemy = newEnemy;
 }
+

@@ -4,6 +4,7 @@
 #include <algorithm>
 using namespace std;
 #include <iostream>
+#include <memory>
 #include <map>
 #include <curses.h>
 
@@ -231,3 +232,4 @@ int main(int argc, char *argv[]) {
 	}
 	
 }
+

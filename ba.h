@@ -2,6 +2,7 @@
 #define _BA_H_
 #include "player.h"
 #include "potion.h"
+#include <memory>
 
 class BA: public Potion {
 public:

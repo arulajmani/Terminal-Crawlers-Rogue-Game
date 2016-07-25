@@ -9,3 +9,4 @@ MerchantHoard::~MerchantHoard() {}
 void MerchantHoard::getPickedBy(Player &p) {
 	p.pickItem(*this);
 }
+
