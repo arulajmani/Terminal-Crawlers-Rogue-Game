@@ -4,8 +4,6 @@
 
 class GameElement {
 	std::pair<int, int> coords;
-	int xcoord; 
-	int ycoord;
 
 public:
 	GameElement();

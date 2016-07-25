@@ -26,7 +26,7 @@ void Game::createPlayer(std::string race) {
 
 void Game::movePlayer(string direction) {
 	bool crossed = floor->movePlayer(direction);
-	if (floorNum == 5 and not crossed) {
+	if (floorNum == 6 and crossed) {
 		won = true;
 		return;
 	}

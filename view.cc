@@ -36,7 +36,8 @@ void View::display() {
 	int def = myPlayer->getDef() + myPlayer->getLevelDef();
 	double goldAmt = myPlayer->printGold();
 	string race = myPlayer->getRace();
-	cout << "Race: "<< race<< "        Gold: "<< goldAmt<< "                                      Floor Number: " << floorNum <<endl;
+	int floorNumber = min(5, floorNum);
+	cout << "Race: "<< race<< "        Gold: "<< goldAmt<< "                                      Floor Number: " << floorNumber <<endl;
 	cout<< "HP: "<<hp<<endl;
 	cout<<"Attack: "<<atk<<endl;
 	cout<<"Defence: "<<def<<endl;

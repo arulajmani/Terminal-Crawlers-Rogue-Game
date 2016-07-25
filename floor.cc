@@ -469,8 +469,9 @@ bool Floor::movePlayer(string direction) {
 				return true;
 			}
 			else {
+				floorNum++;
 				view->addMessage("Congratulations, you won the game!");
-				return false;
+				return true;
 			}
 		}
 	else { // Enemy case
