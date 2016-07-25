@@ -10,9 +10,9 @@ const int specAtk = 80;
 Charizard::Charizard(): Player{"Charizard", defHP, defAtk, defDef}, attackCounter{0}, spAttack{false}, recharge{false} {}
 Charizard::~Charizard() {}
 
-void Charizard::attack(Character &c) {
-	int beforeHP = c.getHP();
-	int defenderDef = c.getDef();
+void Charizard::attack(Enemy &e) {
+	int beforeHP = e.getHP();
+	int defenderDef = e.getDef();
 	if (attackCounter == 3) {
 		this->setAtk(specAtk);
 		spAttack = true;
@@ -27,13 +27,13 @@ void Charizard::attack(Character &c) {
 		attackCounter = 0;
 		recharge = false;
 	}
-	int attackerAtk = this->getAtk();
+	int attackerAtk = this->getAtk() + this->getLevelAtk();
 	double damage = ceil((100.0 / ( 100.0 + static_cast<double>(defenderDef)) * static_cast<double>(attackerAtk)));
 	int newHP = beforeHP - static_cast<int>(damage);
 	if (newHP < 0) {
 		newHP = 0;
 	}
-	c.setHP(newHP);
+	e.setHP(newHP);
 	attackCounter++;
 }
 

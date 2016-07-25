@@ -1,12 +1,12 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
-
-#include "character.h"
 #include <string>
 #include <utility> 
+#include "character.h"
 
 class Gold; 
 class Potion;
+class Enemy;
 
 class Player: public Character {
 	std::string race;
@@ -34,6 +34,7 @@ public:
 	std::string getRace();
 	virtual void pickItem(Gold &g);
 	virtual void pickItem(Potion &p);
+	virtual void attack(Enemy &e);
 
 };
 

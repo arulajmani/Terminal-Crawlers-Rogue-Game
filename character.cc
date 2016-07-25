@@ -1,4 +1,6 @@
 #include "character.h"
+#include "player.h"
+#include "enemy.h"
 #include <cmath>
 #include <iostream>
 using namespace std; 
@@ -41,14 +43,4 @@ void Character::setDef(int def) {
 	this->def = def;
 }
 
-void Character::attack(Character &c) {
-	int beforeHP = c.getHP();
-	int defenderDef = c.getDef();
-	int attackerAtk = this->getAtk();
-	double damage = ceil((100.0 / ( 100.0 + static_cast<double>(defenderDef)) * static_cast<double>(attackerAtk)));
-	int newHP = beforeHP - static_cast<int>(damage);
-	if (newHP < 0) {
-		newHP = 0;
-	}
-	c.setHP(newHP);
-}
+

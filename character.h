@@ -1,6 +1,5 @@
 #ifndef _CHARACTER_H_
 #define _CHARACTER_H_
-
 #include "gameelement.h"
 
 class Character: public GameElement {
@@ -22,7 +21,6 @@ public:
 	void setAtk(int atk);
 	void setDef(int def);
 
-	virtual void attack(Character &c);
 	virtual char displayDisplaySymbol();
 
 };

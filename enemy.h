@@ -1,10 +1,9 @@
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
-
 #include "character.h"
-#include "player.h"
 #include <string>
 
+class Player;
 
 class Enemy: public Character {
 	char displaySymbol;
@@ -22,6 +21,8 @@ public:
 
 	bool hasMoved(); // Returns true if the enemy has moved on current turn.
 	void setMoved(bool state);
+
+	void attack(Player &p);
 
 };
 

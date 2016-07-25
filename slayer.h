@@ -2,6 +2,7 @@
 #define _SLAYER_H_
 #include <string>
 #include "player.h"
+#include "enemy.h"
 
 
 class Slayer: public Player {
@@ -10,7 +11,7 @@ public:
 	Slayer();
 	~Slayer();
 
-	void attack(Character &c) override;
+	void attack(Enemy &e) override;
 	void changeEnemy(char newEnemy);
 };
 

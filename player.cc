@@ -1,8 +1,9 @@
 #include "player.h"
 #include "potion.h"
 #include "gold.h"
+#include "enemy.h"
+#include <cmath>
 using namespace std;
-#include <iostream>
 
 Player::Player(string race, int hp, int atk, int def): Character{hp, atk, def}, race{race}, levelAtk{0}, levelDef{0}, gold{0} {}
 Player::~Player() {}
@@ -113,4 +114,16 @@ pair<int, int> Player::checkMove(string direction) {
 		get<1>(checkCoords) += -1;
 	}
 	return checkCoords;
+}
+
+void Player::attack(Enemy &e) {
+	int beforeHP = e.getHP();
+	int defenderDef = e.getDef();
+	int attackerAtk = this->getAtk() + this->getLevelDef();
+	double damage = ceil((100.0 / ( 100.0 + static_cast<double>(defenderDef)) * static_cast<double>(attackerAtk)));
+	int newHP = beforeHP - static_cast<int>(damage);
+	if (newHP < 0) {
+		newHP = 0;
+	}
+	e.setHP(newHP);
 }
