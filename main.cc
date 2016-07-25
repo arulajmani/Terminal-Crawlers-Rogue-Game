@@ -6,7 +6,7 @@ using namespace std;
 #include <iostream>
 #include <memory>
 #include <map>
-#include <curses.h>
+#include <ncurses.h>
 
 vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
 map<int, string> wasd {{119,"no"}, {97,"we"}, {115, "so"}, {100,"ea"}};
