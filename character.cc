@@ -43,7 +43,7 @@ void Character::attack(Character &c) {
 	int beforeHP = c.getHP();
 	int defenderDef = c.getDef();
 	int attackerAtk = this->getAtk();
-	float damage = ceil((100.0 / ( 100.0 + static_cast<float>(defenderDef)) * static_cast<float>(attackerAtk)));
+	double damage = ceil((100.0 / ( 100.0 + static_cast<double>(defenderDef)) * static_cast<double>(attackerAtk)));
 	int newHP = beforeHP - static_cast<int>(damage);
 	if (newHP < 0) {
 		newHP = 0;

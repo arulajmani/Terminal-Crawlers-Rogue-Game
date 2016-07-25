@@ -30,6 +30,7 @@
 #include "elf.h"
 #include "orc.h"
 #include "dwarf.h"
+#include "charizard.h"
 
 
 class Factory {

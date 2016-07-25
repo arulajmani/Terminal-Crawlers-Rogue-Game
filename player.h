@@ -22,6 +22,9 @@ public:
 	int getGold() const;
 	virtual double printGold(); 
 
+	virtual bool specialAttack();
+	virtual bool mustRecharge();
+
 	void setLevelAtk(int levelAtk);
 	void setLevelDef(int levelDef);
 	void setGold(int value); // Perform computation in base classes, this will just update. (Allow removal of gold as well)

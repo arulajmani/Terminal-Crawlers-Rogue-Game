@@ -9,15 +9,18 @@ using namespace std;
 
 vector<string> directions{"no", "so", "ea", "we","ne", "se", "nw", "sw"};
 map<int, string> wasd {{119,"no"}, {97,"we"}, {115, "so"}, {100,"ea"}};
-vector<string> dlcDescription {"WASD Controls"};
-vector<bool> dlcBool {false};
+vector<string> dlcDescription {"WASD Controls", "More characters"};
+vector<bool> dlcBool {false, false};
 
 void greeting() {
 	cout << "Welcome to Chamber Crawler 3000. Choose your race from any of: h, e, o, d."<<endl;
-	cout <<"h(human) -> HP(140) : Attack(20) : Defence(20)"<<endl;
+	cout <<"h(uman) -> HP(140) : Attack(20) : Defence(20)"<<endl;
 	cout << "e(lf) -> HP(140) : Attack(30) : Defence(10) : Special Ability (negative potions have positive effects)"<<endl;
 	cout << "o(rc) -> HP(180) : Attack(30) : Defence(25) : Special Ability (Gold counts for half its value)"<<endl;
 	cout << "d(warf) -> HP(100) : Attack(20) : Defence(30) : Special Ability (Gold counts for 2X its value)"<<endl;
+	if (dlcBool[1]) {
+		cout << "c(charizard) -> HP(160) : Attack(40) : Defence(30) : Special Ability (Performs special attack every 4th move, must recharge the next move)"<<endl;
+	}
 	cout <<"q -> Quit"<<endl;
 }
 
@@ -37,7 +40,7 @@ string chooseRace() {
 	while(true) {
 		try {
 			cin >> input;
-			if (input == "h" || input == "d" || input == "o" || input == "e" || input == "q") {
+			if (input == "h" || input == "d" || input == "o" || input == "e" || input == "q" || (dlcBool[1] && input == "c")) {
 				break;
 			} else {
 				cout <<"Please enter valid input"<<endl;
@@ -82,6 +85,18 @@ shared_ptr<Game> playerDead (shared_ptr<Game> game, bool filePresent, string flo
 }
 
 int main(int argc, char *argv[]) {
+
+	// DLC set up.
+	for (int i = 0; i < dlcDescription.size(); ++i) {
+		cout << "Would you like to turn on "<< dlcDescription[i] << "(y/n)";
+		string decision;
+		cin >> decision;
+		if (decision == "y") {
+			dlcBool[i] = true;
+		}
+	}
+
+
 	srand(time(NULL)); // Seeding the rand for the whole game.
 	bool filePresent = false; // Change this to false at teh end.
 	string floorPlan = "default.txt";
@@ -101,16 +116,6 @@ int main(int argc, char *argv[]) {
 	cout << "Here is the starting board"<<endl;
 	game->display();
 	cin.exceptions(ios::failbit|ios::eofbit);
-
-	// DLC set up.
-	for (int i = 0; i < dlcDescription.size(); ++i) {
-		cout << "Would you like to turn on "<< dlcDescription[i] << "(y/n)";
-		string decision;
-		cin >> decision;
-		if (decision == "y") {
-			dlcBool[i] = true;
-		}
-	}
 
 	// To let user use WASD.
 	if (dlcBool[0]) {

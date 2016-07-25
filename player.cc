@@ -19,7 +19,13 @@ int Player::getGold() const {
 	return gold;
 }
 
+bool Player::specialAttack() {
+	return false;
+}
 
+bool Player::mustRecharge() {
+	return false;
+}
 
 void Player::setLevelDef(int levelDef) {
 	this->levelDef = levelDef;

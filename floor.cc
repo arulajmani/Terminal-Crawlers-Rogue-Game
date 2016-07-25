@@ -423,15 +423,15 @@ bool Floor::movePlayer(string direction) {
 		} else {
 			view->addMessage ("Player moved ");
 			if (direction == "ea") {
-				view->addMessage("East");
+				view->addMessage("East. ");
 			}
 			else if (direction == "we") {
-				view->addMessage("West");
+				view->addMessage("West. ");
 			}
 			else if (direction == "so") {
-				view->addMessage("South");
+				view->addMessage("South. ");
 			} else {
-				view->addMessage("North");
+				view->addMessage("North. ");
 			}
 		}
 	}
@@ -622,7 +622,15 @@ void Floor::playerAttack(string direction) {
 		ostringstream ss;
 		ss << damage;
 		string damageDealt = ss.str();
-		view->addMessage("Player attacked the ");
+		if (myPlayer->mustRecharge()) {
+			view->addMessage("Player must recharge on this turn.");
+			return;
+		}
+		if (myPlayer->specialAttack()) {
+			view->addMessage("Charizard used special Attack on the ");
+		} else {
+			view->addMessage("Player attacked the ");
+		}
 		view->addMessage(enemyName);
 		view->addMessage(". Amount of damage dealt was: ");
 		view->addMessage(damageDealt);

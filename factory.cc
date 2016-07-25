@@ -22,6 +22,9 @@ shared_ptr<Player> Factory::createPlayer(string race) {
 	else if(race == "d") {
 		newPlayer = make_shared<Dwarf>();
 	} 
+	else if (race == "c") {
+		newPlayer = make_shared<Charizard>();
+	}
 	return newPlayer; 
 }
 
