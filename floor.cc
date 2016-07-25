@@ -419,7 +419,7 @@ bool Floor::movePlayer(string direction) {
 			view->addMessage("Player stepped into the doorway");
 		}
 		else if (nextPos == '#') {
-			view->addMessage("Player is trodding the stairways");
+			view->addMessage("Player is trodding the passages");
 		} else {
 			view->addMessage ("Player moved ");
 			if (direction == "ea") {
